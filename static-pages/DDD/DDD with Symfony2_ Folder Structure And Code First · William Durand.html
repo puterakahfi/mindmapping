@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="author" content="William Durand">
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <title>
+    
+      DDD with Symfony2: Folder Structure And Code First &middot; William Durand
+    
+  </title>
+
+  
+  <meta property="og:title" content="DDD with Symfony2: Folder Structure And Code First">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://williamdurand.fr/2013/08/07/ddd-with-symfony2-folder-structure-and-code-first/">
+  <meta property="og:description" content="">
+  
+  <meta property="article:published_time" content="2013-08-07T00:00:00+00:00">
+  
+  
+  
+  <meta content="PHP" property="article:tag">
+  
+  <meta content="DDD" property="article:tag">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@couac">
+  <meta name="twitter:creator" content="@couac">
+  <meta name="twitter:title" content="DDD with Symfony2: Folder Structure And Code First">
+  <meta name="twitter:description" content="">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Hi! I'm <a href="http://www.twitter.com/couac">Will</a>.
+<br>
+<br>
+28 years old. Lifelong learner. Open Source evangelist. Traveler. Triathlete. Work <a href="https://twitter.com/_TailorDev">@_TailorDev</a>.
+<br>
+<br>
+<small>
+<a href="/cdn-cgi/l/email-protection#27504e4b4b6743554943094a42"><span class="__cf_email__" data-cfemail="32455b5e5e7256405c561c5f57">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></a> | <a href="http://pgp.mit.edu/pks/lookup?op=get&search=0xa509bcf1c1274f3b">0xa509bcf1c1274f3b</a>
+</small>
+</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/books/">Bookshelf</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/publications/">Publications</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/talks/">Talks</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/trips/">Trips</a>
+        
+      
+    
+
+    <span class="sidebar-nav-item">
+      <i class="fa fa-external-link"></i>&nbsp;<a href="http://fr.linkedin.com/in/williamdurand">About</a>
+    </span>
+
+    <span class="sidebar-nav-item">
+      <i class="fa fa-external-link"></i>&nbsp;<a href="http://edu.williamdurand.fr/">Lectures</a>
+    </span>
+
+    <span class="sidebar-nav-item">
+      <i class="fa fa-external-link"></i>&nbsp;<a href="/atom.xml">RSS</a>
+    </span>
+  </nav>
+
+  <div class="sidebar-item">
+    <ul class="social-links">
+      <li>
+        <i class="fa fa-github"></i>&nbsp;<a href="http://www.github.com/willdurand">GitHub</a>
+      </li>
+      <li>
+        <i class="fa fa-linkedin"></i>&nbsp;<a href="http://linkedin.com/in/williamdurand">LinkedIn</a>
+      </li>
+      <li>
+        <i class="fa fa-twitter"></i>&nbsp;<a href="http://www.twitter.com/couac">Twitter</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="menu-hint hide-on-mobile"></div>
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">William Durand</a>
+            <small></small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+    <div class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <h1 class="post-title" itemprop="name">DDD with Symfony2: Folder Structure And Code First</h1>
+
+  <span class="post-date">
+    
+    <time pubdate="pubdate" datetime="2013-08-07T00:00:00+00:00">
+      <meta itemprop="datePublished" content="2013-08-07T00:00:00+00:00" />
+      07 August 2013 &mdash;
+    </time>
+    Clermont-Fd Area, France
+  </span>
+
+  
+
+  
+
+  <div itemprop="articleBody">
+    <p><em>2013-08-11 - Move JMSSerializerBundle configuration files into the <code class="highlighter-rouge">ApiBundle</code>
+bundle.</em></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Domain-driven_design">Domain Driven Design</a> also
+known as <strong>DDD</strong> is an approach to develop software for complex needs by
+connecting the implementation to an evolving model. <a href="http://dddcommunity.org/learning-ddd/what_is_ddd/">It is a way of thinking and
+a set of priorities, aimed at accelerating software projects that have to deal
+with complicated domains</a>.</p>
+
+<p>It is possible to use this approach in a Symfony2 project, and that is what I am
+going to introduce in a series of blog posts. You will learn how to build an
+<a href="/2012/08/02/rest-apis-with-symfony2-the-right-way/">application that manages users through a REST
+API</a> using <strong>D</strong>omain
+<strong>D</strong>riven <strong>D</strong>esign.</p>
+
+<h2 id="bootstrap">Bootstrap</h2>
+
+<p>Start by creating a fresh project using the
+<a href="https://github.com/symfony/symfony-standard">symfony-standard</a> edition:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>composer create-project symfony/framework-standard-edition path/to/install
+</code></pre>
+</div>
+
+<p>I use to remove unecessary files such as <code class="highlighter-rouge">src/*</code>, as well as useless bundles. My
+<code class="highlighter-rouge">composer.json</code> file requires the following packages (for now):</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="s2">"require"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"php"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&gt;=5.3.3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symfony/symfony"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.3.*"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sensio/distribution-bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.3.*"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"twig/extensions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.*"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"symfony/monolog-bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.3.*"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"incenteev/composer-parameter-handler"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sensio/framework-extra-bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~2.3"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Don’t forget to update the <code class="highlighter-rouge">AppKernel</code> class accordingly. You are now ready!</p>
+
+<h2 id="folder-structure">Folder Structure</h2>
+
+<p>As Mathias Verraes stated in his blog post about <a href="http://verraes.net/2011/10/code-folder-structure/">Code Folder
+Structures</a>, most of the
+usual Symfony2 project folder structures are <strong>not efficient</strong>. That is why it
+is important to spend some time designing a decent folder structure.</p>
+
+<p>In your case, the domain expert said <em>users</em> are <strong>centrepieces</strong>. The word
+<em>User</em> is part of the <a href="http://martinfowler.com/bliki/UbiquitousLanguage.html">Ubiquitous
+Language</a>, the term <a href="http://www.amazon.com/gp/product/0321125215">Eric
+Evans</a> uses in <strong>DDD</strong> for the
+practice of building up a common, rigorous language between developers and
+users.</p>
+
+<p>At first glance, it sounds like a good idea to create a <code class="highlighter-rouge">CoreDomainBundle</code> or
+even a <code class="highlighter-rouge">UserBundle</code> bundle that will own users related things. <em><a href="http://www.youtube.com/watch?v=xoMgnJDXd3k">Nein Nein Nein
+Nein Nein Nein!</a></em> I too often say
+that <strong>bundles should integrate libraries</strong>, and I am not the <a href="http://richardmiller.co.uk/2013/06/18/symfony2-bundle-structure-bundles-as-integration-layers-for-libraries/">only
+one</a>.</p>
+
+<p>This also applies to your bundles, so users related stuff will better live in a
+<code class="highlighter-rouge">CoreDomain</code> package:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    └── CoreDomain
+        └── User
+</code></pre>
+</div>
+
+<p>However, you still need a <code class="highlighter-rouge">CoreDomainBundle</code> bundle in order to integrate your
+<code class="highlighter-rouge">CoreDomain</code> package into your Symfony2 project:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    ├── CoreDomain
+    │   └── User
+    └── CoreDomainBundle
+        └── AcmeCoreDomainBundle.php
+</code></pre>
+</div>
+
+<p>This package is part of the <strong>Domain Layer</strong>. This layer is the <strong>heart</strong> of
+your application. <strong>Business rules and logic live inside this layer</strong>. Business
+entity state and behavior are defined and used here. Next section is about
+designing this <strong>Domain Layer</strong> using a <strong>Code First</strong> approach.</p>
+
+<h2 id="code-first">Code First</h2>
+
+<p>The <strong>Code First</strong> approach provides an alternative to the well-known <strong>Database
+First</strong> approach. As far as I know, it comes from the Microsoft world, but it
+does not really matter.</p>
+
+<p>Using a Database First approach, you design your database schema, and then
+generate your classes. That is how <a href="http://propelorm.org">Propel</a> works for
+instance. It is <a href="http://en.wikipedia.org/wiki/Rapid_application_development">RAD</a>
+compliant, but it does not fit the <strong>DDD</strong> mindset.</p>
+
+<p>Let’s try the <strong>Code First</strong> approach then. Basically, start by writing your
+classes, think in term of objects, not tables. You don’t have to take care of
+the database yet. The <strong>domain expert</strong> said a <code class="highlighter-rouge">User</code> has an <em>identifier</em>, a
+<em>first name</em>, and a <em>last name</em>.</p>
+
+<p>The <code class="highlighter-rouge">User</code> class is called an
+<a href="http://devlicio.us/blogs/casey/archive/2009/02/13/ddd-entities-and-value-objects.aspx">Entity</a>
+in <strong>DDD</strong> as it has an <strong>identity</strong>. It is unique within the system.
+<strong>Identity</strong> can be represented in many ways on an entity, it could be a numeric
+identifier, a <a href="http://en.wikipedia.org/wiki/Globally_unique_identifier">GUID</a>,
+or a natural key. Note that these <a href="http://dddsample.sourceforge.net/characterization.html#Entities">Entities</a>
+are not the same as the <a href="http://www.doctrine-project.org/">Doctrine</a> ones. They
+might be Doctrine classes, but they don’t have to be.</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\CoreDomain\User</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$id</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="nv">$firstName</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="nv">$lastName</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">UserId</span> <span class="nv">$id</span><span class="p">,</span> <span class="nv">$firstName</span><span class="p">,</span> <span class="nv">$lastName</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span>        <span class="o">=</span> <span class="nv">$id</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">firstName</span> <span class="o">=</span> <span class="nv">$firstName</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastName</span>  <span class="o">=</span> <span class="nv">$lastName</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getId</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getFirstName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getLastName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Generally speaking, try to
+<a href="/2013/06/03/object-calisthenics/#9-no-getters/setters/properties">avoid</a>
+<a href="http://whitewashing.de/2012/08/22/building_an_object_model__no_setters_allowed.html">setters</a>
+in order to make your code
+<a href="/2013/07/30/from-stupid-to-solid-code/#open/closed-principle">solid</a>.
+You could use a <a href="http://dddsample.sourceforge.net/characterization.html#Value_Objects">Value
+Object</a>
+to <a href="/2013/06/03/object-calisthenics/#8-no-classes-with-more-than-two-instance-variables">represent the name of the
+user</a>
+but it is not mandatory.</p>
+
+<p>By the way, a <a href="http://martinfowler.com/eaaCatalog/valueObject.html">Value Object</a>
+is a simple object whose equality is <strong>not based on identity</strong>, instead two
+Value Objects are equal if all their fields are equal. Value Objects can be a
+Money or date range object. Their key property is that they follow value
+semantics rather than reference semantics. <a href="http://www.codeproject.com/Articles/339725/Domain-Driven-Design-Clear-Your-Concepts-Before-Yo">They don’t however have any value
+other than by virtue of their
+attributes</a>.
+Also, <a href="http://c2.com/cgi/wiki?ValueObjectsShouldBeImmutable">Value Objects should be
+immutable</a>. If you want to
+change a Value Object you should replace the object with a new one.</p>
+
+<p>As you might noticed, the <code class="highlighter-rouge">User</code> identifier is represented by a <code class="highlighter-rouge">UserId</code>
+instance, not a scalar type because you don’t know which type to use. Will it be
+a numeric identifier or a GUID? You don’t know yet. Also, instead of passing IDs
+everywhere, having a class for them makes this very explicit. This <code class="highlighter-rouge">UserId</code>
+class is your very first <strong>Value Object</strong>:</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\CoreDomain\User</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserId</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$value</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">value</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getValue</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The domain expert said the application will manage <strong>users</strong>, so your
+application will deal with a <strong>collection</strong> of users. In <strong>DDD</strong>, a collection
+can be implemented by using the
+<a href="http://martinfowler.com/eaaCatalog/repository.html">Repository</a> design pattern.</p>
+
+<p>A Repository mediates between the domain and data mapping using a
+<strong>collection-like interface</strong> for accessing domain objects. It is <strong>not</strong> a Data
+Access Layer though, as it deals with Entities and Value Objects. Note that there
+are <a href="http://lostechies.com/jimmybogard/2009/09/03/ddd-repository-implementation-patterns/">various Repository implementation
+patterns</a>
+but, in your case, here is how your <code class="highlighter-rouge">UserRepository</code> interface should look like:</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\CoreDomain\User</span><span class="p">;</span>
+
+<span class="k">interface</span> <span class="nx">UserRepository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nx">UserId</span> <span class="nv">$userId</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findAll</span><span class="p">();</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">add</span><span class="p">(</span><span class="nx">User</span> <span class="nv">$user</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">remove</span><span class="p">(</span><span class="nx">User</span> <span class="nv">$user</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>You should end up with the following folder structure:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    ├── CoreDomain
+    │   └── User
+    │       ├── User.php
+    │       ├── UserId.php
+    │       └── UserRepository.php
+    └── CoreDomainBundle
+        └── AcmeCoreDomainBundle.php
+</code></pre>
+</div>
+
+<p>Now that you have a decent <strong>Domain Layer</strong> with Entities, Value Objects, and
+Repositories, let’s wire it to your Symfony2 application. Note that your
+<strong>Domain Layer</strong> is <strong>reusable</strong>, and loosely coupled. That is really important!</p>
+
+<h2 id="the-infrastructure-layer">The Infrastructure Layer</h2>
+
+<p>In a <strong>Code First</strong> approach, you can <strong>delay the decision</strong> to choose a
+persistence layer. The main advantage is to be able to write some other parts of
+the application without having to wait.</p>
+
+<p>You can create a <code class="highlighter-rouge">InMemoryUserRepository</code> class that implements the
+<code class="highlighter-rouge">UserRepository</code> interface which contains hardcoded objects:</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\CoreDomainBundle\Repository</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Acme\CoreDomain\User\User</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\CoreDomain\User\UserId</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\CoreDomain\User\UserRepository</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">InMemoryUserRepository</span> <span class="k">implements</span> <span class="nx">UserRepository</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$users</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">users</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nx">UserId</span><span class="p">(</span><span class="s1">'8CE05088-ED1F-43E9-A415-3B3792655A9B'</span><span class="p">),</span> <span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Doe'</span>
+        <span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">users</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nx">UserId</span><span class="p">(</span><span class="s1">'62A0CEB4-0403-4AA6-A6CD-1EE808AD4D23'</span><span class="p">),</span> <span class="s1">'Jean'</span><span class="p">,</span> <span class="s1">'Bon'</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nx">UserId</span> <span class="nv">$userId</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findAll</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">users</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">add</span><span class="p">(</span><span class="nx">User</span> <span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">remove</span><span class="p">(</span><span class="nx">User</span> <span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Here is what you should get by running <code class="highlighter-rouge">tree src/</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    ├── CoreDomain
+    │   └── User
+    │       ├── User.php
+    │       ├── UserId.php
+    │       └── UserRepository.php
+    └── CoreDomainBundle
+        ├── Repository
+        │   └── InMemoryUserRepository.php
+        └── AcmeCoreDomainBundle.php
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">InMemoryUserRepository</code> class is part of what people call the
+<strong>Infrastructure Layer</strong> in <strong>DDD</strong>, and is located into the <code class="highlighter-rouge">CoreDomainBundle</code>
+bundle because it is specific to the application. The <strong>Infrastructure Layer</strong>
+contains technical services, persistence, and more generally, concrete
+implementations of the <strong>Domain Layer</strong>.</p>
+
+<p>Register a new service named <code class="highlighter-rouge">user_repository</code> so that the <strong>Application Layer</strong>
+is able to access the <code class="highlighter-rouge">UserRepository</code> repository. The
+<strong>Application Layer</strong> can be seen as the <strong>Controller Layer</strong> in a
+<a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller</a>
+architecture. The <strong>Application Layer</strong> is in charge of <strong>coordinating the
+actions to be performed on the domain</strong>, and delegates all domain actions to the
+domain itself. This layer is kept thin. It <strong>does not contain business rules</strong>
+or knowledge. It <strong>does not have state reflecting the business situation</strong>, but
+it <strong>can have state that reflects the progress of a task</strong> for the user or the
+program.</p>
+
+<p>By the way, you will need to <a href="http://symfony.com/doc/current/cookbook/bundles/extension.html#loading-external-configuration-resources">write an <code class="highlighter-rouge">Extension</code> class in order to load bundle’s service
+configuration</a>
+but I won’t cover that part.</p>
+
+<p>The <code class="highlighter-rouge">user_repository</code> service acts as an <strong>interface</strong>. It is an
+<a href="http://symfony.com/doc/current/components/dependency_injection/advanced.html#aliasing">alias</a>
+that points to a <strong>concrete implementation</strong> which is a <strong>non-public</strong> service:</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- src/Acme/CoreDomainBundle/Resources/config/repositories.xml --&gt;</span>
+<span class="cp">&lt;?xml version="1.0" ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">"http://symfony.com/schema/dic/services"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;parameters&gt;</span>
+        <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">"user_repository.in_memory.class"</span><span class="nt">&gt;</span>Acme\CoreDomainBundle\Repository\InMemoryUserRepository<span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;/parameters&gt;</span>
+
+    <span class="nt">&lt;services&gt;</span>
+        <span class="c">&lt;!-- Exposed Services --&gt;</span>
+        <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">"user_repository"</span> <span class="na">alias=</span><span class="s">"user_repository.in_memory"</span><span class="nt">&gt;&lt;/service&gt;</span>
+
+        <span class="c">&lt;!-- Concrete Implementations --&gt;</span>
+        <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">"user_repository.in_memory"</span> <span class="na">public=</span><span class="s">"false"</span> <span class="na">class=</span><span class="s">"%user_repository.in_memory.class%"</span><span class="nt">&gt;&lt;/service&gt;</span>
+    <span class="nt">&lt;/services&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
+</code></pre>
+</div>
+
+<p>Later when you will choose your persistence layer, you will just have to change
+the alias to another concrete implementation like <code class="highlighter-rouge">user_repository.doctrine</code> for
+instance, but you won’t have to change your <strong>Application Layer</strong> code.</p>
+
+<h2 id="the-application-layer">The Application Layer</h2>
+
+<p>What you have to build is a REST API. The code will live in a bundle named
+<code class="highlighter-rouge">ApiBundle</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    ├── ApiBundle
+    │   ├── Controller
+    │   │   └── UserController.php
+    │   ├── Resources
+    │   │   └── config
+    │   │       └── routing.yml
+    │   └── AcmeApiBundle.php
+    ├── CoreDomain
+    │   └── User
+    │       ├── User.php
+    │       ├── UserId.php
+    │       └── UserRepository.php
+    └── CoreDomainBundle
+        ├── DependencyInjection
+        │   └── AcmeCoreDomainExtension.php
+        ├── Repository
+        │   └── InMemoryUserRepository.php
+        └── AcmeCoreDomainBundle.php
+</code></pre>
+</div>
+
+<p>You will need the following dependencies in your <code class="highlighter-rouge">composer.json</code> file:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="s2">"require"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+
+    </span><span class="nt">"friendsofsymfony/rest-bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"<a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="5f6f716e6c71751f3b3a29">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script>"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"jms/serializer-bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"<a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="ba8a948b889490fadedfcc">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script>"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Don’t forget to register the bundles in the <code class="highlighter-rouge">AppKernel</code> class.</p>
+
+<p>For now, you will implement only one action to retrieve all users into your
+<code class="highlighter-rouge">UserController</code> class:</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\ApiBundle\Controller</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">FOS\RestBundle\Controller\Annotations</span> <span class="k">as</span> <span class="nx">Rest</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="sd">/**
+     * @Rest\View
+     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">allAction</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'user_repository'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="nv">$users</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>There is no black magic here, things won’t work out of the box. Let’s take a
+look at the configuration. First, you need to add a new route to your routing
+definition:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># src/Acme/ApiBundle/Resources/config/routing.yml</span>
+<span class="s">acme_api.user_all</span><span class="pi">:</span>
+    <span class="s">pattern</span><span class="pi">:</span>  <span class="s">/users.{_format}</span>
+    <span class="s">defaults</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">_controller</span><span class="pi">:</span> <span class="nv">AcmeApiBundle</span><span class="pi">:</span><span class="nv">User</span><span class="pi">:</span><span class="nv">all</span><span class="pi">,</span> <span class="nv">_format</span><span class="pi">:</span> <span class="nv">~</span> <span class="pi">}</span>
+    <span class="s">requirements</span><span class="pi">:</span>
+        <span class="s">_method</span><span class="pi">:</span> <span class="s">GET</span>
+</code></pre>
+</div>
+
+<p>You also need to configure both
+<a href="https://github.com/friendsofsymfony/FOSRestBundle">FOSRestBundle</a> and
+<a href="https://github.com/sensiolabs/SensioFrameworkExtraBundle">SensioFrameworkExtraBundle</a>:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># app/config/config.yml</span>
+<span class="s">fos_rest</span><span class="pi">:</span>
+    <span class="s">view</span><span class="pi">:</span>
+        <span class="s">view_response_listener</span><span class="pi">:</span> <span class="s">force</span>
+    <span class="s">format_listener</span><span class="pi">:</span>
+        <span class="s">default_priorities</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">json'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">html'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">*/*'</span><span class="pi">]</span>
+        <span class="s">fallback_format</span><span class="pi">:</span> <span class="s">json</span>
+        <span class="s">prefer_extension</span><span class="pi">:</span> <span class="s">true</span>
+
+<span class="s">sensio_framework_extra</span><span class="pi">:</span>
+    <span class="s">view</span><span class="pi">:</span>    <span class="pi">{</span> <span class="nv">annotations</span><span class="pi">:</span> <span class="nv">false</span> <span class="pi">}</span>
+</code></pre>
+</div>
+
+<p>At this time, you should be able to access <code class="highlighter-rouge">http://yourproject.local/users</code>, but
+it should throw an exception saying the Twig template named
+<code class="highlighter-rouge">AcmeApiBundle:User:all.html.twig</code> does not exist.
+However, if you browse <code class="highlighter-rouge">http://yourproject.local/users.json</code>, you should get JSON
+content containing your users.</p>
+
+<p>Thing is, it is not well serialized. That is because you didn’t configure
+<a href="https://github.com/schmittjoh/JMSSerializerBundle">JMSSerializerBundle</a> yet.
+First of all, you need to tell the
+<a href="https://github.com/schmittjoh/serializer">Serializer</a> where to find
+configuration files:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># app/config/config.yml</span>
+<span class="s">jms_serializer</span><span class="pi">:</span>
+    <span class="s">metadata</span><span class="pi">:</span>
+        <span class="s">directories</span><span class="pi">:</span>
+            <span class="s">CoreDomain</span><span class="pi">:</span>
+                <span class="s">namespace_prefix</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Acme</span><span class="se">\\</span><span class="s">CoreDomain"</span>
+                <span class="s">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">@AcmeApiBundle/Resources/config/serializer/"</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">ApiBundle</code> owns the serializer configuration, it is one of its
+responsibilities. As you can see, I <strong>use a YAML configuration file</strong>, not
+annotations, because I don’t want to pollute the agnostic <strong>Domain Layer</strong>.</p>
+
+<p>Here is the configuration file for the <code class="highlighter-rouge">User</code> entity:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># src/Acme/ApiBundle/Resources/config/serializer/User.User.yml</span>
+<span class="s">Acme\CoreDomain\User\User</span><span class="pi">:</span>
+    <span class="s">exclusion_policy</span><span class="pi">:</span> <span class="s">ALL</span>
+    <span class="s">properties</span><span class="pi">:</span>
+        <span class="s">id</span><span class="pi">:</span>
+            <span class="s">expose</span><span class="pi">:</span> <span class="s">true</span>
+            <span class="s">inline</span><span class="pi">:</span> <span class="s">true</span>
+        <span class="s">firstName</span><span class="pi">:</span>
+            <span class="s">expose</span><span class="pi">:</span> <span class="s">true</span>
+            <span class="s">serialized_name</span><span class="pi">:</span> <span class="s">first_name</span>
+        <span class="s">lastName</span><span class="pi">:</span>
+            <span class="s">expose</span><span class="pi">:</span> <span class="s">true</span>
+            <span class="s">serialized_name</span><span class="pi">:</span> <span class="s">last_name</span>
+</code></pre>
+</div>
+
+<p>And here is the configuration file for the <code class="highlighter-rouge">UserId</code> value object:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># src/Acme/ApiBundle/Resources/config/serializer/User.UserId.yml</span>
+<span class="s">Acme\CoreDomain\User\UserId</span><span class="pi">:</span>
+    <span class="s">exclusion_policy</span><span class="pi">:</span> <span class="s">ALL</span>
+    <span class="s">properties</span><span class="pi">:</span>
+        <span class="s">value</span><span class="pi">:</span>
+            <span class="s">expose</span><span class="pi">:</span> <span class="s">true</span>
+            <span class="s">serialized_name</span><span class="pi">:</span> <span class="s">id</span>
+</code></pre>
+</div>
+
+<p>That should give you the following JSON content:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"8CE05088-ED1F-43E9-A415-3B3792655A9B"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"first_name"</span><span class="p">:</span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"last_name"</span><span class="p">:</span><span class="s2">"Doe"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"62A0CEB4-0403-4AA6-A6CD-1EE808AD4D23"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"first_name"</span><span class="p">:</span><span class="s2">"Jean"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"last_name"</span><span class="p">:</span><span class="s2">"Bon"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Running <code class="highlighter-rouge">tree src/</code> on the command line should give you the following output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>src
+└── Acme
+    ├── ApiBundle
+    │   ├── Controller
+    │   │   └── UserController.php
+    │   ├── Resources
+    │   │   ├── config
+    │   │   │   ├── routing.yml
+    │   │   │   └── serializer
+    │   │   │       ├── User.User.yml
+    │   │   │       └── User.UserId.yml
+    │   │   └── views
+    │   │       └── User
+    │   │           └── all.html.twig
+    │   └── AcmeApiBundle.php
+    ├── CoreDomain
+    │   └── User
+    │       ├── User.php
+    │       ├── UserId.php
+    │       └── UserRepository.php
+    └── CoreDomainBundle
+        ├── DependencyInjection
+        │   └── AcmeCoreDomainExtension.php
+        ├── Repository
+        │   └── InMemoryUserRepository.php
+        ├── Resources
+        │   └── config
+        │       └── repositories.xml
+        └── AcmeCoreDomainBundle.php
+</code></pre>
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Adopting the right <strong>folder structure</strong> in your code is important. You should
+always decouple your code as much as possible. By remembering that a bundle
+<strong>integrates</strong> a third-party library or just a set of agnostic classes, you end
+up with a clean separation between Symfony2 related things, and your business
+logic.</p>
+
+<p>Bundles that integrate your <strong>Domain Layer</strong> packages are part of the
+<strong>Infrastructure Layer</strong>. Your controllers are part of the  <strong>Application
+Layer</strong>. The missing layer is the <strong>Presentation Layer</strong> (UI) which talk to
+the <strong>Application Layer</strong>. This layer is responsible for displaying information
+to the user, and accept new data, but I will cover it in another article.</p>
+
+<p><img src="/images/posts/ddd.png" alt="" /></p>
+
+<p><small class="source">Source: <a href="http://guptavikas.wordpress.com/2009/12/01/domain-driven-design-an-introduction/">http://guptavikas.wordpress.com/2009/12/01/domain-driven-design-an-introduction/</a></small></p>
+
+<p>By using the <strong>Code First</strong> approach, you have been able to write a first
+action that just works. You won’t have to change it. However, you will be able
+to rely on a database or whatever you want later on. It will be up to you.</p>
+
+<p>In the next blog post, I will <strike>introduce the **Presentation Layer**, new Value
+Objects such as the `Name` one, and more on **DDD**!</strike> <a href="/2013/08/20/ddd-with-symfony2-making-things-clear/">cover a few points that
+have been misunderstood</a>.</p>
+
+  </div>
+
+  <em class="fork-and-edit">
+    By the way, if you found a typo, please <a href="http://github.com/willdurand/willdurand.github.com/edit/master/_posts/2013-08-07-ddd-with-symfony2-folder-structure-and-code-first.markdown">fork and edit this post</a>. Thank you so much! This post is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+  </em>
+
+  <p class="christmas">
+      If you like this post or if you use one of the <a href="https://github.com/willdurand">Open Source projects</a>
+      I maintain, <a href="/cdn-cgi/l/email-protection#c2b5abaeae82a6b0aca6ecafa7">say hello by email</a>.
+      There is also my <a href="https://amzn.com/w/2XWTWY0NSR9XT">Amazon Wish List</a>. Thank you &hearts;
+  </p>
+
+  <p class="money">
+    <script id='fbmcvr5'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//button.flattr.com/view/?fid=9djjxn&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbmcvr5');</script>
+  </p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts" itemscope itemtype="http://schema.org/Blog">
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2017/03/13/reviewing-the-flexispot-workstation/" itemprop="name" itemprop="headline">
+            Reviewing the FlexiSpot Desktop Workstation 27 inches
+          </a>
+          <time datetime="2017-03-13T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2017-03-13T00:00:00+00:00">13 Mar 2017</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2016/05/16/phd-check/" itemprop="name" itemprop="headline">
+            PhD: &check;
+          </a>
+          <time datetime="2016-05-16T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2016-05-16T00:00:00+00:00">16 May 2016</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2016/01/21/patching-linux-kernel-raspbian/" itemprop="name" itemprop="headline">
+            Patching Linux Kernel (Raspbian &amp; CVE-2016-0728)
+          </a>
+          <time datetime="2016-01-21T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2016-01-21T00:00:00+00:00">21 Jan 2016</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2016/01/16/my-life-on-the-internets-a-year-later/" itemprop="name" itemprop="headline">
+            My Life On The Internets: A Year Later
+          </a>
+          <time datetime="2016-01-16T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2016-01-16T00:00:00+00:00">16 Jan 2016</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2015/09/08/level-up/" itemprop="name" itemprop="headline">
+            Level Up
+          </a>
+          <time datetime="2015-09-08T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2015-09-08T00:00:00+00:00">08 Sep 2015</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2015/06/02/video-nobody-understands-rest/" itemprop="name" itemprop="headline">
+            [Video] Nobody Understands REST, but That's Ok ;-)
+          </a>
+          <time datetime="2015-06-02T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2015-06-02T00:00:00+00:00">02 Jun 2015</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2015/04/11/on-capifony-and-its-future/" itemprop="name" itemprop="headline">
+            On capifony and its Future
+          </a>
+          <time datetime="2015-04-11T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2015-04-11T00:00:00+00:00">11 Apr 2015</small>
+          </time>
+        </h3>
+      </li>
+    
+      <li itemscope itemtype="http://schema.org/BlogPosting">
+        <h3>
+          <a href="/2015/03/17/playing-with-a-esp8266-wifi-module/" itemprop="name" itemprop="headline">
+            Playing With a ESP8266 WiFi Module
+          </a>
+          <time datetime="2015-03-17T00:00:00+00:00">
+            <small><meta itemprop="datePublished" content="2015-03-17T00:00:00+00:00">17 Mar 2015</small>
+          </time>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+<section class="post-comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'williamdurand';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+      <a href="http://www.github.com/willdurand/willdurand.github.com" class="ribbon">
+          <img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme.png" alt="Fork me on GitHub" width="149" height="149">
+      </a>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/jquery-1.6.2.min.js"><\/script>')</script>
+    <script src="/js/jquery.ui.totop.js" type="text/javascript"></script>
+    <script src="/js/anchorify.js" type="text/javascript"></script>
+    <script>
+      $().UItoTop();
+      $('.post h2, .post h3, .post h4, .post h5, .post h6').anchorify();
+
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+
+      var _paq = _paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//piwik.vanoix.com/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 4]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//piwik.vanoix.com/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
+  <script>/* <![CDATA[ */(function(d,s,a,i,j,r,l,m,t){try{l=d.getElementsByTagName('a');t=d.createElement('textarea');for(i=0;l.length-i;i++){try{a=l[i].href;s=a.indexOf('/cdn-cgi/l/email-protection');m=a.length;if(a&&s>-1&&m>28){j=28+s;s='';if(j<m){r='0x'+a.substr(j,2)|0;for(j+=2;j<m&&a.charAt(j)!='X';j+=2)s+='%'+('0'+('0x'+a.substr(j,2)^r).toString(16)).slice(-2);j++;s=decodeURIComponent(s)+a.substr(j,m-j)}t.innerHTML=s.replace(/</g,'&lt;').replace(/\>/g,'&gt;');l[i].href='mailto:'+t.value}}catch(e){}}}catch(e){}})(document);/* ]]> */</script></body>
+</html>

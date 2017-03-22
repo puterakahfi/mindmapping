@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="author" content="Fabian Keller"/>
+<meta name="publisher" content="Fabian Keller"/>
+<meta name="copyright" content="Fabian Keller"/>
+<meta name="description" content="Deciding how to setup the directory structure of a project is not easy. Often, the frameworks people are used to suggest a way to organize classes, such as&hellip;"/>
+<meta name="keywords" content="architecture,domain driven design,fabian keller,java,software engineering,web development"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0;"/>
+<title>Domain Driven Design with Symfony: A Folder Structure | Fabian Keller</title>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="http://www.fabian-keller.de/blog/domain-driven-design-with-symfony-a-folder-structure"/>
+<link rel="shortcut icon" href="http://www.fabian-keller.de/favicon.ico"/>
+ 
+<meta name="DC.Title" content="Domain Driven Design with Symfony: A Folder Structure"/>
+<meta name="DC.Creator" content="Fabian Keller"/>
+<meta name="DC.Rights" content="Fabian Keller"/>
+<meta name="DC.Publisher" content="Fabian Keller"/>
+<meta name="DC.Description" content="Deciding how to setup the directory structure of a project is not easy. Often, the frameworks people are used to suggest a way to organize classes, such as&hellip;"/>
+<meta property="og:title" content="Domain Driven Design with Symfony: A Folder Structure | Fabian Keller"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://www.fabian-keller.de/blog/domain-driven-design-with-symfony-a-folder-structure"/>
+<meta property="og:image" content="http://www.fabian-keller.de/content/4-blog/12-domain-driven-design-with-symfony-a-folder-structure/domain-driven-design-with-symfony-a-folder-structure.jpg"/>
+<meta property="og:description" content="Deciding how to setup the directory structure of a project is not easy. Often, the frameworks people are used to suggest a way to organize classes, such as&hellip;"/>
+<meta itemprop="name" content="Domain Driven Design with Symfony: A Folder Structure | Fabian Keller">
+<meta itemprop="description" content="Deciding how to setup the directory structure of a project is not easy. Often, the frameworks people are used to suggest a way to organize classes, such as&hellip;">
+<link rel="stylesheet" href="http://www.fabian-keller.de/public/vendor.css"> <link rel="stylesheet" href="http://www.fabian-keller.de/public/fabiankeller.css">
+</head>
+<body>
+<header>
+<nav class="navbar navbar-default">
+<div class="container">
+ 
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topnav" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="http://www.fabian-keller.de">
+Fabian Keller <small>Software Engineer</small>
+</a>
+</div>
+<div class="collapse navbar-collapse" id="topnav">
+<ul class="nav navbar-nav navbar-right">
+<li>
+<a href="http://www.fabian-keller.de/about">About</a>
+</li>
+<li>
+<a href="http://www.fabian-keller.de/now">Now</a>
+</li>
+<li>
+<a href="http://www.fabian-keller.de/code">Do</a>
+</li>
+<li class="active">
+<a href="http://www.fabian-keller.de/blog">Write</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+</header><script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Domain Driven Design with Symfony: A Folder Structure",
+    "keywords": "architecture,Domain-driven Design",
+    "url": "http://www.fabian-keller.de/blog/domain-driven-design-with-symfony-a-folder-structure",
+    "datePublished": "2016-08-13T00:00:00+00:00",
+    "dateCreated": "2016-08-13T00:00:00+00:00",
+    "dateModified": "2016-08-13T00:00:00+00:00",
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://www.fabian-keller.de/thumbs/blog/domain-driven-design-with-symfony-a-folder-structure/domain-driven-design-with-symfony-a-folder-structure-750x400.jpg",
+        "height": 400,
+        "width": 750
+    },
+    "articleBody": "<p>Deciding how to setup the directory structure of a project is not easy.\nOften, the frameworks people are used to suggest a way to organize classes, such as <a href=\"http://symfony.com/doc/current/quick_tour/the_architecture.html\">Symfony does</a>.\nHowever, when implementing domain-driven design (DDD) it is very important to NOT couple the domain code to a framework, as sooner or later sticking to a proposed directory structure renders your carefully crafted code coupled to the framework.\nAlso, you want to make sure that your <a href=\"http://www.fabian-keller.de/blog/changeability\">architecture remains changeable</a>.</p>\n<h2>Deciding on a Directory Structure</h2>\n<p>When building an application it is important to choose a structure and then stick to it.\nFor PHP and Symfony, there are quite a <a href=\"https://leanpub.com/ddd-in-php\">few</a> <a href=\"http://de.slideshare.net/_leopro_/clean-architecture-with-ddd-layering-in-php-35793127\">detailed</a> <a href=\"http://williamdurand.fr/2013/08/07/ddd-with-symfony2-folder-structure-and-code-first/\">resources</a> and <a href=\"https://github.com/codeliner/php-ddd-cargo-sample\">example</a> <a href=\"https://github.com/Sylius/Sylius\">applications</a> out there highlighting how they organize their code.\nFor a recent project of mine, I have investigated a lot of these resources and projects, but in the end came up with yet another directory structure for DDD applications supported by Symfony.\nLets jump straight to how things are organized now.</p>\n<h2>Layered Architecture</h2>\n<p>The code is organized by functional components, which have a logically coherent and tight coupling of the contained models.\nA component (e.g., a User component) is then organized into five different layers:</p>\n<ul>\n<li><strong>Domain</strong> layer: contains the actual business logic and domain models.</li>\n<li><strong>Infrastructure</strong> layer: binds the business logic implementation to infrastructure and frameworks, such as Symfony or Doctrine.</li>\n<li><strong>Presentation</strong> layer: is responsible for presenting a user interface, allowing users to make use of the business logic.</li>\n<li><strong>Api</strong> layer: provides an API interface to interact with the domain services.</li>\n<li><strong>Tests</strong> layer: Contains all tests relevant to the component.</li>\n</ul>\n<p>The general folder structure for the Symfony application with a sample component now looks as follows:</p>\n<pre><code>\u251c\u2500\u2500 app\n\u251c\u2500\u2500 assets\n\u251c\u2500\u2500 bin\n\u251c\u2500\u2500 src\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 ...\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Api\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Domain\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Infrastructure\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Presentation\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 Tests\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 ...\n\u251c\u2500\u2500 vendor\n\u251c\u2500\u2500 web</code></pre>\n<p>The direct child folders of each component relate to the different architectural layers described above.\nHence, all classes belonging to a component belong to a certain layer.\nThe layers and their contents are explained in the following sections.</p>\n<h2>Domain</h2>\n<pre><code>\u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 Domain\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Command\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Event\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Model\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Repository\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Service\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 ValueObject</code></pre>\n<p>Most importantly, the domain layer contains the domain models, domain repositories (simple interactions with models), and domain services (complex interactions with [multiple] entities).\nAlso command classes describing business interactions and corresponding domain events belong here.\nLast but not least, also custom value objects that are important to the domain are stored here. </p>\n<p>All classes and interfaces defined in this layer have no dependencies to any third party library.</p>\n<h2>Infrastructure</h2>\n<pre><code>\u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 Infrastructure\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 UserInfrastructureBundle.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Console\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 EventListener\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Repository\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Resources\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 Service</code></pre>\n<p>The infrastructure layer binds the elements defined in the domain layer to a specific framework or platform in order to have a runnable application.\nThe layer can for example act as an adapter/wrapper for specific persistence tasks or provide application services (such as email, caching, message queues, etc.).</p>\n<p>In case of Symfony, the infrastructure layer also contains console commands the application may have or <code>EventListener</code>s that listen to Symfony-specific or custom events through the frameworks event system.</p>\n<p>In general, the layer contains the actual implementations of the business services described in the domain layer.\nHence, also most dependency injection definitions point to implementations defined in this layer.</p>\n<h2>API</h2>\n<pre><code>\u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 Api\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 UserApiBundle.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Controller\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 Resources</code></pre>\n<p>The API layer provides an API interface to interact with the application.\nFor example, this could be a REST API backend for a modern JavaScript-based frontend.\nThe layer defines routes and controllers that trigger the corresponding operations in the domain layer.</p>\n<p>Having the offered API separate from the implementation allows to precisely define which services are exposed to whom through the API.\nThe layer handles authentication and authorization with the API and can also rate-limit requests or track metrics for billing purposes.\nPutting all these API concerns into this separate layer allows the domain and infrastructure layers to remain slim and focused, while the exposed API can easily be managed.</p>\n<h2>Presentation</h2>\n<pre><code>\u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 Presentation\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 UserPresentationBundle.php\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Controller\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Form\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 Resources\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 Twig</code></pre>\n<p>Symfony provides a lot of resources to help implementing an HTML-based user interface.\nThe presentation layer contains all resources concerned with creating a user interface rendered on the server side for the end user.\nJavaScript based user interfaces typically only require the API layer and there is thus no need for an extra presentation layer.\nFor Symfony, this means that web based controllers, forms with input validation and Twig view scripts are stored in this layer.</p>\n<p>Having separated the user interface from the domain and the infrastructure simplifies the development of either layer.\nThe code in the presentation layer should not contain any business logic, but only forward calls to the respective services of the domain layer.\nHence, the presentation layer stays small helping developers to easily evolve the user interface, even during big changes.</p>\n<h2>Tests</h2>\n<pre><code>\u251c\u2500\u2500 User\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 Tests\n\u2502\u00a0\u00a0  \u00a0\u00a0 \u251c\u2500\u2500 Api\n\u2502\u00a0\u00a0  \u00a0\u00a0 \u251c\u2500\u2500 Domain\n\u2502\u00a0\u00a0  \u00a0\u00a0 \u251c\u2500\u2500 Functional\n\u2502\u00a0\u00a0  \u00a0\u00a0 \u251c\u2500\u2500 Infrastructure\n\u2502\u00a0\u00a0     \u2514\u2500\u2500 Presentation\n\u251c\u2500\u2500 ...</code></pre>\n<p>The tests layer contains all tests relevant to the component.\nTests are again, organized by layer.\nIn addition to unit testing layers, the tests folder could also contain E2E (i.e. in the <code>Functional</code> folder) and integration tests.\nPutting all kinds of tests into this folder structure helps new developers find the tests they are looking for and to easily find components that might be lacking tests of a certain kind.</p>\n<h2>Symfony Bundles</h2>\n<p>As you might have noticed, a component can define up to three Symfony bundles: <code>BcApiBundle</code>, <code>BcInfrastructureBundle</code> and <code>BcPresentationBundle</code>.\nTypically, setting up a bundle requires some effort in terms of configuration files and certain classes.\nTo minimize that effort when using the proposed folder structure, all bundles extend a <code>CompactBundle</code> that favors convention over configuration.\nA typical <code>*Bundle</code> class looks as follows:</p>\n<pre><code class=\"language-php\">namespace Acme\\User\\Infrastructure;\n\nuse Acme\\Core\\Infrastructure\\Bundle\\CompactBundle;\n\nclass UserInfrastructureBundle extends CompactBundle\n{\n}</code></pre>\n<p>This adds the following conventions to configure the bundle:</p>\n<ul>\n<li>Service definitions are stored in <code>&lt;Bundle&gt;/Resources/config/services.yml</code>.</li>\n<li>Routing is stored in <code>&lt;Bundle&gt;/Resources/config/routing.yml</code>.</li>\n<li>Doctrine mapping files are stored in <code>&lt;Component&gt;/Infrastructure/Resources/config/doctrine/</code> while the associated models are stored in the namespace <code>&lt;Component&gt;/Domain</code>.</li>\n<li>JMS Serializer mapping files are stored in <code>&lt;Component&gt;/Infrastructure/Resources/config/serializer/</code> while the associated models are stored in the namespace <code>&lt;Component&gt;/</code> (in contrast to doctrine models, they do not necessarily need to be located in the domain layer).</li>\n</ul>\n<h3>CompactBundle</h3>\n<p>The source files for the <code>CompactBundle</code> are stored in a public gist.\nFeel free to adapt it to your needs.\nThe <code>CompactBundle</code> conventions should help you get started writing your DDD applications with several components.</p>\n<p><a href=\"https://gist.github.com/FaKeller/a8b2c98586f2b939890fc448eda70f91\" class=\"btn btn-default\" target=\"_blank\"><i class=\"fa fa-github\"></i> View Gist on GitHub</a></p>",
+    "editor": {
+        "@type": "Person",
+        "name": "Fabian Keller",
+        "url": "http://www.fabian-keller.de"
+    },
+    "publisher": {
+        "@type": "Person",
+        "name": "Fabian Keller",
+        "url": "http://www.fabian-keller.de"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Fabian Keller",
+        "url": "http://www.fabian-keller.de"
+    }
+}
+</script><main class="section section--fixed">
+<div class="row">
+<div class="col-md-8">
+<article class="box">
+<header class="title  ">
+<time datetime="2016-08-13T00:00:00+00:00" class="title__time">
+August 13th, 2016 </time>
+<time datetime="2017-01-27T00:00:00+00:00" class="title__time">
+&ndash; updated on January 27th, 2017 </time>
+<h1>Domain Driven Design with Symfony: A Folder Structure</h1>
+<ul class="title__tags">
+<li><a href="http://www.fabian-keller.de/blog/tag:architecture">architecture</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:Domain-driven Design">Domain-driven Design</a></li>
+</ul>
+</header>
+<figure class="box__image box__image--no-border">
+<img src="http://www.fabian-keller.de/thumbs/blog/domain-driven-design-with-symfony-a-folder-structure/domain-driven-design-with-symfony-a-folder-structure-750x400.jpg">
+</figure>
+<p>Deciding how to setup the directory structure of a project is not easy.
+Often, the frameworks people are used to suggest a way to organize classes, such as <a href="http://symfony.com/doc/current/quick_tour/the_architecture.html">Symfony does</a>.
+However, when implementing domain-driven design (DDD) it is very important to NOT couple the domain code to a framework, as sooner or later sticking to a proposed directory structure renders your carefully crafted code coupled to the framework.
+Also, you want to make sure that your <a href="http://www.fabian-keller.de/blog/changeability">architecture remains changeable</a>.</p>
+<h2>Deciding on a Directory Structure</h2>
+<p>When building an application it is important to choose a structure and then stick to it.
+For PHP and Symfony, there are quite a <a href="https://leanpub.com/ddd-in-php">few</a> <a href="http://de.slideshare.net/_leopro_/clean-architecture-with-ddd-layering-in-php-35793127">detailed</a> <a href="http://williamdurand.fr/2013/08/07/ddd-with-symfony2-folder-structure-and-code-first/">resources</a> and <a href="https://github.com/codeliner/php-ddd-cargo-sample">example</a> <a href="https://github.com/Sylius/Sylius">applications</a> out there highlighting how they organize their code.
+For a recent project of mine, I have investigated a lot of these resources and projects, but in the end came up with yet another directory structure for DDD applications supported by Symfony.
+Lets jump straight to how things are organized now.</p>
+<h2>Layered Architecture</h2>
+<p>The code is organized by functional components, which have a logically coherent and tight coupling of the contained models.
+A component (e.g., a User component) is then organized into five different layers:</p>
+<ul>
+<li><strong>Domain</strong> layer: contains the actual business logic and domain models.</li>
+<li><strong>Infrastructure</strong> layer: binds the business logic implementation to infrastructure and frameworks, such as Symfony or Doctrine.</li>
+<li><strong>Presentation</strong> layer: is responsible for presenting a user interface, allowing users to make use of the business logic.</li>
+<li><strong>Api</strong> layer: provides an API interface to interact with the domain services.</li>
+<li><strong>Tests</strong> layer: Contains all tests relevant to the component.</li>
+</ul>
+<p>The general folder structure for the Symfony application with a sample component now looks as follows:</p>
+<pre><code>├── app
+├── assets
+├── bin
+├── src
+│   ├── ...
+│   ├── User
+│   │   ├── Api
+│   │   ├── Domain
+│   │   ├── Infrastructure
+│   │   ├── Presentation
+│   │   └── Tests
+│   ├── ...
+├── vendor
+├── web</code></pre>
+<p>The direct child folders of each component relate to the different architectural layers described above.
+Hence, all classes belonging to a component belong to a certain layer.
+The layers and their contents are explained in the following sections.</p>
+<h2>Domain</h2>
+<pre><code>├── User
+│   ├── Domain
+│   │   ├── Command
+│   │   ├── Event
+│   │   ├── Model
+│   │   ├── Repository
+│   │   ├── Service
+│   │   └── ValueObject</code></pre>
+<p>Most importantly, the domain layer contains the domain models, domain repositories (simple interactions with models), and domain services (complex interactions with [multiple] entities).
+Also command classes describing business interactions and corresponding domain events belong here.
+Last but not least, also custom value objects that are important to the domain are stored here. </p>
+<p>All classes and interfaces defined in this layer have no dependencies to any third party library.</p>
+<h2>Infrastructure</h2>
+<pre><code>├── User
+│   ├── Infrastructure
+│   │   ├── UserInfrastructureBundle.php
+│   │   ├── Console
+│   │   ├── EventListener
+│   │   ├── Repository
+│   │   ├── Resources
+│   │   └── Service</code></pre>
+<p>The infrastructure layer binds the elements defined in the domain layer to a specific framework or platform in order to have a runnable application.
+The layer can for example act as an adapter/wrapper for specific persistence tasks or provide application services (such as email, caching, message queues, etc.).</p>
+<p>In case of Symfony, the infrastructure layer also contains console commands the application may have or <code>EventListener</code>s that listen to Symfony-specific or custom events through the frameworks event system.</p>
+<p>In general, the layer contains the actual implementations of the business services described in the domain layer.
+Hence, also most dependency injection definitions point to implementations defined in this layer.</p>
+<h2>API</h2>
+<pre><code>├── User
+│   ├── Api
+│   │   ├── UserApiBundle.php
+│   │   ├── Controller
+│   │   └── Resources</code></pre>
+<p>The API layer provides an API interface to interact with the application.
+For example, this could be a REST API backend for a modern JavaScript-based frontend.
+The layer defines routes and controllers that trigger the corresponding operations in the domain layer.</p>
+<p>Having the offered API separate from the implementation allows to precisely define which services are exposed to whom through the API.
+The layer handles authentication and authorization with the API and can also rate-limit requests or track metrics for billing purposes.
+Putting all these API concerns into this separate layer allows the domain and infrastructure layers to remain slim and focused, while the exposed API can easily be managed.</p>
+<h2>Presentation</h2>
+<pre><code>├── User
+│   ├── Presentation
+│   │   ├── UserPresentationBundle.php
+│   │   ├── Controller
+│   │   ├── Form
+│   │   ├── Resources
+│   │   └── Twig</code></pre>
+<p>Symfony provides a lot of resources to help implementing an HTML-based user interface.
+The presentation layer contains all resources concerned with creating a user interface rendered on the server side for the end user.
+JavaScript based user interfaces typically only require the API layer and there is thus no need for an extra presentation layer.
+For Symfony, this means that web based controllers, forms with input validation and Twig view scripts are stored in this layer.</p>
+<p>Having separated the user interface from the domain and the infrastructure simplifies the development of either layer.
+The code in the presentation layer should not contain any business logic, but only forward calls to the respective services of the domain layer.
+Hence, the presentation layer stays small helping developers to easily evolve the user interface, even during big changes.</p>
+<h2>Tests</h2>
+<pre><code>├── User
+│   └── Tests
+│       ├── Api
+│       ├── Domain
+│       ├── Functional
+│       ├── Infrastructure
+│       └── Presentation
+├── ...</code></pre>
+<p>The tests layer contains all tests relevant to the component.
+Tests are again, organized by layer.
+In addition to unit testing layers, the tests folder could also contain E2E (i.e. in the <code>Functional</code> folder) and integration tests.
+Putting all kinds of tests into this folder structure helps new developers find the tests they are looking for and to easily find components that might be lacking tests of a certain kind.</p>
+<h2>Symfony Bundles</h2>
+<p>As you might have noticed, a component can define up to three Symfony bundles: <code>BcApiBundle</code>, <code>BcInfrastructureBundle</code> and <code>BcPresentationBundle</code>.
+Typically, setting up a bundle requires some effort in terms of configuration files and certain classes.
+To minimize that effort when using the proposed folder structure, all bundles extend a <code>CompactBundle</code> that favors convention over configuration.
+A typical <code>*Bundle</code> class looks as follows:</p>
+<pre><code class="language-php">namespace Acme\User\Infrastructure;
+
+use Acme\Core\Infrastructure\Bundle\CompactBundle;
+
+class UserInfrastructureBundle extends CompactBundle
+{
+}</code></pre>
+<p>This adds the following conventions to configure the bundle:</p>
+<ul>
+<li>Service definitions are stored in <code>&lt;Bundle&gt;/Resources/config/services.yml</code>.</li>
+<li>Routing is stored in <code>&lt;Bundle&gt;/Resources/config/routing.yml</code>.</li>
+<li>Doctrine mapping files are stored in <code>&lt;Component&gt;/Infrastructure/Resources/config/doctrine/</code> while the associated models are stored in the namespace <code>&lt;Component&gt;/Domain</code>.</li>
+<li>JMS Serializer mapping files are stored in <code>&lt;Component&gt;/Infrastructure/Resources/config/serializer/</code> while the associated models are stored in the namespace <code>&lt;Component&gt;/</code> (in contrast to doctrine models, they do not necessarily need to be located in the domain layer).</li>
+</ul>
+<h3>CompactBundle</h3>
+<p>The source files for the <code>CompactBundle</code> are stored in a public gist.
+Feel free to adapt it to your needs.
+The <code>CompactBundle</code> conventions should help you get started writing your DDD applications with several components.</p>
+<p><a href="https://gist.github.com/FaKeller/a8b2c98586f2b939890fc448eda70f91" class="btn btn-default" target="_blank"><i class="fa fa-github"></i> View Gist on GitHub</a></p> </article>
+<section id="mc_embed_signup">
+<form action="//fabian-keller.us13.list-manage.com/subscribe/post?u=b4ca19a6c7084bc7cc7c3b921&amp;id=23de646938" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+<div id="mc_embed_signup_scroll" class="box">
+<header class="title title--underlined">
+<h3>Subscribe to blog updates</h3>
+</header>
+<div class="row">
+<div class="mc-field-group col-sm-12 col-md-3">
+<div class="form-group">
+<label for="mce-FNAME" class="sr-only">First Name</label>
+<input type="text" value="" name="FNAME" class="form-control required" id="mce-FNAME" placeholder="Your First Name">
+</div>
+</div>
+<div class="mc-field-group col-sm-12 col-md-6">
+<div class="form-group">
+<label for="mce-EMAIL" class="sr-only">Email Address</label>
+<input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Your Email Address">
+</div>
+</div>
+<div class="col-sm-12 col-md-3">
+<div style="position: absolute; left: -5000px;" aria-hidden="true">
+<input type="text" name="b_b4ca19a6c7084bc7cc7c3b921_23de646938" tabindex="-1" value="">
+</div>
+<div class="form-group">
+<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-success btn-block button">
+</div>
+</div>
+<small class="col-md-12 text-muted" style="font-size: 13px; line-height: 1.0; display: inline-block;">
+Of course, we handle your email address very carefully and will not give it to third parties. You will
+not
+receive spam emails from us.
+<a href="http://us13.campaign-archive2.com/home/?u=b4ca19a6c7084bc7cc7c3b921&id=23de646938" target="_blank" title="View previous campaigns"> Have a look at previous emails</a>, to see what you subscribe
+for.
+</small>
+</div>
+<div id="mce-responses" class="clear">
+<div class="response" id="mce-error-response" style="display:none"></div>
+<div class="response" id="mce-success-response" style="display:none"></div>
+</div>
+</div>
+</form>
+</section>
+<div class="box">
+<header class="title title--underlined ">
+<h3>Comments</h3>
+</header>
+<div id="disqus_thread"></div>
+</div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://www.fabian-keller.de/blog/domain-driven-design-with-symfony-a-folder-structure';
+        this.page.identifier = 'blog/domain-driven-design-with-symfony-a-folder-structure';
+    };
+    (function () {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//fabiankeller.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments
+powered by Disqus.</a></noscript>
+</div>
+<aside class="col-md-4">
+<div class="box">
+<header class="title title--underlined title--center">
+<img src="http://www.fabian-keller.de/assets/images/fabiankeller_sq_sm.jpg" class="title__image"/>
+<h3>Welcome</h3>
+</header>
+<p>Hi, my name is Fabian Keller and I am a software engineer with a strong passion for code quality, architecture and cloud computing. This is my personal website where you can find my latest projects and thoughts on various topics.</p>
+</div> <div class="box">
+<header class="title title--underlined title--center">
+<h3>Blog Categories</h3>
+</header>
+<ul class="list list--dashed">
+<li><a href="http://www.fabian-keller.de/blog/tag:general">General</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:continuous engineering">Continuous Engineering</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:kirby cms">Kirby Cms</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:frontend">Frontend</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:documentation">Documentation</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:infrastructure">Infrastructure</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:architecture">Architecture</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:Docker">Docker</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:Thoughts">Thoughts</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:mobile">Mobile</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:CloudFoundry">CloudFoundry</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:Domain-driven Design">Domain-driven Design</a></li>
+<li><a href="http://www.fabian-keller.de/blog/tag:Testing">Testing</a></li>
+</ul>
+</div>
+<div class="box">
+<header class="title title--underlined title--center">
+<h3>Latest Blog Posts</h3>
+</header>
+<ul class="list list--dashed">
+<li>
+<a href="http://www.fabian-keller.de/blog/living-styleguide-brunch">
+Building a Living Style Guide with Brunch </a>
+</li>
+<li>
+<a href="http://www.fabian-keller.de/blog/how-to-develop-living-styleguide">
+How to Develop a Living Style Guide </a>
+</li>
+<li>
+<a href="http://www.fabian-keller.de/blog/migrating-a-gitlab-instance-to-another-server">
+Migrating a GitLab Instance to Another Server </a>
+</li>
+<li>
+<a href="http://www.fabian-keller.de/blog/adding-json-ld-to-a-personal-website">
+Adding JSON-LD to a Personal Website </a>
+</li>
+</ul>
+<p class="text-right">
+<a href="http://www.fabian-keller.de/blog-archive" class="btn btn-default">Archive</a>
+</p>
+</div>
+</aside> </div>
+</main><footer class="footer">
+<div class="footer__links">
+<div class="footer__content">
+<div class="row">
+<div class="col-md-6">
+<div class="title title--underlined"><h3>About me</h3></div>
+<p>Hi, my name is Fabian Keller and I am a software engineer with a strong passion for code quality, architecture and cloud computing. This is my personal website where you can find my latest projects and thoughts on various topics.</p>
+</div>
+<div class="col-md-6">
+<div class="title title--underlined"><h3>Explore</h3></div>
+<ul class="list list--dashed">
+<li><a href="http://www.fabian-keller.de/about">About me</a></li>
+<li><a href="http://www.fabian-keller.de/projects">Latest projects</a></li>
+<li><a href="http://www.fabian-keller.de/blog">Latest blog posts</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footer__copyright">
+<div class="footer__content">
+<div class="row">
+<div class="col-md-4 text-left">&copy; 2017 Fabian Keller</div>
+<div class="col-md-4 text-center">Made with &lt;/&gt; in Germany</div>
+<div class="col-md-4 text-right">
+<a href="http://www.fabian-keller.de/thank-you">Thank You &lt;3</a> |
+<a href="http://www.fabian-keller.de/imprint">Imprint</a> |
+<a href="http://www.fabian-keller.de/privacy">Privacy</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://www.fabian-keller.de/public/fabiankeller.js"></script><script id="dsq-count-scr" src="//fabiankeller.disqus.com/count.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.1/cookieconsent.min.js"></script>
+<script>window.cookieconsent.initialise({"palette":{"popup":{"background":"#4382bb"},"button":{"background":"#163f5c"}},"theme":"edgeless","position":"bottom-right","content":{"href":"http://www.fabian-keller.de/privacy"}});</script>
+<script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-38259994-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

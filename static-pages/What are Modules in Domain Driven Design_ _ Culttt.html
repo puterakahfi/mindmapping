@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" class="wf-loading">
+  <head>
+    <meta charset='UTF-8'>
+    <title>What are Modules in Domain Driven Design? | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://culttt.com/wp-content/themes/culttt-v3/style.css" />
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png"/>
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Most programming language have the concept of self contained modules in one form or another. For example, PHP have the concepts of Namespacing. Namespaces"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://culttt.com/2014/12/10/modules-domain-driven-design/" />
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What are Modules in Domain Driven Design? | Culttt" />
+<meta property="og:description" content="Most programming language have the concept of self contained modules in one form or another. For example, PHP have the concepts of Namespacing. Namespaces" />
+<meta property="og:url" content="http://culttt.com/2014/12/10/modules-domain-driven-design/" />
+<meta property="og:site_name" content="Culttt" />
+<meta property="article:publisher" content="http://facebook.com/culttt" />
+<meta property="article:author" content="https://www.facebook.com/phillyyyy" />
+<meta property="article:section" content="Code" />
+<meta property="article:published_time" content="2014-12-10T07:00:24+00:00" />
+<meta property="article:modified_time" content="2014-12-11T19:49:39+00:00" />
+<meta property="og:updated_time" content="2014-12-11T19:49:39+00:00" />
+<meta property="fb:admins" content="893905018" />
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/12/What-are-Modules-in-Domain-Driven-Design-.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Most programming language have the concept of self contained modules in one form or another. For example, PHP have the concepts of Namespacing. Namespaces" />
+<meta name="twitter:title" content="What are Modules in Domain Driven Design? | Culttt" />
+<meta name="twitter:site" content="@culttt" />
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/12/What-are-Modules-in-Domain-Driven-Design-.jpg" />
+<meta name="twitter:creator" content="@philipbrown" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Culttt &raquo; What are Modules in Domain Driven Design? Comments Feed" href="http://culttt.com/2014/12/10/modules-domain-driven-design/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='http://culttt.com/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://culttt.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='http://wp.me/p2tyoR-1kA' />
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F12%2F10%2Fmodules-domain-driven-design%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F12%2F10%2Fmodules-domain-driven-design%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//v0.wordpress.com'>
+<link rel='dns-prefetch' href='//i0.wp.com'>
+<link rel='dns-prefetch' href='//i1.wp.com'>
+<link rel='dns-prefetch' href='//i2.wp.com'>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  </head>
+  <body class="">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">What are Modules in Domain Driven Design?</strong></span></span></span></span>
+              
+                
+                  <h1>What are Modules in Domain Driven Design?</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on December 10th, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="http://i0.wp.com/culttt.com/wp-content/uploads/2014/12/What-are-Modules-in-Domain-Driven-Design-.jpg" alt="What are Modules in Domain Driven Design" data-recalc-dims="1" /><br />
+Most programming language have the concept of self contained modules in one form or another. For example, PHP have the concepts of <a href="http://culttt.com/2012/12/31/what-is-namespacing">Namespacing</a>.</p>
+<p>Namespaces allow you to keep related code under the same “bucket” and prevents name collisions between classes from different vendors.</p>
+<p>Modules are an important concept in Domain Driven Design for a couple of reasons. Firstly they act as purely a form of code organisation, but secondly they also represent an important concept of the structure of the Ubiquitous Language.</p>
+<p>In today’s article we’re going to be looking at the importance of Modules in Domain Driven Design, how to think about them and how to extract the important concepts from the Ubiquitous Language.</p>
+<h2>What are Modules?</h2>
+<p>A Module serves as a container for a specific set of classes of your application. In PHP this would be a specific namespace that contains all of the related classes for that specific concept.</p>
+<p>The code within a module should be highly cohesive and there should be low coupling between classes of different modules.</p>
+<p>There are 4 important things to remember when thinking about Modules.</p>
+<h3>Derived from the Ubiquitous Language</h3>
+<p>The name of the Module should be derived directly from the Ubiquitous Language and should reflect an important concept from the Domain. Any member of the team should be able to tell you what role and responsibilities any particular Module should possess, given it’s name.</p>
+<p>For example, if an important concept to your Organisation is <em>Identity</em> it makes sense to name the Module that deals with this functionality <code>Identity</code>.</p>
+<p>The Ubiquitous Language of the project should guide and instruct the naming of Entities, Value Objects and Services and so it is no different for Modules. A Module is just as an important concept as any Entity of the application.</p>
+<p>So instead of grouping the code around users under a <code>Users</code> namespace, instead use the word that is directly derived from the Ubiquitous Language, so anyone on the team will understand what this specific Module is used for.</p>
+<h3>Contains one or more cohesive Aggregates</h3>
+<p>A Module will typically contain one, or sometimes multiple Aggregates that are highly cohesive. If you have multiple Aggregates in a Module, but one is not cohesive with the others, it’s time to break it out into its own Module.</p>
+<p>For example, in a <code>Discussion</code> Module you might have an Aggregate named <code>Thread</code>. The <code>Thread</code> Aggregate would act as the controller for the Entities and Value Objects that are required for a discussion thread.</p>
+<p>Discussions are usually organised into groups or categories of a specific topic or genre. Whilst discussions are related to groups, it makes sense to move the <code>Group</code> Aggregate into it’s own Module because we are mixing two important, yet different concepts of the Domain into one Module.</p>
+<h3>Organised by the Domain</h3>
+<p>Modules should be organised by concepts from the Domain, and not by the type of class. For example, don’t group all of your Aggregates, Services and Factories into different Modules based upon the type of class. Instead, each Module should have the appropriate classes to model the concept and functionality of that specific aspect of the Domain.</p>
+<p>Typically a lot of projects will be organised in the following structure:</p>
+<ul>
+<li><code>Vendor/Models</code></li>
+<li><code>Vendor/Repositories</code></li>
+<li><code>Vendor/Services</code></li>
+<li><code>Vendor/Factories</code></li>
+</ul>
+<p>However you shouldn’t organise your code by it’s technical type. Instead you should group together related code that represents a concept of the Domain.</p>
+<p>An alternative organisation could be:</p>
+<ul>
+<li>
+  <code>Identity</code></p>
+<ul>
+<li><code>User</code></li>
+<li><code>UserRepository</code></li>
+<li><code>Email</code></li>
+<li><code>EmailIsUnique</code></li>
+</ul>
+</li>
+</ul>
+<h3>Modules should be loosely coupled</h3>
+<p>Models should be loosely coupled as standalone aspects of your project. You should be able to abstract the code out of your project and test it in isolation without having to cut ties or pull a tangle of interrelated knots with your other modules.</p>
+<p>Typically you won’t have a pure separation between Modules. The very nature of Domain Driven Design means that there will be relationships between Modules.</p>
+<p>However you should aim to distill the relationship between Modules to only those that directly model concepts from the Domain.</p>
+<p>You should also aim to reduce the coupling of related Modules by making the dependency between two Modules unidirectional. For example a <code>Thread</code> belongs to a <code>Group</code>, but a <code>Group</code> doesn’t really care about the existence of a <code>Thread</code>.</p>
+<h2>What is the difference between a Module and a Bounded Context?</h2>
+<p>A couple of weeks ago we looked at <a href="http://culttt.com/2014/11/19/bounded-contexts-context-maps-domain-driven-design">Bounded Contexts</a> and how they act as a boundary around certain components of our application. The majority of large applications will have multiple Bounded Contexts that might involve different third-party services or legacy systems.</p>
+<p>Most organisations will have such a large Domain Model it is important to split it into multiple Bounded Contexts. This keeps the context and integrity of the internal concepts inside the Bounded Context consistent and unified.</p>
+<p>Inside the Bounded Context, each concept should be broken down into Modules. A Module will represent the related classes of a specific concept of that Bounded Context.</p>
+<p>So Modules represent important concepts inside of Bounded Contexts.</p>
+<h2>Modules in different layers</h2>
+<p>So far we’ve looked at Modules in the Domain layer of an application, but Domain Driven applications will also have Application and Infrastructure layers.</p>
+<p>Again, there is no hard or fast rule with how you should organise your code. However, I think organising this code into the same named Modules makes it easier to see how code is related across the different layers of the application.</p>
+<p>For example, you might have a <code>UserRepository</code> interface in the Domain <code>Identity</code> Module. This interface requires a concrete implementation <code>UserDoctrineRepository</code> that would sit in the <code>Identity</code> namespace of the Infrastructure layer.</p>
+<h2>Modules as separate Composer Packages</h2>
+<p>Over the last couple of years, PHP as a language as broadly adopted <a href="http://culttt.com/2013/01/07/what-is-php-composer">Composer</a> as it’s package manager of choice.</p>
+<p>When you break a project up into individual Modules, theoretically you could actually make those Modules individual packages that can be pulled into the application as dependencies.</p>
+<p>This is the ultimate separation Nirvana, but it probably works better in theory than it does in practice.</p>
+<p>Typically there will be relationships between Modules and so physically separating code into individual packages will often be more trouble than its worth.</p>
+<h2>Conclusion</h2>
+<p>Modularity is an important concept that transcends across all programming languages. Using Modules in a Domain Driven Design application will help you organise your code, keep related things together and nudge you along the path towards low coupling.</p>
+<p>You don’t have to go all out and separate your code into individual Composer packages, but thinking of your project as a series of modules will certainly reduce the cognitive overhead of tackling a big project.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt='' src='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=100&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' />                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="culttt" data-lang="en" data-related="philipbrown" data-count="vertical">Tweet</a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root"></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like" data-send="false" data-layout="box_count" data-show-faces="false"></div>
+                    </div>
+                    <div class="social-button">
+                      <g:plusone size="tall"></g:plusone>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      <a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="culttt" >Buffer</a>
+                      <script type="text/javascript" src="http://static.bufferapp.com/js/button.js"></script>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-4873">
+        <div id="dsq-comment-header-4873" class="dsq-comment-header">
+            <cite id="dsq-cite-4873">
+                <a id="dsq-author-user-4873" href="http://kirkbushell.me/" target="_blank" rel="nofollow">Kirk Bushell</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4873" class="dsq-comment-body">
+            <div id="dsq-comment-message-4873" class="dsq-comment-message"><p>I tend to break it down by module, then by class type. On large projects, having everything in Identity (in your example) results in an extremely large folder full of class files. In one of our projects, for example, we actually use a concept called submodules, so in Identity, youd&#8217; have the following:</p>
+<p>Identity/<br />
+   Users/<br />
+      Repositories/<br />
+      Services/<br />
+   Roles/<br />
+      Permissions/</p>
+<p>.etc.</p>
+<p>This is just a matter of taste, however &#8211; and I would agree than in smaller projects, using the structure you&#8217;ve outlined is great. Our project is approaching 1M lines of code, so it&#8217;s rather large and requires the additional structure.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4885">
+        <div id="dsq-comment-header-4885" class="dsq-comment-header">
+            <cite id="dsq-cite-4885">
+                <a id="dsq-author-user-4885" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4885" class="dsq-comment-body">
+            <div id="dsq-comment-message-4885" class="dsq-comment-message"><p>Ah interesting! Yeah I think grouping everything under the <code>Identity</code> namespace would get out of control for bigger projects.</p>
+<p>In what domain is your current project that has 1M lines of code?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-4888">
+        <div id="dsq-comment-header-4888" class="dsq-comment-header">
+            <cite id="dsq-cite-4888">
+                <a id="dsq-author-user-4888" href="http://kirkbushell.me/" target="_blank" rel="nofollow">Kirk Bushell</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4888" class="dsq-comment-body">
+            <div id="dsq-comment-message-4888" class="dsq-comment-message"><p>Sorry Philip, I don&#8217;t understand your question.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-4907">
+        <div id="dsq-comment-header-4907" class="dsq-comment-header">
+            <cite id="dsq-cite-4907">
+                <a id="dsq-author-user-4907" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4907" class="dsq-comment-body">
+            <div id="dsq-comment-message-4907" class="dsq-comment-message"><p>I mean, what type of application is it? What does it do? And for what type of business?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-5" id="dsq-comment-4914">
+        <div id="dsq-comment-header-4914" class="dsq-comment-header">
+            <cite id="dsq-cite-4914">
+                <a id="dsq-author-user-4914" href="http://kirkbushell.me/" target="_blank" rel="nofollow">Kirk Bushell</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4914" class="dsq-comment-body">
+            <div id="dsq-comment-message-4914" class="dsq-comment-message"><p>Oh the whole app. It&#8217;s an awards recognition application, built for SaaS. </p>
+<p><a href="http://awardforce.com" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://awardforce.com', 'http://awardforce.com']);" rel="nofollow">http://awardforce.com</a> :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt depth-5" id="dsq-comment-4969">
+        <div id="dsq-comment-header-4969" class="dsq-comment-header">
+            <cite id="dsq-cite-4969">
+                <a id="dsq-author-user-4969" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4969" class="dsq-comment-body">
+            <div id="dsq-comment-message-4969" class="dsq-comment-message"><p>Ah, nice! :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-4877">
+        <div id="dsq-comment-header-4877" class="dsq-comment-header">
+            <cite id="dsq-cite-4877">
+                <span id="dsq-author-user-4877">Juukie14</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4877" class="dsq-comment-body">
+            <div id="dsq-comment-message-4877" class="dsq-comment-message"><p>The example of thread/group made a clear view on how to see what a module could be.</p>
+<p>Ps, I feel the last paragraph should be checked:<br />
+&#8220;You don’t have to all out and separate your code into individual Composer packages, but thinking of your project as a series of modules will certainly reduce the cognitive overheard of tackling a big project.&#8221;</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4886">
+        <div id="dsq-comment-header-4886" class="dsq-comment-header">
+            <cite id="dsq-cite-4886">
+                <a id="dsq-author-user-4886" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4886" class="dsq-comment-body">
+            <div id="dsq-comment-message-4886" class="dsq-comment-message"><p>Ah yeah I missed the world &#8220;go&#8221;. Thank you :)</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-4893">
+        <div id="dsq-comment-header-4893" class="dsq-comment-header">
+            <cite id="dsq-cite-4893">
+                <span id="dsq-author-user-4893">Juukie14</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4893" class="dsq-comment-body">
+            <div id="dsq-comment-message-4893" class="dsq-comment-message"><p>Should overheard not also be overhead?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-4912">
+        <div id="dsq-comment-header-4912" class="dsq-comment-header">
+            <cite id="dsq-cite-4912">
+                <a id="dsq-author-user-4912" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4912" class="dsq-comment-body">
+            <div id="dsq-comment-message-4912" class="dsq-comment-message"><p>Ah, yes it should! Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-4879">
+        <div id="dsq-comment-header-4879" class="dsq-comment-header">
+            <cite id="dsq-cite-4879">
+                <a id="dsq-author-user-4879" href="http://blog.jakeryansmith.com/" target="_blank" rel="nofollow">Jake Ryan Smith</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4879" class="dsq-comment-body">
+            <div id="dsq-comment-message-4879" class="dsq-comment-message"><p>I&#8217;ve really been enjoying these articles on DDD! Thank you so much. You are really good at explaining things in a way I understand. Keep up the good work!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4887">
+        <div id="dsq-comment-header-4887" class="dsq-comment-header">
+            <cite id="dsq-cite-4887">
+                <a id="dsq-author-user-4887" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4887" class="dsq-comment-body">
+            <div id="dsq-comment-message-4887" class="dsq-comment-message"><p>Thanks Jake :D Glad you are finding them useful! :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/12/10/modules-domain-driven-design/';
+var disqus_identifier = '5120 http://culttt.com/?p=5120';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "What are Modules in Domain Driven Design?";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=5120';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&zoneid=1408&key=cff8e425093b59be72c2fd4e27ce192a&serve=C6SIVKV&placement=cultttcom&circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com">Yellow Flag</a></p>
+    </footer>
+  </body>
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2016Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'5120',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '5120' ]);
+</script>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 23:47:17 by W3 Total Cache -->

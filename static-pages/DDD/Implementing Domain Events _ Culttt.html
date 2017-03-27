@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" class="wf-loading">
+  <head>
+    <meta charset='UTF-8'>
+    <title>Implementing Domain Events | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://culttt.com/wp-content/themes/culttt-v3/style.css" />
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png"/>
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Recently we&#039;ve been taking a deeper dive into the world of Domain Driven Design to discover how we can understand the requirements of an application and mo"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://culttt.com/2014/09/22/implementing-domain-events/" />
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Implementing Domain Events | Culttt" />
+<meta property="og:description" content="Recently we&#039;ve been taking a deeper dive into the world of Domain Driven Design to discover how we can understand the requirements of an application and mo" />
+<meta property="og:url" content="http://culttt.com/2014/09/22/implementing-domain-events/" />
+<meta property="og:site_name" content="Culttt" />
+<meta property="article:publisher" content="http://facebook.com/culttt" />
+<meta property="article:author" content="https://www.facebook.com/phillyyyy" />
+<meta property="article:tag" content="Cribbb" />
+<meta property="article:tag" content="PHP" />
+<meta property="article:section" content="Code" />
+<meta property="article:published_time" content="2014-09-22T06:00:09+00:00" />
+<meta property="article:modified_time" content="2014-09-24T17:46:06+00:00" />
+<meta property="og:updated_time" content="2014-09-24T17:46:06+00:00" />
+<meta property="fb:admins" content="893905018" />
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/09/Implementing-Domain-Events.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Recently we&#039;ve been taking a deeper dive into the world of Domain Driven Design to discover how we can understand the requirements of an application and mo" />
+<meta name="twitter:title" content="Implementing Domain Events | Culttt" />
+<meta name="twitter:site" content="@culttt" />
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/09/Implementing-Domain-Events.jpg" />
+<meta name="twitter:creator" content="@philipbrown" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Culttt &raquo; Implementing Domain Events Comments Feed" href="http://culttt.com/2014/09/22/implementing-domain-events/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='http://culttt.com/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://culttt.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='http://wp.me/p2tyoR-1gu' />
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F09%2F22%2Fimplementing-domain-events%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F09%2F22%2Fimplementing-domain-events%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//v0.wordpress.com'>
+<link rel='dns-prefetch' href='//i0.wp.com'>
+<link rel='dns-prefetch' href='//i1.wp.com'>
+<link rel='dns-prefetch' href='//i2.wp.com'>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  </head>
+  <body class="">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">Implementing Domain Events</strong></span></span></span></span>
+              
+                
+                  <h1>Implementing Domain Events</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on September 22nd, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="http://i0.wp.com/culttt.com/wp-content/uploads/2014/09/Implementing-Domain-Events.jpg" alt="Implementing Domain Events" data-recalc-dims="1" /><br />
+Recently we&#8217;ve been taking a deeper dive into the world of Domain Driven Design to discover how we can understand the requirements of an application and model it in code.</p>
+<p>A big problem with application development is often that the two opposing sides of business and development fail to communicate effectively and so the end product does not meet the end user&#8217;s requirements.</p>
+<p>Domain Driven Design aims to mitigate this problem.</p>
+<p>A common requirement within an application is an action should be triggered as a consequence of some other action occurring.</p>
+<p>In Domain Driven Development this pattern is known as Domain Events, and so that is what we&#8217;ll be looking at today.</p>
+<h2>Using Events in application development</h2>
+<p>The usage of events within the context of an application is more commonly known as The Publish-Subscribe pattern.</p>
+<p>I&#8217;ve already covered using Events in web applications a couple of times, so instead of covering old ground I&#8217;ll link you up with those older posts so you can have a read through them instead.</p>
+<p>First I looked at <a href="http://culttt.com/2014/03/10/using-events-laravel-4/">using Events in Laravel 4</a>. Laravel is built around the idea of events and so the framework ships with it&#8217;s own event dispatcher that allows you to hook on to the framework or define your infrastructure events.</p>
+<p>Next I looked at <a href="http://culttt.com/2014/06/16/creating-registration-events-laravel-4/">Creating Registration Events in Laravel 4</a>. This tutorial centred around using Laravel&#8217;s event dispatcher within the context of a registration process. Typically when a new user signs up for your application you will probably want to kick off a series of events such as sending that user a confirmation email. Using events we can decouple those actions from the code that actually registers the new user.</p>
+<p>Finally I looked at <a href="http://culttt.com/2014/08/04/understanding-doctrine-2-lifecycle-events">Understanding Doctrine 2 Lifecycle Events</a>. In the previous tutorials I was looking at events within the architecture of Laravel as a framework. However events are commonly used in a variety of different contexts. In this tutorial I looked at how Doctrine 2 uses lifecycle events to allow you to hook on to the various stages of the ORM process.</p>
+<p>So we&#8217;ve previously looked at two very different types of event based systems. Laravel has a fantastic event dispatcher that can be used to trigger events within the framework layer of your application. Doctrine 2 has events that allow you to hook on to the various stages of persisting data to the database. Both of these event systems accomplish the same job of decoupling actions from their triggers.</p>
+<p>Domain Events also decouple actions based on their triggers and so conceptually all three event systems are satisfying the same requirement.</p>
+<p>However there is a strict line between where you use the three different event systems and for what purpose.</p>
+<p>Doctrine 2 events should only ever be used as part of the data persistence process. These types of events are internal to how Doctrine 2 functions and should not leak outside of this layer of abstraction.</p>
+<p>Laravel&#8217;s event dispatcher should only be used on the surface layer of the application. Laravel’s event dispatcher is used as part of the infrastructure of your application.</p>
+<p>Domain events should only ever be used to model the events of your domain. These events are core to the domain of your application and are critical for implementing your business logic.</p>
+<p>Whilst all three different types of events accomplish the same goals, you should maintain this separation. Data persistence or framework concerns should never leak into your domain related code.</p>
+<h2>What are Domain Events?</h2>
+<p>So what are Domain Events? Well, a Domain Event is an event that is a concern of the domain of the application you are building. The requirement for Domain Events usually arrises from the direct conversations with the client or business expert.</p>
+<p>Non-technical people won&#8217;t refer to Domain Events explicitly, rather they will mention the fact that something needs to occur as a consequence of another separate action. It is your job as the technical person to understand these statements and translate them into the correct tool for the job.</p>
+<p>As with <a href="http://culttt.com/2014/08/18/encapsulating-applications-business-rules">Value Objects</a>, <a href="http://culttt.com/2014/08/25/implementing-specification-pattern">Specification Objects</a> and <a href="http://culttt.com/2014/09/01/user-entity-ubiquitous-language">Entities</a>, Domain Events should model a particular part of the domain.</p>
+<p>So for instance, if the domain of your application requires that an email confirmation is sent to a new user when they sign up, this would be a Domain Event because it is a rule of the business you are modelling.</p>
+<h2>How do Domain Events work?</h2>
+<p>Domain Events work in exactly the same way that an event based architecture works in other contexts.</p>
+<p>You will typically create a new event such as <code>UserWasRegistered</code>. This will be a class that holds the required details of the event that just took place, in this case an instance a <code>$user</code> object.</p>
+<p>Next you will write listeners to listen for the event. For example, you might have a listener called <code>SendNewUserWelcomeEmail</code>. This would be a class that accepts the <code>UserWasRegistered</code> event and uses the <code>$user</code> object to send the email.</p>
+<p>The <code>SendNewUserWelcomeEmail</code> is responsible for having the ability to send the email and so the process for registering a new user is completely decoupled from the process of sending the email.</p>
+<p>You can also register multiple listeners for events so you can very easily add or remove actions that should be fired whenever an event takes place.</p>
+<h2>Adding the Domain Events package</h2>
+<p>Domain Events are certainly not a new concept and so it doesn&#8217;t make sense to reinvent the wheel on how they should work. Whenever you can use an open source library to solve your problem you should do so because it is one less concern for your application.</p>
+<p>We&#8217;re going to need an event dispatcher that will allow us to register new events and listeners. I&#8217;m going to be using the <a href="https://github.com/heybigname/domain-event-dispatcher" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/heybigname/domain-event-dispatcher', 'Domain Event Dispatcher']);" >Domain Event Dispatcher</a> by <a href="https://github.com/mitchellvanw" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/mitchellvanw', 'Mitchell van Wijngaarden']);" >Mitchell van Wijngaarden</a>.</p>
+<p>Add the following line to your <code>composer.json</code> file to include this package as a dependency of your project:</p>
+<pre class="brush: jscript; title: ; notranslate" title="">
+&quot;heybigname/event-dispatcher&quot;: &quot;~1.1&quot;
+</pre>
+<h2>Domain Events and Aggregate Roots</h2>
+<p>As I briefly mentioned <a href="http://culttt.com/2014/09/15/defining-building-blocks-domain-driven-design/">last week</a>, Aggregate Roots form the backbone of our domain model.</p>
+<p>You can think of Aggregate Roots as the main entity that controls access to other entities. So for example in the context of a forum, a <code>Post</code> entity would be the Aggregate Root and so it would act as a gateway to the <code>Comment</code> objects. A <code>Comment</code> does not make sense without a <code>Post</code> and so by restricting access to <code>Comment</code> objects through the <code>Post</code> Aggregate Root, we make our code much easier to work with.</p>
+<p>The Aggregate Root also controls what Domain Events should be used throughout the lifecycle of the entities it controls. We can identity an Aggregate Root by using the interface we defined <a href="http://culttt.com/2014/09/15/defining-building-blocks-domain-driven-design/">last week</a>:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Domain\Model\Identity;
+
+use Cribbb\Domain\AggregateRoot;
+
+class User implements AggregateRoot {}
+</pre>
+<p>Our <code>AggregateRoot</code> interface requires that we implement methods for <code>record()</code> and <code>release()</code>. These two methods will be used for attaching events during application requests and releasing and dispatching them at the appropriate time.</p>
+<p>To satisfy this interface we can use the <code>HasEvents</code> trait that we defined <a href="http://culttt.com/2014/09/15/defining-building-blocks-domain-driven-design/">last week</a>:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Domain\Model\Identity;
+
+use Cribbb\Domain\HasEvents;
+use Cribbb\Domain\AggregateRoot;
+
+class User implements AggregateRoot
+{
+    use HasEvents;
+}
+</pre>
+<h2>Creating Domain Events</h2>
+<p>Domain Event objects are very simple PHP classes that capture the data of the event that just took place. These classes can contain whatever is relevant from the event, it’s really up to you.</p>
+<p>For example, the <code>UserHasRegistered</code> event might look like this:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Domain\Model\Identity\Events;
+
+use Cribbb\Gettable;
+use BigName\EventDispatcher\Event;
+use Cribbb\Domain\Model\Identity\User;
+
+class UserHasRegistered implements Event
+{
+    use Gettable;
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * Create a new UserHasRegistered event
+     *
+     * @param User $user
+     * @return void
+     */
+    public function __construct(User $user)
+    {
+        $this-&gt;user = $user;
+    }
+
+    /**
+     * Return the name of the event
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'UserHasRegistered';
+    }
+}
+</pre>
+<p>You will notice that I’ve created this class under the <code>Events</code> namespace deep within the <code>Domain\Model\Identity</code> namespace. Domain Events should live within your Domain related code.</p>
+<p>The Domain Event implements the <code>Event</code> interface from the dispatcher package. This interface requires that we have a <code>getName()</code> method that returns the name of the event.</p>
+<p>The rest of the class is really up to us. In this example I’m simply injecting the <code>User $user</code> object that was just created during the registration process.</p>
+<p>The event is recorded in the <code>User</code> entity when a new object is created:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+/**
+ * Create a new User
+ *
+ * @param UserId $userId
+ * @param Email $email
+ * @param Username $username
+ * @param HashedPassword $password
+ * @return void
+ */
+private function __construct(UserId $userId, Email $email, Username $username, HashedPassword $password)
+{
+    $this-&gt;setId($userId);
+    $this-&gt;setEmail($email);
+    $this-&gt;setUsername($username);
+    $this-&gt;setPassword($password);
+
+    $this-&gt;record(new UserHasRegistered($this));
+}
+</pre>
+<h2>Listening for Events</h2>
+<p>The beautiful thing about this pattern is the fact that the listeners who are interested in the events are totally decoupled from the process that triggers the events.</p>
+<p>This means you can have multiple separate listeners for each event, and you can add or remove listeners without touching any of your existing code.</p>
+<p>This also makes listeners really small and easily testable!</p>
+<p>When a new user has registered we might want to send them an email to welcome them to the application.</p>
+<p>Your listener class might look something like this:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Domain\Model\Identity\Listeners;
+
+use Cribbb\Mailer;
+use BigName\EventDispatcher\Event;
+use BigName\EventDispatcher\Listener;
+
+class SendWelcomeEmailListener implements Listener
+{
+    /**
+     * @var Cribbb\Mailer
+     */
+    private $mailer
+
+    /**
+     * Create a new SendWelcomeEmailListener listener
+     *
+     * @param Mailer $mailer
+     * @return void
+     */
+    public function __construct(Mailer $mailer)
+    {
+        $this-&gt;mailer = $mailer;
+    }
+
+    /**
+     * Handle the Event
+     *
+     * @param Event $event
+     * @return void
+     */
+    public function handle(Event $event)
+    {
+        // Send the welcome email
+    }
+}
+</pre>
+<p>As you can see, the listener is responsible for sending the email to the new user.</p>
+<p>With the listener created, we can attach it to the event within the Dispatcher:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+use Cribbb\Mailer;
+use BigName\EventDispatcher\Dispatcher;
+use Cribbb\Domain\Model\Identity\Listeners\SendWelcomeEmailListener;
+
+$listener = new SendWelcomeEmailListener(new Mailer);
+
+$dispatcher = new Dispatcher;
+$dispatcher-&gt;addListener('UserWasRegistered', $listener);
+</pre>
+<p>You can register any number of listeners to any events that you define within your application. The code above would typically be found during the bootstrap process of your application.</p>
+<h2>Dispatching Events</h2>
+<p>Now that a new <code>User $user</code> object has been created we can dispatch the events that have occurred to trigger the interested listeners.</p>
+<p>The <code>User $user</code> object has these pent-up events ready to go. In our example this is only the <code> UserHasRegistered</code> event, but it could be any number of additional events also.</p>
+<p>To dispatch the events we simply need to provide the array of events from the <code>User $user</code> object to the <code>dispatch()</code> method of the Dispatcher:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+$dispatcher-&gt;dispatch($user-&gt;release());
+</pre>
+<p>This will cycle through each event and trigger the listeners to execute their code. In this example that would mean the <code>SendWelcomeEmailListener</code> would send the welcome email to the new user.</p>
+<h2>Conclusion</h2>
+<p>Domain Events are an extremely important aspect of Domain Driven Design and so they form one of the fundamental building blocks around modelling an application. A good place to start when planning the build of an application is often to think of what Domain Events are required.</p>
+<p>Domain Events allow you to decouple events and listeners. This makes it really easy to add or remove listeners that should be fired as a consequence of an event.</p>
+<p>Separating your code into events and listeners also has the added benefit that it promotes the separation of concerns. In the example we looked at today, the <code>SendWelcomeEmailListener</code> has the single concern of sending that single email. This makes testing your code a whole lot easier!</p>
+<p>This is a series of posts on building an entire Open Source application called <a href="http://cribbb.com" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://cribbb.com', 'Cribbb']);" >Cribbb</a>. All of the tutorials will be free to web, and all of the code is available on <a href="https://github.com/cribbb/cribbb" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/cribbb/cribbb', 'GitHub']);" >GitHub</a>.</p>
+<p>To view a full listing of the tutorials in this series, <a href="http://culttt.com/tag/cribbb/">click here</a>.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt='' src='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=100&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' />                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="culttt" data-lang="en" data-related="philipbrown" data-count="vertical">Tweet</a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root"></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like" data-send="false" data-layout="box_count" data-show-faces="false"></div>
+                    </div>
+                    <div class="social-button">
+                      <g:plusone size="tall"></g:plusone>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      <a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="culttt" >Buffer</a>
+                      <script type="text/javascript" src="http://static.bufferapp.com/js/button.js"></script>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-3809">
+        <div id="dsq-comment-header-3809" class="dsq-comment-header">
+            <cite id="dsq-cite-3809">
+                <span id="dsq-author-user-3809">Sasa Tokic</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3809" class="dsq-comment-body">
+            <div id="dsq-comment-message-3809" class="dsq-comment-message"><p>Noticed a small typo:</p>
+<p>use HashEvents;</p>
+<p>it should be &#8221; use HasEvents &#8221; right? ;)</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3824">
+        <div id="dsq-comment-header-3824" class="dsq-comment-header">
+            <cite id="dsq-cite-3824">
+                <a id="dsq-author-user-3824" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3824" class="dsq-comment-body">
+            <div id="dsq-comment-message-3824" class="dsq-comment-message"><p>Haha, oops, indeed! Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-3810">
+        <div id="dsq-comment-header-3810" class="dsq-comment-header">
+            <cite id="dsq-cite-3810">
+                <span id="dsq-author-user-3810">MP</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3810" class="dsq-comment-body">
+            <div id="dsq-comment-message-3810" class="dsq-comment-message"><p>Very useful. This will alleviate developing complex applications with cross-cutting concerns.</p>
+<p>Just to make it clear, with the Mailer interface, you&#8217;d create an adapter or decorator around your infrastructure concrete mailer and configure it in Laravel&#8217;s dependency container, correct?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3825">
+        <div id="dsq-comment-header-3825" class="dsq-comment-header">
+            <cite id="dsq-cite-3825">
+                <a id="dsq-author-user-3825" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3825" class="dsq-comment-body">
+            <div id="dsq-comment-message-3825" class="dsq-comment-message"><p>Thank you :)</p>
+<p>I would have a <code>MailGunMailer</code> that would implement the <code>CribbbMailer</code> interface. The code in this article was just an example, I&#8217;ll be showing real code examples in the coming weeks :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-3812">
+        <div id="dsq-comment-header-3812" class="dsq-comment-header">
+            <cite id="dsq-cite-3812">
+                <span id="dsq-author-user-3812">rok</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3812" class="dsq-comment-body">
+            <div id="dsq-comment-message-3812" class="dsq-comment-message"><p>The laracasts commander package is a bit better than the chosen package. Take a look at <a href="https://github.com/laracasts/Commander" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'https://github.com/laracasts/Commander', 'https://github.com/laracasts/Commander']);" rel="nofollow">https://github.com/laracasts/Commander</a></p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3827">
+        <div id="dsq-comment-header-3827" class="dsq-comment-header">
+            <cite id="dsq-cite-3827">
+                <a id="dsq-author-user-3827" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3827" class="dsq-comment-body">
+            <div id="dsq-comment-message-3827" class="dsq-comment-message"><p>Hmm, I would say that was package is doing a different job to the Domain Event&#8217;s package that I&#8217;m using in this tutorial.</p>
+<p>But thank you, I&#8217;ll check it out.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-3816">
+        <div id="dsq-comment-header-3816" class="dsq-comment-header">
+            <cite id="dsq-cite-3816">
+                <span id="dsq-author-user-3816">MP</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3816" class="dsq-comment-body">
+            <div id="dsq-comment-message-3816" class="dsq-comment-message"><p>Another typo:</p>
+<p>Should be &#8220;$listener = new SendWelcomeEmailListener(new Mailer);&#8221;</p>
+<p>Instead of &#8220;$listener = SendWelcomeEmailListener(new Mailer);&#8221;</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3829">
+        <div id="dsq-comment-header-3829" class="dsq-comment-header">
+            <cite id="dsq-cite-3829">
+                <a id="dsq-author-user-3829" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3829" class="dsq-comment-body">
+            <div id="dsq-comment-message-3829" class="dsq-comment-message"><p>I think I need an editor!</p>
+<p>Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-3845">
+        <div id="dsq-comment-header-3845" class="dsq-comment-header">
+            <cite id="dsq-cite-3845">
+                <span id="dsq-author-user-3845">Krzysztof Wolniak</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3845" class="dsq-comment-body">
+            <div id="dsq-comment-message-3845" class="dsq-comment-message"><p>Why this article is not listed under <a href="http://culttt.com/tag/cribbb/" rel="nofollow">http://culttt.com/tag/cribbb/</a> ?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3851">
+        <div id="dsq-comment-header-3851" class="dsq-comment-header">
+            <cite id="dsq-cite-3851">
+                <a id="dsq-author-user-3851" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3851" class="dsq-comment-body">
+            <div id="dsq-comment-message-3851" class="dsq-comment-message"><p>I think the caching is just being a bit overzealous. Are you viewing it on mobile?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-3855">
+        <div id="dsq-comment-header-3855" class="dsq-comment-header">
+            <cite id="dsq-cite-3855">
+                <span id="dsq-author-user-3855">Krzysztof Wolniak</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3855" class="dsq-comment-body">
+            <div id="dsq-comment-message-3855" class="dsq-comment-message"><p>I viewed it on desktop PC, but now I see article is listed there.<br />
+By the way, great series. Thanks!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-3860">
+        <div id="dsq-comment-header-3860" class="dsq-comment-header">
+            <cite id="dsq-cite-3860">
+                <a id="dsq-author-user-3860" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3860" class="dsq-comment-body">
+            <div id="dsq-comment-message-3860" class="dsq-comment-message"><p>Thank you :) Yeah I have to force the cache to dump sometimes.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2014/11/03/creating-domain-event-dispatcher/' rel='external nofollow' class='url'>Creating your own Domain Event Dispatcher | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-4830">
+        <div id="dsq-comment-header-4830" class="dsq-comment-header">
+            <cite id="dsq-cite-4830">
+                <a id="dsq-author-user-4830" href="http://www.alireza-rahmani.ir/" target="_blank" rel="nofollow">alireza Rahmani khalili</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4830" class="dsq-comment-body">
+            <div id="dsq-comment-message-4830" class="dsq-comment-message"><p>Dude this id not working &#8220;heybigname/event-dispatcher&#8221;: &#8220;~1.1&#8221;</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4850">
+        <div id="dsq-comment-header-4850" class="dsq-comment-header">
+            <cite id="dsq-cite-4850">
+                <a id="dsq-author-user-4850" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4850" class="dsq-comment-body">
+            <div id="dsq-comment-message-4850" class="dsq-comment-message"><p>Try <code>composer require heybigname/event-dispatcher</code></p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-5186">
+        <div id="dsq-comment-header-5186" class="dsq-comment-header">
+            <cite id="dsq-cite-5186">
+                <span id="dsq-author-user-5186">Vitaly Chirkov</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5186" class="dsq-comment-body">
+            <div id="dsq-comment-message-5186" class="dsq-comment-message"><p>What about events like CommentWasDeleted? There is no way to use destructors to emit it : ) Do you prefer Application Service, Command Handler or some other place to emit such kind of events? Looks like a bit inconsistent.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5191">
+        <div id="dsq-comment-header-5191" class="dsq-comment-header">
+            <cite id="dsq-cite-5191">
+                <a id="dsq-author-user-5191" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5191" class="dsq-comment-body">
+            <div id="dsq-comment-message-5191" class="dsq-comment-message"><p>Hmm, yeah I never really thought about deleted events. Yeah I would use Application Services or Command Handlers to emit the events, depending on what I was using.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even depth-2" id="dsq-comment-6467">
+        <div id="dsq-comment-header-6467" class="dsq-comment-header">
+            <cite id="dsq-cite-6467">
+                <span id="dsq-author-user-6467">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6467" class="dsq-comment-body">
+            <div id="dsq-comment-message-6467" class="dsq-comment-message"><p>Hi Vitaly maybe you are thinking in Event Sourcing and CQRS architecturing. You can find more info searching those terms.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-3" id="dsq-comment-6508">
+        <div id="dsq-comment-header-6508" class="dsq-comment-header">
+            <cite id="dsq-cite-6508">
+                <span id="dsq-author-user-6508">Vitaly Chirkov</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6508" class="dsq-comment-body">
+            <div id="dsq-comment-message-6508" class="dsq-comment-message"><p>Yep, thx. I know some ES &amp; CQRS, but I still wonder how to solve this problem gracefully. Do you have any solution?</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2015/01/19/modelling-notification-system-php/' rel='external nofollow' class='url'>Modelling a Notification System in PHP | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-5540">
+        <div id="dsq-comment-header-5540" class="dsq-comment-header">
+            <cite id="dsq-cite-5540">
+                <span id="dsq-author-user-5540">Kim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5540" class="dsq-comment-body">
+            <div id="dsq-comment-message-5540" class="dsq-comment-message"><p>Can you help explain when you might use domain commands vs domain events? For instance, you could create a command SendWelcomeEmail from user registration, rather than raising a UserRegistered event, and defining a listener to send the email elsewhere. </p>
+<p>If sending a registration email is a business rule whenever registration happens, I would have been tempted to submit a domain command SendWelcomeEmail from within $user-&gt;register(). It seems nice that anyone reading user registration would very clearly see all business required activities for registration, rather than having to go somewhere else and look through listeners. If I had some infrastructure-level cruft that needed to be initialized when a user registered, I might have offloaded that to an event listener so no references to it would have cluttered up the definition of registration. </p>
+<p>After digging around I don&#8217;t think my strategy on command vs event/listener lines up with standard practice though, so could you help clarify why you&#8217;d use one over the other?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5554">
+        <div id="dsq-comment-header-5554" class="dsq-comment-header">
+            <cite id="dsq-cite-5554">
+                <a id="dsq-author-user-5554" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5554" class="dsq-comment-body">
+            <div id="dsq-comment-message-5554" class="dsq-comment-message"><p>A Domain Command is something that you create to model a piece of functionality of the application. For example, <code>RegisterNewUser</code>.</p>
+<p>A Domain Event is an an object that is created when an action of significance takes place. For example, <code>UserWasRegistered</code>.</p>
+<p>A Domain Event Listener is an class that listens for a particular event (e.g <code>UserWasRegistered</code>) and then runs through a series of attached actions (e.g <code>SendWelcomeEmail</code>).</p>
+<p>The Domain Command is the task that your user performs.</p>
+<p>The Domain Event is the object that captures the important data of what just took place.</p>
+<p>The Domain Event Listener is the consequence of that action occurring.</p>
+<p>So you should be able to add / update / remove Domain Event Listeners that are attached to the Domain Event without touching the actual bit of functionality you are modelling (<code>RegisterNewUser</code>).</p>
+<p>So it comes down to modelling your application&#8217;s functionality through commands.</p>
+<p>Understanding what important events take place during that execution.</p>
+<p>Registering listeners to those events to satisfy the business requirements without coupling those consequences to the initial action.</p>
+<p>I think you are just confused with how each different part plays a role. Sending the user an email is a business rule, but it is a consequence of the Domain Event being fired during the registration command. You will likely have other business rules that also need to be satisfied as a consequence of this Event which can be implemented as listeners without coupling to the initial registration functionality.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-6116">
+        <div id="dsq-comment-header-6116" class="dsq-comment-header">
+            <cite id="dsq-cite-6116">
+                <span id="dsq-author-user-6116">Miki</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6116" class="dsq-comment-body">
+            <div id="dsq-comment-message-6116" class="dsq-comment-message"><p>Why not use Laravel Events?</p>
+<p><a href="http://laravel.com/docs/4.2/events" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://laravel.com/docs/4.2/events', 'http://laravel.com/docs/4.2/events']);" rel="nofollow">http://laravel.com/docs/4.2/events</a></p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-6159">
+        <div id="dsq-comment-header-6159" class="dsq-comment-header">
+            <cite id="dsq-cite-6159">
+                <a id="dsq-author-user-6159" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6159" class="dsq-comment-body">
+            <div id="dsq-comment-message-6159" class="dsq-comment-message"><p>Framework Events and Domain Events are two very different things. Framework Events are used for framework concerns, whereas Domain Events model business problems.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-6526">
+        <div id="dsq-comment-header-6526" class="dsq-comment-header">
+            <cite id="dsq-cite-6526">
+                <span id="dsq-author-user-6526">Mateus Azevedo</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6526" class="dsq-comment-body">
+            <div id="dsq-comment-message-6526" class="dsq-comment-message"><p>I didn&#8217;t get it yet&#8230;<br />
+Laravel has event/listener/dispatch system that can be used to handle Domain Events, so why use a third party package?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-6533">
+        <div id="dsq-comment-header-6533" class="dsq-comment-header">
+            <cite id="dsq-cite-6533">
+                <a id="dsq-author-user-6533" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6533" class="dsq-comment-body">
+            <div id="dsq-comment-message-6533" class="dsq-comment-message"><p>Because Domain Events are not the same as framework events. Domain Events model things that are important to the business, not the framework.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-5" id="dsq-comment-6722">
+        <div id="dsq-comment-header-6722" class="dsq-comment-header">
+            <cite id="dsq-cite-6722">
+                <span id="dsq-author-user-6722">londoh</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6722" class="dsq-comment-body">
+            <div id="dsq-comment-message-6722" class="dsq-comment-message"><p>[just reading thru your doctrine articles this evening. very helpful &#8211; tnx]</p>
+<p>actually i also dont get why you used the 3rd party events package. (except maybe this was written pre L5?) But as I understand it, the L5 events stuff isnt (only) dealing with fw events, so you can fire, and listen for own (domain) events. And they&#8217;re queue-able, and its built in. It would seem to be a valid alternative to the package you mention.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt depth-5" id="dsq-comment-6754">
+        <div id="dsq-comment-header-6754" class="dsq-comment-header">
+            <cite id="dsq-cite-6754">
+                <a id="dsq-author-user-6754" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6754" class="dsq-comment-body">
+            <div id="dsq-comment-message-6754" class="dsq-comment-message"><p>Yeah this was written during Laravel 4, and yeah Laravel 5 has adopted the idea of Domain events, whereas Laravel was much more concerned with framework events.</p>
+<p>I&#8217;m actually using Laravel 5 Events for Domain Events in a current project and it&#8217;s working great!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-6122">
+        <div id="dsq-comment-header-6122" class="dsq-comment-header">
+            <cite id="dsq-cite-6122">
+                <span id="dsq-author-user-6122">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6122" class="dsq-comment-body">
+            <div id="dsq-comment-message-6122" class="dsq-comment-message"><p>Hi Philip, working with the new Laravel 5 structure and Events, Listeners, Subscribers, how can we do to work with Domain Events? Is better to use the new L5 structure or add custom Domain Events within the Domain paths than use the new paths available in L5?</p>
+<p>Thanks in advanced.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-6160">
+        <div id="dsq-comment-header-6160" class="dsq-comment-header">
+            <cite id="dsq-cite-6160">
+                <a id="dsq-author-user-6160" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6160" class="dsq-comment-body">
+            <div id="dsq-comment-message-6160" class="dsq-comment-message"><p>Hmm, I think it depends on the situation and how you plan on using the events. Laravel provides a lot out of the box, so it&#8217;s probably just easier to use the Laravel structure.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-6176">
+        <div id="dsq-comment-header-6176" class="dsq-comment-header">
+            <cite id="dsq-cite-6176">
+                <span id="dsq-author-user-6176">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6176" class="dsq-comment-body">
+            <div id="dsq-comment-message-6176" class="dsq-comment-message"><p>Ok thanks, I think I will try using Laravel Events and EventDispatcher, Listeners, &#8230; but I recreate this structure for those two fields: Domain Events and Application Events.</p>
+<p>Thanks so much!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-6944">
+        <div id="dsq-comment-header-6944" class="dsq-comment-header">
+            <cite id="dsq-cite-6944">
+                <a id="dsq-author-user-6944" href="http://parallax.lk/" target="_blank" rel="nofollow">Namal Attanayake</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6944" class="dsq-comment-body">
+            <div id="dsq-comment-message-6944" class="dsq-comment-message"><p>Hey, Thanks for your greate article which me helped to deeply understand the Events. Need to clarify one thing. Why you saying that the Laravel Events are framework events? When I seen the doc, their example is a Business domain Event too.</p>
+<p>php artisan make:event PodcastWasPurchased</p>
+<p>PodcastWasPurchased Event is a Domain event huh?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-2" id="dsq-comment-6993">
+        <div id="dsq-comment-header-6993" class="dsq-comment-header">
+            <cite id="dsq-cite-6993">
+                <a id="dsq-author-user-6993" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6993" class="dsq-comment-body">
+            <div id="dsq-comment-message-6993" class="dsq-comment-message"><p>Yeah this tutorial was written for Laravel 4. Laravel 5 introduced the more concrete idea of Domain Events.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/09/22/implementing-domain-events/';
+var disqus_identifier = '4866 http://culttt.com/?p=4866';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "Implementing Domain Events";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=4866';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&zoneid=1408&key=cff8e425093b59be72c2fd4e27ce192a&serve=C6SIVKV&placement=cultttcom&circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com">Yellow Flag</a></p>
+    </footer>
+  </body>
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushJScript.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPhp.js?ver=3.0.9b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['tab-size'] = 2;
+	SyntaxHighlighter.all();
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2016Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'4866',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '4866' ]);
+</script>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 14:24:06 by W3 Total Cache -->

@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en" class="wf-loading">
+  <head>
+    <meta charset='UTF-8'>
+    <title>Creating and Using a Command Bus | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://culttt.com/wp-content/themes/culttt-v3/style.css" />
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png"/>
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="There are three different layers to Domain Driven Design applications, each with their own roles and responsibilities within the application stack. Over th"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://culttt.com/2014/11/10/creating-using-command-bus/" />
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Creating and Using a Command Bus | Culttt" />
+<meta property="og:description" content="There are three different layers to Domain Driven Design applications, each with their own roles and responsibilities within the application stack. Over th" />
+<meta property="og:url" content="http://culttt.com/2014/11/10/creating-using-command-bus/" />
+<meta property="og:site_name" content="Culttt" />
+<meta property="article:publisher" content="http://facebook.com/culttt" />
+<meta property="article:author" content="https://www.facebook.com/phillyyyy" />
+<meta property="article:tag" content="Cribbb" />
+<meta property="article:tag" content="PHP" />
+<meta property="article:section" content="Code" />
+<meta property="article:published_time" content="2014-11-10T07:00:07+00:00" />
+<meta property="article:modified_time" content="2014-11-13T18:23:21+00:00" />
+<meta property="og:updated_time" content="2014-11-13T18:23:21+00:00" />
+<meta property="fb:admins" content="893905018" />
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/11/Creating-and-Using-a-Command-Bus.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="There are three different layers to Domain Driven Design applications, each with their own roles and responsibilities within the application stack. Over th" />
+<meta name="twitter:title" content="Creating and Using a Command Bus | Culttt" />
+<meta name="twitter:site" content="@culttt" />
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/11/Creating-and-Using-a-Command-Bus.jpg" />
+<meta name="twitter:creator" content="@philipbrown" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Culttt &raquo; Creating and Using a Command Bus Comments Feed" href="http://culttt.com/2014/11/10/creating-using-command-bus/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='http://culttt.com/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://culttt.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='http://wp.me/p2tyoR-1j3' />
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F11%2F10%2Fcreating-using-command-bus%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F11%2F10%2Fcreating-using-command-bus%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//v0.wordpress.com'>
+<link rel='dns-prefetch' href='//i0.wp.com'>
+<link rel='dns-prefetch' href='//i1.wp.com'>
+<link rel='dns-prefetch' href='//i2.wp.com'>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  </head>
+  <body class="">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">Creating and Using a Command Bus</strong></span></span></span></span>
+              
+                
+                  <h1>Creating and Using a Command Bus</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on November 10th, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="http://i1.wp.com/culttt.com/wp-content/uploads/2014/11/Creating-and-Using-a-Command-Bus.jpg" alt="Creating and Using a Command Bus" data-recalc-dims="1" /><br />
+There are three different layers to Domain Driven Design applications, each with their own roles and responsibilities within the application stack.</p>
+<p>Over the past couple of weeks we’ve been looking at mainly the Domain and Infrastructure layers of our applications.</p>
+<p>Whilst the Domain and Infrastructure layers are important, we are missing one important component of the Domain Driven Design trifecta, <em>The Application Layer</em>.</p>
+<p>In today’s tutorial we’re going to be looking at building the Application layer of Cribbb and seeing how each piece has a role in the architecture of the application.</p>
+<h2>Domain Driven Design architecture recap</h2>
+<p>The architecture of a Domain Driven Design project is comprised of three main areas. Each areas has it’s own unique role and responsibilities within the bigger context of the entire application. It is very important that the responsibility of a particular layer does not leak out into other aspects of the application.</p>
+<h3>The Domain layer</h3>
+<p>The real business logic of the application should be encapsulated with the Domain Layer. This means that any rules or criteria the application requires should sit within the Domain layer and not leak out into the other layers of the application.</p>
+<p>The Domain layer is comprised of Entities and Value Objects as well as Domain Events and other objects that capture the business rules of the application.</p>
+<p>So far we’ve covered the following sections of the Domain layer:</p>
+<ul>
+<li><a href="http://culttt.com/2014/08/18/encapsulating-applications-business-rules">Encapsulating your application’s business rules</a></li>
+<li><a href="http://culttt.com/2014/08/25/implementing-specification-pattern">Implementing The Specification Pattern</a></li>
+<li><a href="http://culttt.com/2014/09/01/user-entity-ubiquitous-language">The User Entity and The Ubiquitous Language</a></li>
+<li><a href="http://culttt.com/2014/09/08/benefits-using-repositories">What are the benefits of using Repositories?</a></li>
+<li><a href="http://culttt.com/2014/09/15/defining-building-blocks-domain-driven-design">Defining the building blocks of Domain Driven Design</a></li>
+<li><a href="http://culttt.com/2014/09/22/implementing-domain-events">Implementing Domain Events</a></li>
+<li><a href="http://culttt.com/2014/09/29/creating-domain-services">Creating Domain Services</a></li>
+<li><a href="http://culttt.com/2014/10/20/creating-user-registration-domain-service">Creating a User Registration Domain Service</a></li>
+<li><a href="http://culttt.com/2014/10/27/building-password-reminder-domain-service">Building a Password Reminder Domain Service</a></li>
+<li><a href="http://culttt.com/2014/11/03/creating-domain-event-dispatcher">Creating your own Domain Event Dispatcher</a></li>
+</ul>
+<h3>The Infrastructure Layer</h3>
+<p>The Infrastructure Layer is made up of all the technical details of how our application is implemented.</p>
+<p>For example, most applications require a database and so the code that interacts with the database would sit in the Infrastructure Layer.</p>
+<p>Domain Driven applications should rely on interfaces and not implementations. This means we would rely on a <code>Mailer</code> interface, but we would use a <code>MailGunMailer</code> implementation that implements the interface we require.</p>
+<p>So far we’ve covered the following sections of the Infrastructure layer:</p>
+<ul>
+<li><a href="http://culttt.com/2014/10/06/creating-mailer-infrastructure-service">Creating a Mailer Infrastructure Service</a></li>
+<li><a href="http://culttt.com/2014/10/13/creating-testing-doctrine-repositories">Creating and testing Doctrine Repositories</a></li>
+</ul>
+<h2>What is the job of the Application Layer?</h2>
+<p>The Application Layer of a Domain Driven Design application acts as a public API to the application. The Application layer will accept requests from the outside world and return responses in an appropriate manner.</p>
+<p>The Application Layer is important because it acts as an agnostic barrier between the outside world and your application. Your application should not care where a request comes from.</p>
+<p>The Application Layer also acts as a conductor by pulling in the services it requires to satisfy a request or send a response. This might mean sending Commands into a Command Bus, or running a query on a Repository.</p>
+<h2>How do you implement the Application Layer?</h2>
+<p>I’m by no means an expert in this area of application development, but it seems to me that there are basically two methods for implementing the Application layer.</p>
+<h3>Application Services</h3>
+<p>The first method is to use Application Services. An Application Service is basically just a class with methods for the various tasks your application can perform.</p>
+<p>For example, you might have the following <code>IdentityApplicationService</code>:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+class IdentityApplicationService
+{
+    /**
+     * Register a new user
+     *
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     * @return User
+     */
+    public function register($email, $username, $password)
+    {
+        // register a new user    
+    }
+}
+</pre>
+<p>The <code>register()</code> method on this Application Service would accept the raw strings from the request and use the internal <code>RegisterUserService</code> to create a new <code>User</code> object.</p>
+<p>The Application Service would be injected with the various services it requires to complete the task. Application Service would generally separated by functional area of the application and would group together related methods.</p>
+<h3>Command Bus</h3>
+<p>Alternatively you have the Command Bus approach. A Command Bus accepts a Command object and delegates it to a Command Handler.</p>
+<p>For example, you might have a <code>RegisterUserCommand</code> that is sent to the Command Bus and delegated to a <code>RegisterUserHandler</code>.</p>
+<p>The <code>RegisterUserHandler</code> would be able to handle the process for registering a new user in the application.</p>
+<h2>What are the differences between Application Services and The Command Bus?</h2>
+<p>There are many differences between Application Services and The Command Bus and both have their positives and negatives.</p>
+<p>Firstly, Application Services tend to be more complicated than using a Command Bus. This is because grouping together many related tasks means you end up with a large class that requires a number of dependencies and has a lot of responsibility.</p>
+<p>Using a Command Bus is far more simpler because each Command has a single Command Handler. Each Handler only needs to be concerned with satisfying a single Command, and so your code ends up much closer to The Single Responsibility Principle.</p>
+<p>However on the other hand, using a Command Bus can be more complicated than using an Application Service in some situations. A Command Bus should not return a value after a Command has been handled.</p>
+<p>For example, if you were creating a new resource in your application, you would not be returned the id of the new resource so you could redirect the user to it’s view page.</p>
+<p>Now arguably, this is probably only going to make using a Command Bus more difficult if you are trying to use a Command Bus for the wrong job. If you face this situation, you should probably use an Application Service.</p>
+<p>However testing A Command Bus is more difficult because it’s harder to test code when there is no return value from the method call. I’m still trying to get my head around this one.</p>
+<p>When you begin writing The Application Layer of your application, you don’t need to choose either Application Services or a Command Bus. You can very easily use one type of implementation for certain functionality of your application and another for other aspects. It’s about choosing the right tool for the job, and not trying to fit a square peg in a round hole.</p>
+<h2>Building the Command Bus</h2>
+<p>I’m going to be using a Command Bus in Cribbb for certain aspects of the Application. So today we’ll look at building out The Command Bus.</p>
+<p>As I covered last week in <a href="http://culttt.com/2014/11/03/creating-domain-event-dispatcher">Creating your own Domain Event Dispatcher</a>, you have the option of either using a ready made Command Bus package or rolling your own. Using Open Source packages is a fantastic way of not wasting time by trying to reinvent the wheel.</p>
+<p>However as I advocated last week, I do believe that certain components of your application should sit within your walled garden, even if you end up building a generic tool for a generic problem. I think having complete control of the API and future evolution of application critical components is worth the time investment of writing your own code.</p>
+<p>The Command Bus infrastructure will be made up of three main components:</p>
+<ol>
+<li><strong>Commands</strong> are the data objects that are passed into The Command Bus</li>
+<li><strong>Handlers</strong> deal with accepting a Command and completing the required task</li>
+<li><strong>The Command Bus</strong> is responsible for mapping Commands to Command Handlers and instantiating the required objects</li>
+</ol>
+<p>You will notice that this set up is not that different to implementing Domain Events from last week. The theory is very similar, however the big difference is Commands only have one Handler, whereas Events have many Listeners.</p>
+<p>Now that we’ve got the theory down, lets look at building a Command Bus!</p>
+<h2>The Command Interface</h2>
+<p>The first thing we need to create is the <code>Command</code> interface:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+interface Command
+{
+
+}
+</pre>
+<p>The <code>Command</code> interface doesn’t need to have any method definitions because Commands are basically just plain old PHP objects that hold data.</p>
+<p>You might be thinking, what’s the point in the interface then? I think there is still a lot of value to implementing interfaces even if the interface does not contain any methods. This is because it makes your code a lot more readable and easier to understand for new developers.</p>
+<h2>The Handler Interface</h2>
+<p>Next we need to define a <code>Handler</code> interface:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+interface Handler
+{
+    /**
+     * Handle a Command object
+     *
+     * @param Command $command
+     * @return void
+     */
+    public function handle(Command $command);
+}
+</pre>
+<p>Each Handler will require a <code>handle()</code> method that should accept a <code>Command</code>. We don’t really care how the Handler actually handles the command, we only care about telling it what to do.</p>
+<h2>The Container</h2>
+<p>The Command Bus will be responsible for instantiating a new Handler instance when given a particular Command. This means the Command Bus needs a way of creating other objects.</p>
+<p>If you are familiar with Laravel, you will know about the framework’s very powerful IoC Container. A couple of months I wrote a post on <a href="http://culttt.com/2014/03/24/exploring-laravels-ioc-container">exploring Laravel’s IoC Container</a>.</p>
+<p>We can inject an instance of the Laravel’s Container into our Command Bus, but that would mean we have coupled ourselves to Laravel’s implementation.</p>
+<p>Instead we can define a <code>Container</code> interface that we can rely on instead. This means we can effectively replace the IoC Container with a different implementation that also satisfies the interface contract:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+interface Container
+{
+    /**
+     * Return a new instance of an object
+     *
+     * @param string $class
+     * @return mixed
+     */
+    public function make($class);
+}
+</pre>
+<p>The <code>LaravelContainer</code> implementation looks like this:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+use Illuminate\Container\Container as IoC;
+
+class LaravelContainer implements Container
+{
+    /**
+     * @var Container
+     */
+    private $container;
+
+    /**
+     * Create a new LaravelContainer
+     *
+     * @param IoC $container
+     * @return void
+     */
+    public function __construct(IoC $container)
+    {
+        $this-&gt;container = $container;
+    }
+
+    /**
+     * Resolve the class out of the Container
+     *
+     * @param string $class
+     * @return mixed
+     */
+    public function make($class)
+    {
+        return $this-&gt;container-&gt;make($class);
+    }
+}
+</pre>
+<p>To test the <code>LaravelContainer</code> implementation we can attempt to resolve a class out of the Container:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Tests\Application;
+
+use stdClass;
+use Illuminate\Container\Container;
+use Cribbb\Application\LaravelContainer;
+
+class LaravelContainerTest extends \PHPUnit_Framework_TestCase
+{
+    /** @var LaravelContainer */
+    private $container;
+
+    public function setUp()
+    {
+        $container = new Container;
+        $container-&gt;bind('Cat', function () {
+            $cat = new stdClass;
+            $cat-&gt;name = 'lolcat';
+            return $cat;
+        });
+
+        $this-&gt;container = new LaravelContainer($container);
+    }
+
+    /** @test */
+    public function should_make_class_from_container()
+    {
+        $class = $this-&gt;container-&gt;make('Cat');
+
+        $this-&gt;assertInstanceOf('stdClass', $class);
+        $this-&gt;assertEquals('lolcat', $class-&gt;name);
+    }
+}
+</pre>
+<h2>The Inflector</h2>
+<p>The Command Bus should also be responsible for mapping Commands to Handlers. Instead of lumping this responsibility into the Command Bus, we can instead write a dedicated Inflector that can do the job for us.</p>
+<p>As time goes by we might want to change the organisation of our code and so I think it makes sense to create an <code>Inflector</code> interface:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+interface Inflector
+{
+    /**
+     * Find a Handler for a Command
+     *
+     * @param Command $command
+     * @return string
+     */
+    public function inflect(Command $command);
+}
+</pre>
+<p>A simple string replace Inflector implementation could be as follows:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+class NameInflector implements Inflector
+{
+    /**
+     * Find a Handler for a Command
+     *
+     * @param Command $command
+     * @return string
+     */
+    public function inflect(Command $command)
+    {
+        return str_replace('Command', 'Handler', get_class($command));
+    }
+}
+</pre>
+<p>We can test this Inflector implementation with the following tests:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Tests\Application;
+
+use stdClass;
+use Cribbb\Stubs\CommandStub;
+use Cribbb\Application\NameInflector;
+
+class NameInflectorTest extends \PHPUnit_Framework_TestCase
+{
+    /** @var Inflector */
+    private $inflector;
+
+    public function setUp()
+    {
+        $this-&gt;inflector = new NameInflector;
+    }
+
+    /** @test */
+    public function should_get_handler_name_from_command()
+    {
+        $command = new CommandStub(new stdClass);
+
+        $handler = $this-&gt;inflector-&gt;inflect($command);
+
+        $this-&gt;assertEquals('Cribbb\Stubs\HandlerStub', $handler);
+    }
+}
+</pre>
+<p>Shout out to <a href="http://fideloper.com" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://fideloper.com', 'Chris Fidao’s']);" >Chris Fidao’s</a> <a href="https://github.com/fideloper/hexagonal-php" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/fideloper/hexagonal-php', 'Hexagonal PHP']);" >Hexagonal PHP</a> repository for the inspiration of this technique.</p>
+<h2>The CommandBus Implementation</h2>
+<p>Finally we have the <code>CommandBus</code> implementation. The Command Bus should be injected with instances of <code>Container</code> and <code>Inflector</code> and it should have an <code>execute()</code> method that accepts a <code>Command</code>:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+&lt;?php namespace Cribbb\Application;
+
+class CommandBus
+{
+    /**
+     * @var Container
+     */
+    private $container;
+
+    /**
+     * @var Inflector
+     */
+    private $inflector;
+
+    /**
+     * Create a new CommandBus
+     *
+     * @param Container $container
+     * @return void
+     */
+    public function __construct(Container $container, Inflector $inflector)
+    {
+        $this-&gt;container = $container;
+        $this-&gt;inflector = $inflector;
+    }
+
+    /**
+     * Execute a Command by passing it to a Handler
+     *
+     * @param Command $command
+     * @return void
+     */
+    public function execute(Command $command)
+    {
+        $this-&gt;handler($command)-&gt;handle($command);
+    }
+
+    /**
+     * Get the Command Handler
+     *
+     * @return mixed
+     */
+    private function handler(Command $command)
+    {
+        $class = $this-&gt;inflector-&gt;inflect($command);
+
+        return $this-&gt;container-&gt;make($class);
+    }
+}
+</pre>
+<p>As you can see, the <code>execute()</code> method does not return any value. I’ve also made use of a <code>private</code> method for determining which Handler to use and then resolving it from the Container.</p>
+<h2>Conclusion</h2>
+<p>The Application layer of a Domain Driven Design application is the final piece of the puzzle. The Application handles communicating with the outside world by accepting requests and returning responses. By acting as a boundary to the application, the internal code does not care where the request comes from or where it is going.</p>
+<p>There are a couple of common approaches to building out the Application layer. Two popular choices are Application Services or using Commands and Command Handlers. Both approaches have positives and negatives and so it is up to you to decide which is right for the task at hand.</p>
+<p>Today we created a simple Command Bus implementation. I also mentioned last week, the majority of the time you should be using Open Source components whenever you can. Open Source components are usually stronger, more robust and actively maintained. However sometimes I do think there is a benefit to bringing critical components in-house so you can completely control the interface and the implementation.</p>
+<p>This is a series of posts on building an entire Open Source application called <a href="http://cribbb.com" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://cribbb.com', 'Cribbb']);" >Cribbb</a>. All of the tutorials will be free to web, and all of the code is available on <a href="https://github.com/cribbb/cribbb" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/cribbb/cribbb', 'GitHub']);" >GitHub</a>.</p>
+<p>To view a full listing of the tutorials in this series, <a href="http://culttt.com/tag/cribbb/">click here</a>.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt='' src='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=100&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' />                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="culttt" data-lang="en" data-related="philipbrown" data-count="vertical">Tweet</a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root"></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like" data-send="false" data-layout="box_count" data-show-faces="false"></div>
+                    </div>
+                    <div class="social-button">
+                      <g:plusone size="tall"></g:plusone>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      <a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="culttt" >Buffer</a>
+                      <script type="text/javascript" src="http://static.bufferapp.com/js/button.js"></script>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-4370">
+        <div id="dsq-comment-header-4370" class="dsq-comment-header">
+            <cite id="dsq-cite-4370">
+                <span id="dsq-author-user-4370">jchencha</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4370" class="dsq-comment-body">
+            <div id="dsq-comment-message-4370" class="dsq-comment-message"><p>On testing the command bus. I think phpspec would serve you better since there literally is  a &#8220;-&gt;shouldBeCalled()&#8221; method on its method stubs. Konstantin Kudryashov  has a really nice talk on it <a href="https://www.youtube.com/watch?v=X6y-OyMPqfw" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'https://www.youtube.com/watch?v=X6y-OyMPqfw', 'https://www.youtube.com/watch?v=X6y-OyMPqfw']);" rel="nofollow">https://www.youtube.com/watch?v=X6y-OyMPqfw</a> from Laracon EU.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4394">
+        <div id="dsq-comment-header-4394" class="dsq-comment-header">
+            <cite id="dsq-cite-4394">
+                <a id="dsq-author-user-4394" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4394" class="dsq-comment-body">
+            <div id="dsq-comment-message-4394" class="dsq-comment-message"><p>Ah yeah, I&#8217;ve really looked into PhpSpec much. Thank you, I&#8217;ll explore some more :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-4371">
+        <div id="dsq-comment-header-4371" class="dsq-comment-header">
+            <cite id="dsq-cite-4371">
+                <span id="dsq-author-user-4371">jchencha</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4371" class="dsq-comment-body">
+            <div id="dsq-comment-message-4371" class="dsq-comment-message"><p>Otherwise love the article. I use the command bus implementation in ALL my projects!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4395">
+        <div id="dsq-comment-header-4395" class="dsq-comment-header">
+            <cite id="dsq-cite-4395">
+                <a id="dsq-author-user-4395" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4395" class="dsq-comment-body">
+            <div id="dsq-comment-message-4395" class="dsq-comment-message"><p>Ah that&#8217;s cool! How are you finding it? What have you found to be the main positives and negatives?</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-4372">
+        <div id="dsq-comment-header-4372" class="dsq-comment-header">
+            <cite id="dsq-cite-4372">
+                <a id="dsq-author-user-4372" href="http://absfrm.com/" target="_blank" rel="nofollow">absfrm</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4372" class="dsq-comment-body">
+            <div id="dsq-comment-message-4372" class="dsq-comment-message"><p>Big like :)<br />
+thanks</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4396">
+        <div id="dsq-comment-header-4396" class="dsq-comment-header">
+            <cite id="dsq-cite-4396">
+                <a id="dsq-author-user-4396" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4396" class="dsq-comment-body">
+            <div id="dsq-comment-message-4396" class="dsq-comment-message"><p>Thank you sir :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-4400">
+        <div id="dsq-comment-header-4400" class="dsq-comment-header">
+            <cite id="dsq-cite-4400">
+                <span id="dsq-author-user-4400">alireza Rahmani khalili</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4400" class="dsq-comment-body">
+            <div id="dsq-comment-message-4400" class="dsq-comment-message"><p>such a great article man!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4406">
+        <div id="dsq-comment-header-4406" class="dsq-comment-header">
+            <cite id="dsq-cite-4406">
+                <a id="dsq-author-user-4406" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4406" class="dsq-comment-body">
+            <div id="dsq-comment-message-4406" class="dsq-comment-message"><p>Thank you! :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-4417">
+        <div id="dsq-comment-header-4417" class="dsq-comment-header">
+            <cite id="dsq-cite-4417">
+                <span id="dsq-author-user-4417">Juukie14</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4417" class="dsq-comment-body">
+            <div id="dsq-comment-message-4417" class="dsq-comment-message"><p>Nice to read, thanks.</p>
+<p>Small typo (RegisterUserSerice):<br />
+&#8220;The register() method on this Application Service would accept the raw strings from the request and use the internal RegisterUserSerice to create a new User object.&#8221;</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4426">
+        <div id="dsq-comment-header-4426" class="dsq-comment-header">
+            <cite id="dsq-cite-4426">
+                <a id="dsq-author-user-4426" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4426" class="dsq-comment-body">
+            <div id="dsq-comment-message-4426" class="dsq-comment-message"><p>Good spot! Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-4421">
+        <div id="dsq-comment-header-4421" class="dsq-comment-header">
+            <cite id="dsq-cite-4421">
+                <span id="dsq-author-user-4421">John Hamman</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4421" class="dsq-comment-body">
+            <div id="dsq-comment-message-4421" class="dsq-comment-message"><p>How would I bind this to the app? and the CommandBus? Do I need to make a serviceprovider for it and if so, what would that look like.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4428">
+        <div id="dsq-comment-header-4428" class="dsq-comment-header">
+            <cite id="dsq-cite-4428">
+                <a id="dsq-author-user-4428" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4428" class="dsq-comment-body">
+            <div id="dsq-comment-message-4428" class="dsq-comment-message"><p>Yeah, that&#8217;s right. You would bind <code>CribbbApplicationCommandBus</code> to the IoC container and then resolve the object out of the Closure with the correct dependencies injected.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-4501">
+        <div id="dsq-comment-header-4501" class="dsq-comment-header">
+            <cite id="dsq-cite-4501">
+                <span id="dsq-author-user-4501">Marijus Plančiūnas</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4501" class="dsq-comment-body">
+            <div id="dsq-comment-message-4501" class="dsq-comment-message"><p>Tell me&#8230; why execute method can&#8217;t return Handler&#8217;s result?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-4523">
+        <div id="dsq-comment-header-4523" class="dsq-comment-header">
+            <cite id="dsq-cite-4523">
+                <a id="dsq-author-user-4523" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-4523" class="dsq-comment-body">
+            <div id="dsq-comment-message-4523" class="dsq-comment-message"><p>It is derived from CQRS (<a href="http://martinfowler.com/bliki/CQRS.html" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://martinfowler.com/bliki/CQRS.html', 'http://martinfowler.com/bliki/CQRS.html']);" rel="nofollow">http://martinfowler.com/bliki/CQRS.html</a>) where the Command and Queries are two separate things.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-5558">
+        <div id="dsq-comment-header-5558" class="dsq-comment-header">
+            <cite id="dsq-cite-5558">
+                <span id="dsq-author-user-5558">selmonal</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5558" class="dsq-comment-body">
+            <div id="dsq-comment-message-5558" class="dsq-comment-message"><p>link doesn&#8217;t work. please explain shortly.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-5585">
+        <div id="dsq-comment-header-5585" class="dsq-comment-header">
+            <cite id="dsq-cite-5585">
+                <a id="dsq-author-user-5585" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5585" class="dsq-comment-body">
+            <div id="dsq-comment-message-5585" class="dsq-comment-message"><p>Try this:<br />
+<a href="http://martinfowler.com/bliki/CQRS.html" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://martinfowler.com/bliki/CQRS.html', 'http://martinfowler.com/bliki/CQRS.html']);" rel="nofollow">http://martinfowler.com/bliki/CQRS.html</a></p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even depth-3" id="dsq-comment-5797">
+        <div id="dsq-comment-header-5797" class="dsq-comment-header">
+            <cite id="dsq-cite-5797">
+                <span id="dsq-author-user-5797">Pras</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5797" class="dsq-comment-body">
+            <div id="dsq-comment-message-5797" class="dsq-comment-message"><p>If it dont return any result how I know if handler function failed (let say command dont pass validation) ? via exception?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-5801">
+        <div id="dsq-comment-header-5801" class="dsq-comment-header">
+            <cite id="dsq-cite-5801">
+                <a id="dsq-author-user-5801" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5801" class="dsq-comment-body">
+            <div id="dsq-comment-message-5801" class="dsq-comment-message"><p>Yeah I would use an Exception.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-5565">
+        <div id="dsq-comment-header-5565" class="dsq-comment-header">
+            <cite id="dsq-cite-5565">
+                <span id="dsq-author-user-5565">Guilherme Guitte</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5565" class="dsq-comment-body">
+            <div id="dsq-comment-message-5565" class="dsq-comment-message"><p>Great article! Philip, I have one question when you have for example, a &#8220;store&#8221; action in your controller, imagine you called the command to pass through a handler and foreward, but as you said, the command object returns nothing and then how you can redirect for a show action for example. without the object or id generated?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5588">
+        <div id="dsq-comment-header-5588" class="dsq-comment-header">
+            <cite id="dsq-cite-5588">
+                <a id="dsq-author-user-5588" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5588" class="dsq-comment-body">
+            <div id="dsq-comment-message-5588" class="dsq-comment-message"><p>If you need the command to return a result then CQRS is the wrong method for that bit of functionality.</p>
+<p>Mixing CQRS and CRUD isn&#8217;t a bad thing.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-5596">
+        <div id="dsq-comment-header-5596" class="dsq-comment-header">
+            <cite id="dsq-cite-5596">
+                <span id="dsq-author-user-5596">Guilherme Guitte</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5596" class="dsq-comment-body">
+            <div id="dsq-comment-message-5596" class="dsq-comment-message"><p>I agree totally!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-5798">
+        <div id="dsq-comment-header-5798" class="dsq-comment-header">
+            <cite id="dsq-cite-5798">
+                <span id="dsq-author-user-5798">Pras</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5798" class="dsq-comment-body">
+            <div id="dsq-comment-message-5798" class="dsq-comment-message"><p>Can I say Controller in MVC is Application Layer in DDD?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-2" id="dsq-comment-5802">
+        <div id="dsq-comment-header-5802" class="dsq-comment-header">
+            <cite id="dsq-cite-5802">
+                <a id="dsq-author-user-5802" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5802" class="dsq-comment-body">
+            <div id="dsq-comment-message-5802" class="dsq-comment-message"><p>Hmm, I guess you could say that loosely, but there are really two different concepts.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-5921">
+        <div id="dsq-comment-header-5921" class="dsq-comment-header">
+            <cite id="dsq-cite-5921">
+                <span id="dsq-author-user-5921">Matt Zuba</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5921" class="dsq-comment-body">
+            <div id="dsq-comment-message-5921" class="dsq-comment-message"><p>While a typical command bus pattern doesn&#8217;t return data, that paradigm doesn&#8217;t really work for a PHP application that doesn&#8217;t use something like long polling or websockets on the client side.  In a .NET or Java application, there is no need for a command to return data because it can fire an event for the UI to intercept and update with.  With PHP though, that&#8217;s not possible in 99% of applications.</p>
+<p>I don&#8217;t really see any problems with a command actually returning data in a PHP application (or any other single request type application).  You&#8217;re still keeping SRP, and you&#8217;re still utilizing a pattern that makes for better code.</p>
+<p>That said, what I have yet to find is a solid example of using the &#8216;Q&#8217; of CQRS in PHP that stays in line with DDD and SRP.  Any examples you&#8217;ve come across for that?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-2" id="dsq-comment-6030">
+        <div id="dsq-comment-header-6030" class="dsq-comment-header">
+            <cite id="dsq-cite-6030">
+                <span id="dsq-author-user-6030">Daris</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6030" class="dsq-comment-body">
+            <div id="dsq-comment-message-6030" class="dsq-comment-message"><p>Mate don&#8217;t break design pattern just to get one advantage from that.  The only reason you would want to break command side of cqrs is creation of new object and you can easly bypass it with uuid generation.  Make your handler expect a command with id.  So your id would need to be generated outside of your handler.  You have id and your handler doesn&#8217;t return an value.  :) </p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-6003">
+        <div id="dsq-comment-header-6003" class="dsq-comment-header">
+            <cite id="dsq-cite-6003">
+                <a id="dsq-author-user-6003" href="http://www.alireza-rahmani.ir/" target="_blank" rel="nofollow">alireza Rahmani khalili</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6003" class="dsq-comment-body">
+            <div id="dsq-comment-message-6003" class="dsq-comment-message"><p>You mind write something about Laravel 5.0?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-2" id="dsq-comment-6021">
+        <div id="dsq-comment-header-6021" class="dsq-comment-header">
+            <cite id="dsq-cite-6021">
+                <a id="dsq-author-user-6021" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6021" class="dsq-comment-body">
+            <div id="dsq-comment-message-6021" class="dsq-comment-message"><p>I&#8217;ll be writing lots about Laravel 5.0 in the coming weeks :D</p>
+<p>Subscribe to my mailing list so you don&#8217;t miss an article!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-3" id="dsq-comment-6034">
+        <div id="dsq-comment-header-6034" class="dsq-comment-header">
+            <cite id="dsq-cite-6034">
+                <a id="dsq-author-user-6034" href="http://www.alireza-rahmani.ir/" target="_blank" rel="nofollow">alireza Rahmani khalili</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6034" class="dsq-comment-body">
+            <div id="dsq-comment-message-6034" class="dsq-comment-message"><p>I&#8217;m already subscribed and enjoying! can&#8217;t wait to see the articles.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even depth-3" id="dsq-comment-6124">
+        <div id="dsq-comment-header-6124" class="dsq-comment-header">
+            <cite id="dsq-cite-6124">
+                <span id="dsq-author-user-6124">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6124" class="dsq-comment-body">
+            <div id="dsq-comment-message-6124" class="dsq-comment-message"><p>Hi Philip great news! Will be possible to give us some tips to integrate DDD within the new L5 architecture? I think the new structure of L5 may confuses us with the Application Layer and some objects as general Events or Domain Events. Thanks in advanced.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-6162">
+        <div id="dsq-comment-header-6162" class="dsq-comment-header">
+            <cite id="dsq-cite-6162">
+                <a id="dsq-author-user-6162" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6162" class="dsq-comment-body">
+            <div id="dsq-comment-message-6162" class="dsq-comment-message"><p>Yeah the stuff I&#8217;m writing now is set up in Laravel 5 :)</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-5" id="dsq-comment-6174">
+        <div id="dsq-comment-header-6174" class="dsq-comment-header">
+            <cite id="dsq-cite-6174">
+                <span id="dsq-author-user-6174">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6174" class="dsq-comment-body">
+            <div id="dsq-comment-message-6174" class="dsq-comment-message"><p>Yeah Philip! Any article related with this feature will be wellcome!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2015/02/16/laying-foundation-application-layer/' rel='external nofollow' class='url'>Laying the Foundation of the Application Layer | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/11/10/creating-using-command-bus/';
+var disqus_identifier = '5025 http://culttt.com/?p=5025';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "Creating and Using a Command Bus";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=5025';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&zoneid=1408&key=cff8e425093b59be72c2fd4e27ce192a&serve=C6SIVKV&placement=cultttcom&circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com">Yellow Flag</a></p>
+    </footer>
+  </body>
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPhp.js?ver=3.0.9b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['tab-size'] = 2;
+	SyntaxHighlighter.all();
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2016Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'5025',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '5025' ]);
+</script>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 14:06:11 by W3 Total Cache -->

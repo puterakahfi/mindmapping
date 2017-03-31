@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+
+<html lang="en-GB">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<title>CQRS - Simple architecture - Technical Blog - Future Processing</title>
+		<link rel="profile" href="http://gmpg.org/xfn/11" />
+		<link rel="pingback" href="https://www.future-processing.pl/blog/xmlrpc.php" />
+
+		<script>
+			var pageUrl = "https://www.future-processing.pl/blog/cqrs-simple-architecture/";
+		</script>
+
+		<!--[if lt IE 9]>
+			<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+			<script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<!-- favicon -->
+		<link rel="icon" type="image/png" href="https://www.future-processing.pl/blog/wp-content/themes/future/images/favicon.png" />
+
+		<!-- facebook OpenGraph -->
+		<meta property="og:title" content="CQRS - Simple architecture - Technical Blog - Future Processing" />
+		<meta property="og:url" content="https://www.future-processing.pl/blog/cqrs-simple-architecture/" />
+		<meta property="og:image" content="https://www.future-processing.pl/blog/wp-content/themes/future/images/fb-thumb.png" />
+
+		<!-- RSS link -->
+		<link rel="alternate" type="application/rss+xml" href="https://www.future-processing.pl/blog/feed/?post_type=post" title="Future Processing - Technical Blog RSS">
+
+				
+<!-- This site is optimized with the Yoast SEO plugin v4.3 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://www.future-processing.pl/blog/cqrs-simple-architecture/" />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="CQRS - Simple architecture - Technical Blog - Future Processing" />
+<meta property="og:description" content="Some say: &#8222;CQRS is hard!&#8221; Is it? Well, I&nbsp;used to think the same! But when I&nbsp;started writing my first piece of software using CQRS,&hellip;" />
+<meta property="og:url" content="https://www.future-processing.pl/blog/cqrs-simple-architecture/" />
+<meta property="og:site_name" content="Technical Blog - Future Processing" />
+<meta property="article:tag" content="Architecture" />
+<meta property="article:tag" content="Command" />
+<meta property="article:tag" content="CQRS" />
+<meta property="article:section" content="Software Craftsmanship" />
+<meta property="article:published_time" content="2015-04-10T15:50:26+02:00" />
+<meta property="article:modified_time" content="2015-04-10T15:55:39+02:00" />
+<meta property="og:updated_time" content="2015-04-10T15:55:39+02:00" />
+<meta property="og:image" content="https://www.future-processing.com/blog/wp-content/uploads/2015/04/blog_techniczny_cqrs.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="718" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Some say: &#8222;CQRS is hard!&#8221; Is it? Well, I&nbsp;used to think the same! But when I&nbsp;started writing my first piece of software using CQRS,&hellip;" />
+<meta name="twitter:title" content="CQRS - Simple architecture - Technical Blog - Future Processing" />
+<meta name="twitter:image" content="https://www.future-processing.com/blog/wp-content/uploads/2015/04/blog_techniczny_cqrs.png" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//ajax.googleapis.com' />
+<link rel='dns-prefetch' href='//maps.googleapis.com' />
+<link rel='dns-prefetch' href='//www.future-processing.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Technical Blog - Future Processing &raquo; Kanał z wpisami" href="https://www.future-processing.pl/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Technical Blog - Future Processing &raquo; Kanał z komentarzami" href="https://www.future-processing.pl/blog/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.future-processing.pl\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='theme-css-css'  href='https://www.future-processing.pl/blog/wp-content/themes/future/css/main.min.css?ver=4.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css'  href='https://www.future-processing.pl/blog/wp-content/plugins/tablepress/css/default.min.css?ver=1.7' type='text/css' media='all' />
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://www.future-processing.pl/blog/wp-content/themes/future/js/dist/all.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?v=3.exp&#038;sensor=false&#038;ver=4.6.1'></script>
+<script type='text/javascript' src='https://www.future-processing.com/blog/wp-content/plugins/wp-charts/js/Chart.min.js?ver=4.6.1'></script>
+<link rel='https://api.w.org/' href='https://www.future-processing.com/blog/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.future-processing.pl/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.future-processing.pl/blog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='https://www.future-processing.com/blog/?p=5454' />
+<link rel="alternate" type="application/json+oembed" href="https://www.future-processing.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.future-processing.pl%2Fblog%2Fcqrs-simple-architecture%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.future-processing.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.future-processing.pl%2Fblog%2Fcqrs-simple-architecture%2F&#038;format=xml" />
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<!--[if lte IE 8]><script src="https://www.future-processing.pl/blog/wp-content/plugins/wp-charts/js/excanvas.compiled.js"></script><![endif]-->	<style>
+    			/*wp_charts_js responsive canvas CSS override*/
+    			.wp_charts_canvas {
+    				width:100%!important;
+    				max-width:100%;
+    			}
+
+    			@media screen and (max-width:480px) {
+    				div.wp-chart-wrap {
+    					width:100%!important;
+    					float: none!important;
+						margin-left: auto!important;
+						margin-right: auto!important;
+						text-align: center;
+    				}
+    			}
+    		</style>	</head>
+
+<body class="single single-post postid-5454 single-format-standard">
+	<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+	  		var js, fjs = d.getElementsByTagName(s)[0];
+	  		if (d.getElementById(id)) return;
+	  		js = d.createElement(s); js.id = id;
+	  		js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&appId=366270270140136&version=v2.0";
+	  		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<header id="page-header" class="blog">
+		<div class="container">
+			<nav id="additional-navigation">
+				<div class="language-nav" >
+					<ul id="menu-blogi-en" class="menu"><li id="menu-item-8476" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8476"><a href="https://www.future-processing.pl/">Polski</a></li>
+<li id="menu-item-8477" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8477"><a href="https://www.future-processing.com/">English</a></li>
+<li id="menu-item-8478" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8478"><a href="https://www.future-processing.de/">Deutsch</a></li>
+</ul>				</div>
+			</nav>
+
+			<div class="social-links">
+	<a rel="nofollow" class="twitter" href="https://twitter.com/FutureProcessin" target="_blank" title="Technical Blog - Future Processingon Twitter"></a>
+	<a rel="nofollow" class="facebook" href="https://www.facebook.com/FutureProcessing" target="_blank" title="Technical Blog - Future Processingon Facebook"></a>
+	<a rel="nofollow" class="google" href="https://plus.google.com/110939518589884610828" target="_blank" title="Technical Blog - Future Processingon Google+"></a>
+	<a rel="nofollow" class="youtube" href="https://www.youtube.com/user/FutureProcessing" target="_blank" title="Technical Blog - Future Processingon YouTube"></a>
+	<a rel="nofollow" class="linkedin" href="https://www.linkedin.com/company/future-processing-sp--z-o-o-" target="_blank" title="Technical Blog - Future Processingon LinkedIn"></a>
+	<a rel="nofollow" class="slideshare" href="http://www.slideshare.net/FutureProcessing" target="_blank" title="Technical Blog - Future Processingon SlideShare"></a>
+	<a rel="nofollow" class="goldenline" href="http://www.goldenline.pl/firma/future-processing/" target="_blank" title="Technical Blog - Future Processingon GoldenLine"></a>
+</div>
+			<div id="logo-container">
+                <h1 class="site-title">
+				    <img src="https://www.future-processing.pl/blog/wp-content/themes/future/images/logo-blog.svg">
+				    <a class="box-link" href="https://www.future-processing.pl/blog" title="Technical Blog" rel="home"></a>
+				</h1>
+				<h2 class="site-description">
+					<img src="https://www.future-processing.pl/blog/wp-content/themes/future/images/logo-fp.svg">
+				    <a class="box-link" href="https://www.future-processing.pl/" title="Future Processing" rel="home"></a>
+				</h2>
+			</div>
+
+			<div class="clear"></div>
+
+			<nav id="site-navigation" role="navigation">
+				<div id="search-box">
+					<a class="search-toggle" href="https://www.future-processing.pl/blog/?s=future+processing" title="Search">Search</a>
+					<form id="search-form" method="get" action="https://www.future-processing.pl/blog" role="search">
+						<input type="text" class="keyword" name="s" placeholder="Search..." maxlength="100" pattern=".{2,100}" />
+						<button type="submit" class="submit">Search</button>
+					</form>
+				</div>
+				<h3 class="menu-toggle">Show menu</h3>
+				<ul id="menu-blog-techniczny" class="menu"><li id="menu-item-3302" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3302"><a href="https://www.future-processing.pl/blog/category/technologies/">Technologies</a>
+<ul class="sub-menu">
+	<li id="menu-item-3303" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3303"><a href="https://www.future-processing.pl/blog/category/technologies/web-frontend/">Web Front-End</a></li>
+	<li id="menu-item-3304" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3304"><a href="https://www.future-processing.pl/blog/category/technologies/net-technologies/">.NET</a></li>
+	<li id="menu-item-3307" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3307"><a href="https://www.future-processing.pl/blog/category/technologies/java-script/">JavaScript</a></li>
+	<li id="menu-item-4980" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4980"><a href="https://www.future-processing.pl/blog/category/technologies/java/">Java</a></li>
+	<li id="menu-item-5414" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5414"><a href="https://www.future-processing.pl/blog/category/technologies/php/">PHP</a></li>
+	<li id="menu-item-3305" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3305"><a href="https://www.future-processing.pl/blog/category/technologies/cloud/">Cloud</a></li>
+	<li id="menu-item-3306" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3306"><a href="https://www.future-processing.pl/blog/category/technologies/databases/">Databases</a></li>
+	<li id="menu-item-3308" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3308"><a href="https://www.future-processing.pl/blog/category/technologies/mobile-technologies/">Mobile</a></li>
+	<li id="menu-item-3309" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3309"><a href="https://www.future-processing.pl/blog/category/technologies/others/">Others</a></li>
+</ul>
+</li>
+<li id="menu-item-3301" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-has-children menu-item-3301"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/">Processes, Standards and Quality</a>
+<ul class="sub-menu">
+	<li id="menu-item-3312" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3312"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/development-methodologies/">Development methodologies</a></li>
+	<li id="menu-item-3314" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3314"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/software-craftsmanship/">Software Craftsmanship</a></li>
+	<li id="menu-item-3311" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3311"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/static-code-analysis/">Code Quality Assurance</a></li>
+	<li id="menu-item-3316" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3316"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/testing-automation/">Test Automation</a></li>
+	<li id="menu-item-3317" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3317"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/testing-management/">Test management</a></li>
+	<li id="menu-item-3315" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3315"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/security/">Software security</a></li>
+	<li id="menu-item-3313" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3313"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/performance/">Performance</a></li>
+</ul>
+</li>
+<li id="menu-item-4003" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4003"><a href="https://www.future-processing.pl/blog/about-us/">About us</a></li>
+<li id="menu-item-3999" class="contact orange menu-item menu-item-type-post_type menu-item-object-page menu-item-3999"><a href="https://www.future-processing.pl/blog/contact/">Contact</a></li>
+</ul>
+				
+
+				<div id="navigation-combo">
+					<ul>
+
+						
+							<li id="menu-dropdown-7412">
+								<div class="dropdown column-2">
+<div class="dropdown--item">
+<ul class="dropdown--item__images">
+<li><a href="https://www.future-processing.com/blog/client/global-giving-foundatio/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/bridge_logo-1.jpg" rel="lightbox" alt="Bridge" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/parkeon/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/logo_parkeon-1.jpg" rel="lightbox" alt="Parkeon" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/trapeze-pti/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/trapeze_logo-1.jpg" rel="lightbox" alt="Trapeze" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/uk-power-ltd/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/ukpower_logo-1.jpg" rel="lightbox" alt="Uk_power" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/solid-entreprenor/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/solid_logo-1.jpg" rel="lightbox" alt="Solid entreprenor" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/staffcare-limited/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/staffcare_logo-1.jpg" rel="lightbox" alt="Staffcare" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/steamship-mutual/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/steamship_logo-1.jpg" rel="lightbox" alt="Steamship mutual" /></a></li>
+<li><a href="https://www.future-processing.com/blog/client/techsoup-global/"><img class="alignnone size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/techsoup_logo-1.jpg" rel="lightbox" alt="Techsoup" /></a></li>
+</ul>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/klienci/" rel="attachment wp-att-5804"><img class="alignnone wp-image-7324 size-full" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__klienci.png" rel="lightbox" sizes="(max-width: 280px) 100vw, 280px" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__klienci-150x150.png 150w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__klienci-200x200.png 200w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__klienci-120x120.png 120w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__klienci.png 280w" alt="" width="280" height="280" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-1161">
+								<div class="dropdown column-4">
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2>Technologie</h2>
+</div>
+<ul>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/microsoft/">Microsoft</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/java/">Java</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/php/">PHP</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/c/">C++</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/node-js/">Node.js</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/technologie/ruby-on-rails/">Ruby on Rails</a></li>
+</ul>
+</div>
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2>Nasze procesy</h2>
+</div>
+<ul>
+<li><a href="https://www.future-processing.com/blog/kompetencje/procesy/quality-assurance/">QA &amp; testowanie jakości</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/procesy/agile/">Agile w&nbsp;FP</a></li>
+</ul>
+</div>
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2>Obszary eksperckie</h2>
+</div>
+<ul>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/performance/">Performance</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/technical-expertise/">Technical Expertise</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/security/">Security</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/databases/">Databases</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/automatyzacja/">Automatyzacja</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/cloud/">Cloud</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/ux/">User Experience</a></li>
+<li><a href="https://www.future-processing.com/blog/kompetencje/obszary-eksperckie/design/">Design</a></li>
+</ul>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/kompetencje/technologie/microsoft/" rel="attachment wp-att-7547"><img class="alignnone size-full wp-image-7547" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__microsoft.png" rel="lightbox" alt="pl__microsoft" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__microsoft.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__microsoft-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__microsoft-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-7428">
+								<div class="dropdown column-4">
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/rozwiazania/">Rozwiązania</a></h2>
+</div>
+<ul>
+<li><a href="https://www.future-processing.com/blog/rozwiazania/systemy-intranet/">Systemy intranet</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/rozwiazania/rozwiazania-sharepoint/">Rozwiązania SharePoint</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/rozwiazania/enterprise-mobility/">Enterprise mobility</a></li>
+</ul>
+</div>
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+</div>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/rozwiazania/pocket-office/">Pocket Office</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/rozwiazania/crm/">CRM</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/rozwiazania/internet-rzeczy/">Internet Rzeczy</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/rozwiazania/adaptive-vision/">Adaptive Vision</a></li>
+</ul>
+</div>
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+<h2>&nbsp;</h2>
+</div>
+<ul>
+</ul>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/rozwiazania/internet-rzeczy/" rel="attachment wp-att-7546"><img class="alignnone size-full wp-image-7546" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__iot.png" rel="lightbox" alt="pl__iot" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__iot.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__iot-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__iot-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-7413">
+								<div class="dropdown column-3">
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/uslugi/">Usługi</a></h2>
+</div>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/outsourcing-rozwoju-oprogramowania/">Outsourcing rozwoju oprogramowania</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/oprogramowanie-na-zamowienie/">Oprogramowanie na zamówienie</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/systemy-wbudowane/">Systemy wbudowane</a></li>
+<li><a href="https://www.future-processing.com/blog/uslugi/analiza-baz-danych/" target="_blank">Analiza baz danych</a></li>
+</ul>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/rozwoj-produktow-dla-klientow/">Rozwój Twoich produktów</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/analiza-design/">Analiza &amp; Projektowanie</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/audyt-oprogramowania/">Audyt oprogramowania</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/uslugi/support-maintenance/">Support &amp; Maintenance</a></li>
+</ul>
+</div>
+<div class="dropdown--item"></div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/uslugi/oprogramowanie-na-zamowienie/" rel="attachment wp-att-7549"><img class="alignnone size-full wp-image-7549" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oprogramowanie.png" rel="lightbox" alt="pl__oprogramowanie" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oprogramowanie.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oprogramowanie-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oprogramowanie-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-7411">
+								<div class="dropdown column-1">
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/badania-i-rozwoj/">Badania i&nbsp;Rozwój</a></h2>
+</div>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/badania-i-rozwoj/obrazowanie-medyczne/">Obrazowanie medyczne</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/badania-i-rozwoj/publikacje/">Publikacje pracowników FP</a></li>
+</ul>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/kariera/aktualne-oferty/?bf=1" rel="attachment wp-att-7544"><img src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__badania-oferta.png" rel="lightbox" alt="pl__badania-oferta" class="alignnone size-full wp-image-7544" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__badania-oferta.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__badania-oferta-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__badania-oferta-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-33">
+								<div class="dropdown column-3">
+<div class="dropdown--item" style="border: 0;">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/kariera/">Kariera</a></h2>
+</div>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/aktualne-oferty/">Aktualne oferty pracy</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/sylwetki-rekrutujacych/">Poznajmy się</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/proces-rekrutacji/">Proces rekrutacji</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/formularz-rekrutacyjny/">Formularz rekrutacyjny</a></li>
+</ul>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/praktyki/">Praktyki studenckie</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/fp-adventure/">FP Adventure</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/kariera/faq/">FAQ</a></li>
+</ul>
+</div>
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2>&nbsp;</h2>
+<ul></ul>
+</div>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/kariera/aktualne-oferty/" rel="attachment wp-att-7548"><img src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oferty.png" rel="lightbox" alt="pl__oferty" class="alignnone size-full wp-image-7548" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oferty.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oferty-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__oferty-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+						
+							<li id="menu-dropdown-31">
+								<div class="dropdown column-4">
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/o-nas/">O nas</a></h2>
+</div>
+<ul>
+<li><a class="item" title="Historia" href="https://www.future-processing.com/blog/o-nas/historia/">Historia</a></li>
+<li><a class="item" title="Zarząd i&nbsp;Rada FP" href="https://www.future-processing.com/blog/o-nas/rada-fp/">Zarząd i&nbsp;Rada FP</a></li>
+<li><a class="item" title="CSR" href="https://www.future-processing.com/blog/o-nas/csr/">CSR</a></li>
+<li><a class="item" title="FPark" href="https://www.future-processing.com/blog/o-nas/fpark/">FPark</a></li>
+<li><a class="item" title="Projekty unijne" href="https://www.future-processing.com/blog/o-nas/projekty-unijne/">Projekty unijne</a></li>
+</ul>
+</div>
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/">Idealny pracodawca</a></h2>
+</div>
+<ul>
+<li><a class="item" href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/kultura-fp/">Kultura FP</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/fpacademy/">FP Academy</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/punkt-przedszkolny/">Punkt Przedszkolny</a></li>
+<li><a class="item" href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/progress-bar/">Coś Ekstra</a></li>
+</ul>
+</div>
+<div class="dropdown--item">
+<div class="dropdown--item__title">
+<h2><a href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/">Inicjatywy FP</a></h2>
+</div>
+<ul>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/wykladamy-na-uczelniach/">Wykłady na uczelniach</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/deadline24/">Deadline24</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/dobre-praktyki-tworzenia-oprogramowania/">DPTO</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/futuredevday/">Future Dev Day</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/swiatowy-dzien-uzytecznosci-wud-silesia/">WUD Silesia</a></li>
+<li><a class="item" title="" href="https://www.future-processing.com/blog/o-nas/inicjatywy-fp/quality-excites/">Quality Excites</a></li>
+</ul>
+</div>
+<div class="dropdown--item"><a href="https://www.future-processing.com/blog/o-nas/idealny-pracodawca/" rel="attachment wp-att-7545"><img class="alignnone size-full wp-image-7545" src="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__idealny-pracodawca.png" rel="lightbox" alt="pl__idealny-pracodawca" srcset="https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__idealny-pracodawca.png 486w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__idealny-pracodawca-300x149.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2016/07/pl__idealny-pracodawca-190x95.png 190w" sizes="(max-width: 486px) 100vw, 486px" /></a></div>
+</div>
+<div class="clear"></div>							</li>
+
+												
+					</ul>
+				</div>
+
+			</nav>
+
+			<div class="clear"></div>
+		</div>
+	</header>
+
+	<div id="main" class="container" role="main">
+
+        <article id="post-5454" class="single-post" itemscope itemtype="http://schema.org/Article">
+							<div class="post-thumbnail white-corner" itemprop="image" content="https://www.future-processing.com/blog/wp-content/uploads/2015/04/blog_techniczny_cqrs.png">
+					<img src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/blog_techniczny_cqrs-1200x440.png" class="attachment-post-header size-post-header wp-post-image" alt="cqrs_future_processing" />				</div>
+			
+			<header>
+				<div class="post-meta">
+					<span itemprop="datePublished" content="2015-04-10">
+						10.04.2015					</span>
+					<ul class="post-categories">
+	<li><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/software-craftsmanship/" rel="category tag">Software Craftsmanship</a></li></ul>				</div>
+				<h2 itemprop="name">CQRS &#8211; Simple architecture</h2>
+														<div itemprop="headline"><p>Some say: &#8222;CQRS is hard!&#8221;<br />
+Is it? Well, I&nbsp;used to think the same! But when I&nbsp;started writing my first piece of software using <a href="https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf" target="_blank">CQRS</a>, it quickly turned out that it is rather uncomplicated. What is more, I&nbsp;think that in long term it is much easier to maintain software written in this way.</p>
+<div class="clear"></div></div>
+							</header>
+
+			<div class="post-content l5 m2 s2">
+				                <div itemprop="articleBody">
+<p>I have started to think, what is the reason that people see it as hard and complex at the beginning? I&nbsp;have a&nbsp;theory: <em>it has rules</em>! Entering the world with rules is always uncomfortable, we need to adjust to rules. In this post I’d like to prove that in this case those rules are quite digestible.</p>
+<h3>On the way to CQRS&#8230;</h3>
+<p>Basically, we can say that CQRS is an implementation of Command Query Separation principle to the architecture of software. What I&nbsp;noticed during my work in this approach is that there is a&nbsp;couple of steps between simplest CQS <a href="http://martinfowler.com/bliki/CommandQuerySeparation.html" target="_blank">implementation</a> and real full-blown CQRS. I&nbsp;think that those steps smoothly introduce rules I&nbsp;have mentioned before.<br />
+While the first steps are not fulfilling my definition of CQRS (but are sometimes so called), they can still introduce some real value to your software. Each step introduces some interesting ideas that may help to structure or clean your codebase/architecture.<br />
+Usually, our journey starts with something that looks like this:</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/1_layered.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5490" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/1_layered-300x105.png" alt="1_layered" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/1_layered-300x105.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/1_layered-190x67.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/1_layered.png 788w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>1. Diagram of classic N-Layer architecture.</em></p>
+<p>This is typical N-Layer architecture as all of us probably know. If we want to add some CQS here, we can &#8222;simply&#8221; separate business logic into Commands and Queries:</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS-Simple-Architecture_2_CQS_1.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5494" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS-Simple-Architecture_2_CQS_1-300x105.png" alt="CQRS Simple Architecture_2_CQS_1" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS-Simple-Architecture_2_CQS_1-300x105.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS-Simple-Architecture_2_CQS_1-190x67.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS-Simple-Architecture_2_CQS_1.png 788w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>2. Separated Commands and Queries with shared domain model</em></p>
+<p>If you are working with legacy codebase this is probably the hardest step as separating side-effects from reads in spaghetti code is not easy. In the same time this step is probably the most beneficial one; it gives you an overview where your side effects are performed.</p>
+<blockquote><p>Hold for a&nbsp;second! You are talking about CQS, CQRS, but you have not defined what Command or Query is!</p></blockquote>
+<p>That is true. Let’s define them now! I’ll give you my personal, intuitive definition of Command and Query here. It is not exhaustive and definitely should be deepened before implementation.</p>
+<p><strong>Command</strong> &#8211; First of all,firing command is the only way to change the state of our system. Commands are responsible for introducing <strong>all</strong> changes to the system. If there was no command, the state of the system remains unchanged! Command should not return any value. I&nbsp;implement it as a&nbsp;pair of classes: <span class="font-family:courier">Command and CommandHandler</span>. Command is just a&nbsp;plain object that is used by <span class="font-family:courier">CommandHandler</span> as input value (parameters) for some operation it represents. In my vision command is simply invoking particular operations in Domain Model (not necessarily one operation per command).</p>
+<p><strong>Query </strong> &#8211; Analogically, query is a&nbsp;READ operation. It reads the state of the system, filters, aggregates and transforms data to deliver it in the most useful format. It can be executed multiple times and will not affect the state of the system. I&nbsp;used to implement them as one class with some <span class="font-family:courier">Execute</span> (&#8230;) method, but now I&nbsp;think that separation to Query and <span class="font-family:courier">QueryHandler/QueryExecutor</span> may be useful.</p>
+<p>Going back to the diagram, I&nbsp;need to clarify one more thing; I’ve smuggled here one additional change, Model became the Domain Model. By the Model I&nbsp;understand a&nbsp;group of containers for data while Domain Model encapsulates essential complexity of business rules. This change is not directly affecting our further considerations as we are interested in architectural stuff here. But it is worth mentioning that despite the fact that the command is responsible for changing state of our system, the essential complexity should be placed in the Domain Model.</p>
+<p>OK, now we can add new command or write new query. After short period of time it will be quite obvious that Domain Model that works well for writing is not necessarily perfect for reading. It is not a&nbsp;huge discovery that it would be easier to read data from some specialized model:</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_CQS_WRITE_READ.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5498" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_CQS_WRITE_READ-300x105.png" alt="CQRS_CQS_WRITE_READ" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_CQS_WRITE_READ-300x105.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_CQS_WRITE_READ-190x66.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_CQS_WRITE_READ.png 789w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>3. Separated READ and WRITE models</em></p>
+<p>We can introduce separated model, mapped by ORM and use it to build our queries, but in some scenarios, especially when ORM introduces overhead, it would be useful to simplify this architecture:</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_4_CQS_NoREAD.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5497" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_4_CQS_NoREAD-300x128.png" alt="CQRS_4_CQS_NoREAD" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_4_CQS_NoREAD-300x128.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_4_CQS_NoREAD-190x81.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_4_CQS_NoREAD.png 789w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>4. Queries can retrieve data directly from database</em></p>
+<p>I think that this particular change should be well thought out!<br />
+Now the problem is that we still have READ and WRITE model separated only at the logical level as both of them shares common database. That means we have separated READ model but most likely it is virtualized by some DB Views, in better case Materialized Views. This solution is OK if our system is not suffering from performance issues and we remember to update our queries along with WRITE model changes.<br />
+The next step is to introduce fully separated data models:</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_5_CQRS.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5496" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_5_CQRS-300x122.png" alt="CQRS_5_CQRS" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_5_CQRS-300x122.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_5_CQRS-190x77.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_5_CQRS.png 778w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>5. CQRS &#8211; READ model is updated by events</em></p>
+<p>From my point of view this is the first model that fulfills original idea presented by Greg Young, now we can call it CQRS. But there is also a&nbsp;catch! I’ll write about it later.</p>
+<h3>CQRS != Event Sourcing</h3>
+<p>Event Sourcing is an idea that was presented along with CQRS, and is often identified as a&nbsp;part of CQRS. The idea of ES is simple: our domain is producing <a href="http://martinfowler.com/eaaDev/DomainEvent.html" target="_blank">events</a> that represent every change made in system. If we take every event from the beginning of the system and replay them on initial state, we will get to the current state of the system. It works similarly to transactions on our bank accounts; we can start with empty account, replay every single transaction and (hopefully) get the current balance. So, if we have stored all events, we can always get the current state of the system.</p>
+<p style="text-align: center;"><a href="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_6_CQRS_ES.png" rel="lightbox"><img class="aligncenter size-medium wp-image-5495" src="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_6_CQRS_ES-300x140.png" alt="CQRS_6_CQRS_ES" srcset="https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_6_CQRS_ES-300x140.png 300w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_6_CQRS_ES-190x88.png 190w, https://www.future-processing.com/blog/wp-content/uploads/2015/04/CQRS_6_CQRS_ES.png 787w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+<em>6. Event Sourcing</em></p>
+<p>While ES is a&nbsp;great method to store the state of the system is not necessarily required in CQRS. For CQRS, it is not important how Domain Model is actually stored and this is just one of options.</p>
+<h3>READ and WRITE model</h3>
+<p>The idea of separated models seems to be quite clear and straight-forward when we are reading about CQRS but it seems to be unclear during implementation. What is the responsibility of WRITE model? Should I&nbsp;put all data into my READ model? Well, it depends!</p>
+<h4>WRITE model</h4>
+<p>I like to think about my WRITE model as about the heart of the system. This is my domain model, it makes business decisions, it is important. The fact that it makes business decisions is crucial here, because it defines major responsibility of this model: it represents the true state of the system, the state that can be used to make valuable decisions. This model is the only source of truth.<br />
+If you want to know more about designing domain models I&nbsp;recommend reading about <a href="http://domaindrivendesign.org/" target="_blank">Domain Driven Design</a> <del datetime="2015-04-10T08:41:28+00:00">technique </del>philosophy.</p>
+<h4>READ model</h4>
+<p>In my first attempt to CQRS I&nbsp;have used WRITE model to build queries and … it was OK (or at least worked). After some time we reach the point in the project where some of our queries were taking a&nbsp;lot of time. Why? Because we are programmers and optimization is our second nature. We designed our model to be normalized, so our READ side were suffering from JOINs. We were forced to pre calculate some data for reports to keep it fast. That was an quite interesting, because in fact we have introduced a&nbsp;cache. And from my point of view this is the best definition of READ model: it is a&nbsp;legitimate cache. Cache that is there by design, and is not introduced because we have to release project and non-functional requirements are not met.<br />
+The label READ model can suggest that it is stored in a&nbsp;single database and that’s it. In fact READ model can be very complex, you can use graph database to store social connections and RDBMS to store financial data. This is the place where polyglot persistence is natural.<br />
+Designing good READ side is a&nbsp;series of trade offs, e.g. pure normalization vs pure denormalization. If your project is small and most of your reads can be efficiently made against WRITE model, it will be a&nbsp;waste of time and computing power to create copy. But if your WRITE model is stored as a&nbsp;series of events, it would be useful to have every required data available without replaying all events from scratch. This process is called <a href="http://martinfowler.com/bliki/EagerReadDerivation.html" target="_blank">Eager Read Derivation</a> and from my point of view it is one of the most complex things in CQRS, this is a&nbsp;catch I&nbsp;have mentioned earlier. As I&nbsp;said before, READ side is a&nbsp;form of cache and as we know:</p>
+<blockquote><p>There are only two hard things in Computer Science: cache invalidation and naming things.<br />
+– Phil Karlton</p></blockquote>
+<p>I said that it is a&nbsp;&#8222;legitimate&#8221; cache, this word has also additional meaning for me that in our system we have obvious reasons to update the cache. Events produced by our Domain Model are natural reasons to update READ model.</p>
+<h4>Eventual Consistency</h4>
+<p>If our models are physically separated, it is natural that synchronisation will take some time, but this time somehow is very scary for the business people. In my projects, if every part was working correctly, time when READ model was out-of-sync was usually negligible. However, we will definitely need to take time hazards into account during development in more complex systems. Well designed UI is also very helpful in handling eventual consistency.<br />
+We have to assume that even if READ model is updated synchronously with WRITE model, user will still make decisions based on stale data. Unfortunately, we can not be sure that when data is presented to user (eg. rendered in web browser) it is still fresh.</p>
+<h3>How I&nbsp;can introduce CQRS to my project?</h3>
+<p>I believe that CQRS is so simple that there is no need to introduce any framework. You can start with the simplest implementation with less than 100 lines and then extend it with new features when it will be needed. You do not need any magic, because CQRS is simple and it simplifies the software. Here is my implementation:</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public interface ICommand
+{
+}
+
+public interface ICommandHandler&lt;in TCommand&gt;
+    where TCommand : ICommand
+{
+    void Execute(TCommand command);
+}
+
+public interface ICommandDispatcher
+{
+    void Execute&lt;TCommand&gt;(TCommand command) 
+        where TCommand : ICommand;
+}
+</pre>
+<p>I defined couple of interfaces that describes commands and theirs execution environment. Why have I&nbsp;used two interfaces to define single command? I&nbsp;did this because I&nbsp;want to keep parameters as plain object that can be created without any dependencies. My command handler will be able to request dependencies from DI container and there will be no need to instantiate it by hand anywhere except in tests. In fact, ICommand interface works here rather as marker that tells developer if he can use this class as a&nbsp;command.</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public interface IQuery&lt;TResult&gt;
+{
+}
+
+public interface IQueryHandler&lt;in TQuery, out TResult&gt;
+    where TQuery : IQuery&lt;TResult&gt;
+{
+    TResult Execute(TQuery query);
+}
+
+public interface IQueryDispatcher
+{
+    TResult Execute&lt;TQuery, TResult&gt;(TQuery query)
+        where TQuery : IQuery&lt;TResult&gt;;
+}
+</pre>
+<p>This definition is very similar with one difference that <span class="font-family:consolas">IQuery</span> interface also defines the result type of the query. This is not the most elegant solution but as a&nbsp;result returned types are verified at the compile time.</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public class CommandDispatcher : ICommandDispatcher
+{
+    private readonly IDependencyResolver _resolver;
+
+    public CommandDispatcher(IDependencyResolver resolver)
+    {
+        _resolver = resolver;
+    }
+
+    public void Execute&lt;TCommand&gt;(TCommand command)
+        where TCommand : ICommand
+    {
+        if(command == null)
+        {
+            throw new ArgumentNullException(&quot;command&quot;);
+        }
+
+        var handler = _resolver.Resolve&lt;ICommandHandler&lt;TCommand&gt;&gt;();
+
+        if (handler == null)
+        {
+            throw new CommandHandlerNotFoundException(typeof(TCommand));
+        }
+
+        handler.Execute(command);
+    }
+}
+</pre>
+<p>My <span class="font-family:courier">CommandDispatcher</span> is relatively short and it has only one responsibility to instantiate proper command handler for a&nbsp;given command and execute it. To avoid handcrafting commands registrations and instantiations I&nbsp;have used DI container to do this for me, but if you do not want to use any DI container you can still do that on your own. I&nbsp;said that this implementation will be simple and I&nbsp;believe it will. The only problem may be noise introduced by generic types and it may be discouraging at the beginning. This implementation is definitely simple in usage. Here is a&nbsp;sample command and handler:</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public class SignOnCommand : ICommand
+{
+    public AssignmentId Id { get; private set; }
+    public LocalDateTime EffectiveDate { get; private set; }
+
+    public SignOnCommand(AssignmentId assignmentId, LocalDateTime effectiveDate)
+    {
+        Id = assignmentId;
+        EffectiveDate = effectiveDate;
+    }
+}
+
+public class SignOnCommandHandler : ICommandHandler&lt;SignOnCommand&gt;
+{
+    private readonly AssignmentRepository _assignmentRepository;
+    private readonly SignOnPolicyFactory _factory;
+
+    public SignOnCommandHandler(AssignmentRepository assignmentRepository,   
+                                SignOnPolicyFactory factory)
+    {
+        _assignmentRepository = assignmentRepository;
+        _factory = factory;
+    }
+
+    public void Execute(SignOnCommand command)
+    {
+        var assignment = _assignmentRepository.GetById(command.Id);
+
+        if (assignment == null)
+        {
+            throw new MeaningfulDomainException(&quot;Assignment not found!&quot;);
+        }
+
+        var policy = _factory.GetPolicy();
+
+        assignment.SignOn(command.EffectiveDate, policy);
+    }
+}
+</pre>
+<p>To execute this command you only need to pass <span class="font-family:courier">SignOnCommand</span> to the dispatcher:</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">_commandDispatcher.Execute(new SignOnCommand(new AssignmentId(rawId), effectiveDate));</pre>
+<p>And that’s it. <span class="font-family:courier">QueryDispatcher</span> looks very similar, the only difference is that it returns some data and thanks to generic stuff I&nbsp;wrote earlier Execute method returns strongly typed result:</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public class QueryDispatcher : IQueryDispatcher
+{
+    private readonly IDependencyResolver _resolver;
+
+    public QueryDispatcher(IDependencyResolver resolver)
+    {
+        _resolver = resolver;
+    }
+
+    public TResult Execute&lt;TQuery, TResult&gt;(TQuery query)
+        where TQuery : IQuery&lt;TResult&gt;
+    {
+        if (query == null)
+        {
+            throw new ArgumentNullException(&quot;query&quot;);
+        }
+
+        var handler = _resolver.Resolve&lt;IQueryHandler&lt;TQuery, TResult&gt;&gt;();
+
+        if (handler == null)
+        {
+            throw new QueryHandlerNotFoundException(typeof(TQuery));
+        }
+
+        return handler.Execute(query);
+    }
+}
+</pre>
+<p>As I&nbsp;said, this implementation is very extensible. For example, we can introduce transactions to our command dispatcher without changing its original implementation by creating decorator:</p>
+<pre class="prettyprint linenumstrigger linenums lang-c#">public class TransactionalCommandDispatcher : ICommandDispatcher
+{
+    private readonly ICommandDispatcher _next;
+    private readonly ISessionFactory _sessionFactory;
+
+    public TransactionalCommandDispatcher(ICommandDispatcher next, 
+            ISessionFactory sessionFactory)
+    {
+        _next = next;
+        _sessionFactory = sessionFactory;
+    }
+
+    public void Execute&lt;TCommand&gt;(TCommand command)
+        where TCommand : ICommand
+    {
+        using (var session = _sessionFactory.GetSession())
+            using (var tx = session.BeginTransaction())
+            {
+                try
+                {
+                    _next.Execute(command);
+                    tx.Commit();
+                }
+                catch
+                {
+                    tx.Rollback();
+                    throw;
+                }
+            }
+    }
+}
+</pre>
+<p>By using this pseudo-aspects we can easily extend both Command and Query dispatchers. You can add Fire-and-Forget manner of command execution as well as extensive logging.</p>
+<p>As you can see CQRS is not that hard, the basic idea is clear but you need to follow some rules. I&nbsp;am sure that this post is not covering the entire thing, that is why I&nbsp;want to recommend you some more reading.</p>
+<h3>Bibliography</h3>
+<ol>
+<li><a href="https://cqrs.files.wordpress.com/2010/11/cqrs_documents.pdf" target="_blank">CQRS Documents by Greg Young</a></li>
+<li><a href="http://www.udidahan.com/2009/12/09/clarified-cqrs/" target="_blank">Clarified CQRS by Udi Dahan</a></li>
+<li><a href="http://martinfowler.com/bliki/CQRS.html" target="_blank">CQRS by Martin Fowler</a></li>
+<li><a href="http://martinfowler.com/bliki/CommandQuerySeparation.html" target="_blank">CQS by Martin Fowler</a></li>
+<li><a href="https://vaughnvernon.co/?page_id=168" target="_blank">&#8222;Implementing DDD&#8221; by Vaughn Vernon</a></li>
+</ol>
+<div class="clear"></div></div>
+                
+                <section id="new-social-shares">
+                    <h2>Like this post? Share it:</h2>
+
+                    <div class="buttons">
+                        <input id="no-social" name="social-select" type="radio" checked>
+
+                        <!-- Facebook -->
+                        <input id="facebook-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="facebook-social"></label>
+                            <div class="content">
+                                <div class="fb-like" data-href="https://www.future-processing.pl/blog/cqrs-simple-architecture/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                            </div>
+                        </div>
+
+                        <!-- Twitter -->
+                        <input id="twitter-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="twitter-social"></label>
+                            <div class="content">
+								<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://www.future-processing.pl/blog/cqrs-simple-architecture/" data-text="CQRS &#8211; Simple architecture" data-count="none">Tweet</a>
+								<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+							</div>
+                        </div>
+
+                        <!-- Google+ -->
+                        <input id="google-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="google-social"></label>
+                            <div class="content">
+                                <div class="g-plusone" data-size="medium"></div>
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <input id="linkedin-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="linkedin-social"></label>
+                            <div class="content">
+                                <script src="//platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                <script type="IN/Share" data-counter="right"></script>
+                            </div>
+                        </div>
+
+                        <!-- Reddit -->
+                        <input id="reddit-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="reddit-social"></label>
+                            <div class="content">
+                                <script type="text/javascript" src="//www.redditstatic.com/button/button1.js"></script>
+                            </div>
+                        </div>
+
+                        <!-- Digg -->
+                        <input id="digg-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="digg-social">
+                                <a href="//digg.com/submit?phase=2&url=https://www.future-processing.pl/blog/cqrs-simple-architecture/" target="_blank">Share on Digg</a>
+                            </label>
+                        </div>
+
+                        <!-- Stumbleupon -->
+                        <input id="stumbleupon-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="stumbleupon-social">
+                                <a href="//www.stumbleupon.com/submit?url=https://www.future-processing.pl/blog/cqrs-simple-architecture/&title=CQRS &#8211; Simple architecture" target="_blank">Share on Stumbleupon</a>
+							</label>
+                        </div>
+
+                        <!-- DZone
+                        <input id="dzone-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="dzone-social">
+								<a href="http://www.addtoany.com/add_to/dzone?linkurl=https://www.future-processing.pl/blog/cqrs-simple-architecture/&linkname=CQRS &#8211; Simple architecture">Share on DZone</a>
+							</label>
+                        </div>-->
+
+                        <!-- Delicious -->
+                        <input id="delicious-social" name="social-select" type="radio">
+                        <div class="social-button">
+                            <label for="delicious-social">
+                                <a href="#" onclick="window.open('//delicious.com/save?v=5&provider={your-company}&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;">Save on Delicious</a>
+                            </label>
+                        </div>
+
+                        <label for="no-social" id="close-social">Close</label>
+                    </div>
+                </section>
+
+                <section id="post-meta">
+                    <div class="categories-tags">
+                        <h2>Category</h2>
+                        <span itemprop="articleSection"><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/software-craftsmanship/" rel="category tag">Software Craftsmanship</a></span>
+                    </div>
+                                            <div class="categories-tags">
+                            <h2>Tags</h2>
+                            															<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/architecture/" title="Architecture">Architecture</a>															<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/command/" title="Command">Command</a>															<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/cqrs/" title="CQRS">CQRS</a>							                            <span itemprop="keywords" content="Architecture, Command, CQRS, "></span>
+                        </div>
+                                    </section>
+
+                <section id="related-posts">
+
+                                        
+                    
+                        <h2>Related posts</h2>
+                        <div class="loop">
+
+                            
+
+                    
+                            
+                                
+	<article id="post-2034">
+		<div class="post-thumbnail white-corner">
+						<h3 class="date">
+				28.04.2014			</h3>
+			<a class="full-box" href="https://www.future-processing.pl/blog/software-architecture-design-and-documentation/" title="Read Software Architecture: design and documentation">
+				Read Software Architecture: design and documentation			</a>
+			<div class="post-meta">
+				<span>
+					28.04.2014				</span>
+				&nbsp;
+																																						Krzysztof Szabelski																									</div>
+		</div>
+		<h2>
+			<a href="https://www.future-processing.pl/blog/software-architecture-design-and-documentation/" title="Read Software Architecture: design and documentation">
+				Software Architecture: design and documentation			</a>
+		</h2>
+		<div class="post-excerpt">
+			<p>In my previous article I&nbsp;tried to present the role of the application architect on a&nbsp;general level. Today I’d like to focus on his specific&hellip;</p>
+		</div>
+		<a class="arrow" href="https://www.future-processing.pl/blog/software-architecture-design-and-documentation/" title="Read more">Read more</a>
+	</article>
+
+                                                                
+                            
+                                
+	<article id="post-2732">
+		<div class="post-thumbnail white-corner">
+						<h3 class="date">
+				7.10.2013			</h3>
+			<a class="full-box" href="https://www.future-processing.pl/blog/devday-2013/" title="Read Dev Day 2013">
+				Read Dev Day 2013			</a>
+			<div class="post-meta">
+				<span>
+					7.10.2013				</span>
+				&nbsp;
+																																						Paweł Rychlik																									</div>
+		</div>
+		<h2>
+			<a href="https://www.future-processing.pl/blog/devday-2013/" title="Read Dev Day 2013">
+				Dev Day 2013			</a>
+		</h2>
+		<div class="post-excerpt">
+			<p>We, software developers, are crazy. Surprisingly, that’s what we have been told at the very beginning of the DevDay conference. The speaker, an ABB&hellip;</p>
+		</div>
+		<a class="arrow" href="https://www.future-processing.pl/blog/devday-2013/" title="Read more">Read more</a>
+	</article>
+
+                                                                
+                                                        
+                            
+                    </div>
+                </section>
+
+                <section id="post-comments">
+                    <a name="comments"></a>
+                    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = "blogtechnicznyfutureprocessing";
+        var disqus_title = "CQRS - Simple architecture";
+        var disqus_url = "https://www.future-processing.pl/blog/cqrs-simple-architecture/";
+        var disqus_identifier = "blogtechnicznyfutureprocessing-5454";
+    </script>                </section>
+			</div>
+
+			
+<div id="sidebar-post" class="sidebar l1 m1 s2" role="complementary">
+	<aside id="post-author" class="widget">
+																	<div class="author">
+						<div class="author-avatar">
+							<img alt='' src='https://secure.gravatar.com/avatar/f45b646403304dca84b766e140c8dcbc?s=48&#038;d=https%3A%2F%2Fwww.future-processing.com%2Fblog%2Fwp-content%2Fthemes%2Ffuture%2Fimages%2Fnophoto.png&#038;r=g' srcset='https://secure.gravatar.com/avatar/f45b646403304dca84b766e140c8dcbc?s=96&amp;d=https%3A%2F%2Fwww.future-processing.com%2Fblog%2Fwp-content%2Fthemes%2Ffuture%2Fimages%2Fnophoto.png&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' />						</div>
+						<h5 itemprop="author">Mateusz Stasch</h5>
+					    <div class="description">
+					    						    						    </div>
+				    </div>
+										</aside>
+
+	<aside id="post-categories" class="widget">
+		<h4 class="widget-title">Categories</h4>
+		<ul class="post-categories">
+	<li><a href="https://www.future-processing.pl/blog/category/processes-standards-and-quality/software-craftsmanship/" rel="category tag">Software Craftsmanship</a></li></ul>	</aside>
+
+			<aside id="future_popularposts-2" class="widget widget_future_popularposts"><h4 class="widget-title">Most popular posts</h4><ul><li><a href="https://www.future-processing.pl/blog/in-the-world/">In the world of Big Data</a></li><li><a href="https://www.future-processing.pl/blog/639/">Auto Load Dispatcher Timer</a></li><li><a href="https://www.future-processing.pl/blog/devday-2013/">Dev Day 2013</a></li><li><a href="https://www.future-processing.pl/blog/code-contracts/">Code Contracts</a></li><li><a href="https://www.future-processing.pl/blog/persist-your-data-activeandroid-and-parse/">Persist your data, ActiveAndroid and Parse</a></li></ul></aside>	</div>
+			<div class="clear"></div>
+		</article>
+
+        </div>
+        <footer id="page-footer" role="contentinfo">
+                            <div id="footer-widgets" class="container sidebar">
+                    <aside id="future_tags-3" class="widget widget_future_tags">
+	<h4 class="widget-title">
+		Tags
+	</h4>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/project-management/" title="Project Management">Project Management</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/best-practices/" title="Best Practices">Best Practices</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/security-2/" title="Security">Security</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/agile-2/" title="Agile">Agile</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/net/" title=".NET">.NET</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/databases-2/" title="databases">databases</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/architecture/" title="Architecture">Architecture</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/javascript/" title="JavaScript">JavaScript</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/scrum/" title="Scrum">Scrum</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/automation/" title="Automation">Automation</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/java/" title="Java">Java</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/cloud-2/" title="cloud">cloud</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/performance-2/" title="performance">performance</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/android/" title="Android">Android</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/c/" title="C#">C#</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/testing/" title="testing">testing</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/nosql/" title="nosql">nosql</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/process-management/" title="Process Management">Process Management</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/docker/" title="Docker">Docker</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/wif/" title="WIF">WIF</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/functional-programming/" title="functional programming">functional programming</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/tricks-tips/" title="Tricks &amp; Tips">Tricks &amp; Tips</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/php/" title="PHP">PHP</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/azure/" title="Azure">Azure</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/v8/" title="V8">V8</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/static-code-analysis-2/" title="Static Code Analysis">Static Code Analysis</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/code-review/" title="Code Review">Code Review</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/certificates/" title="Certificates">Certificates</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/unitests/" title="Unitests">Unitests</a>
+		<a rel="nofollow" href="https://www.future-processing.pl/blog/tag/continuous-integration/" title="continuous integration">continuous integration</a>
+</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h4 class="widget-title">Recent posts</h4>		<ul>
+					<li>
+				<a href="https://www.future-processing.pl/blog/switch-from-c-to-java/">Switch from C# to Java at work</a>
+						</li>
+					<li>
+				<a href="https://www.future-processing.pl/blog/changing-mindset-with-functional-concepts/">Changing mindset with functional concepts</a>
+						</li>
+					<li>
+				<a href="https://www.future-processing.pl/blog/angular-2-fundamentals-based-on-angular-cli-created-app/">Angular 2+ fundamentals based on angular-cli created app</a>
+						</li>
+					<li>
+				<a href="https://www.future-processing.pl/blog/a-curious-case-of-memory-leak-in-a-node-js-app/">A curious case of memory leak in a node.js app</a>
+						</li>
+					<li>
+				<a href="https://www.future-processing.pl/blog/analyzing-code-base-through-git-history/">Analyzing code base through GIT history</a>
+						</li>
+				</ul>
+		</aside>		<aside id="future_archive-2" class="widget widget_future_archive">
+	<h4 class="widget-title">
+		Archives
+	</h4>
+	<ul>	<li><a href='https://www.future-processing.pl/blog/2017/03/'>March 2017</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2017/01/'>January 2017</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/11/'>November 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/10/'>October 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/09/'>September 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/08/'>August 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/07/'>July 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/06/'>June 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/05/'>May 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/04/'>April 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/03/'>March 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2016/01/'>January 2016</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/12/'>Grudzień 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/11/'>November 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/10/'>October 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/09/'>September 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/08/'>August 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/07/'>July 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/06/'>June 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/05/'>May 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/04/'>April 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/03/'>March 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/02/'>February 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2015/01/'>January 2015</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/12/'>Grudzień 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/11/'>November 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/10/'>October 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/09/'>September 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/08/'>August 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/07/'>July 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/06/'>June 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/05/'>May 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/04/'>April 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/03/'>March 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/02/'>February 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2014/01/'>January 2014</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/12/'>Grudzień 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/11/'>November 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/10/'>October 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/09/'>September 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/08/'>August 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/07/'>July 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/06/'>June 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2013/05/'>May 2013</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2012/10/'>October 2012</a></li>
+	<li><a href='https://www.future-processing.pl/blog/2012/07/'>July 2012</a></li>
+
+	</ul>
+</aside>                </div>
+            
+            <div class="separator"></div>
+
+            <div id="copyrights" class="container" role="contentinfo">
+                 © 2004-2017 Technical Blog &#8211; Future Processing. All rights reserved.&nbsp;
+                 <a title="Privacy policy" href="https://www.future-processing.pl/blog/polityka-prywatnosci/">Privacy policy</a>
+                 <a title="Cookies" href="https://www.future-processing.pl/blog/cookies/">Cookies</a>
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+
+             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+             var disqus_shortname = 'blogtechnicznyfutureprocessing';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var s = document.createElement('script'); s.async = true;
+                s.type = 'text/javascript';
+                s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+                (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+            }());
+        </script>
+
+        <script type="text/javascript">
+            window.___gcfg = {lang: 'pl'};
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = '//apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+
+        <script type='text/javascript' src='https://www.future-processing.com/blog/wp-content/plugins/wp-charts//js/functions.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://www.future-processing.pl/blog/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://blogtechnicznyfutureprocessing.disqus.com/embed.js?ver=4.6.1'></script>
+
+        	
+	<!-- Google Tag Manager -->
+	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NNN6QX"
+	                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NNN6QX');</script>
+	<!-- End Google Tag Manager -->
+
+
+    </body>
+</html>

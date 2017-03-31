@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://culttt.com/2014/11/26/strategies-integrating-bounded-contexts -->
+<html lang="en" class="wf-museosans-n7-active wf-active gr__culttt_com"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Strategies for Integrating Bounded Contexts | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="./Strategies for Integrating Bounded Contexts _ Culttt_files/style.css">
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico">
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png">
+    <script async="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/strategies-integrating-bounded-contexts"></script><script src="./Strategies for Integrating Bounded Contexts _ Culttt_files/cb=gapi.loaded_1" async=""></script><script src="./Strategies for Integrating Bounded Contexts _ Culttt_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/plusone.js" gapi_processed="true"></script><script id="facebook-jssdk" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/all.js"></script><script id="twitter-wjs" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/widgets.js"></script><script type="text/javascript" async="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/ga.js"></script><script src="./Strategies for Integrating Bounded Contexts _ Culttt_files/zsc1foq.js" type="text/javascript" async=""></script><script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Over the last couple of weeks we have looked at a couple of important topics in the world of Domain Driven Design. First we looked at what are Domain Model">
+<meta name="robots" content="noodp">
+<link rel="canonical" href="http://culttt.com/2014/11/26/strategies-integrating-bounded-contexts/">
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strategies for Integrating Bounded Contexts | Culttt">
+<meta property="og:description" content="Over the last couple of weeks we have looked at a couple of important topics in the world of Domain Driven Design. First we looked at what are Domain Model">
+<meta property="og:url" content="http://culttt.com/2014/11/26/strategies-integrating-bounded-contexts/">
+<meta property="og:site_name" content="Culttt">
+<meta property="article:publisher" content="http://facebook.com/culttt">
+<meta property="article:author" content="https://www.facebook.com/phillyyyy">
+<meta property="article:section" content="Code">
+<meta property="article:published_time" content="2014-11-26T07:00:47+00:00">
+<meta property="article:modified_time" content="2014-11-27T15:53:19+00:00">
+<meta property="og:updated_time" content="2014-11-27T15:53:19+00:00">
+<meta property="fb:admins" content="893905018">
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/11/Strategies-for-Integrating-Bounded-Contexts.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Over the last couple of weeks we have looked at a couple of important topics in the world of Domain Driven Design. First we looked at what are Domain Model">
+<meta name="twitter:title" content="Strategies for Integrating Bounded Contexts | Culttt">
+<meta name="twitter:site" content="@culttt">
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/11/Strategies-for-Integrating-Bounded-Contexts.jpg">
+<meta name="twitter:creator" content="@philipbrown">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://s.gravatar.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Culttt » Strategies for Integrating Bounded Contexts Comments Feed" href="http://culttt.com/2014/11/26/strategies-integrating-bounded-contexts/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Strategies for Integrating Bounded Contexts _ Culttt_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="jetpack_css-css" href="./Strategies for Integrating Bounded Contexts _ Culttt_files/jetpack.css" type="text/css" media="all">
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/jquery.js"></script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/jquery-migrate.min.js"></script>
+<link rel="https://api.w.org/" href="http://culttt.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.6.1">
+<link rel="shortlink" href="http://wp.me/p2tyoR-1jP">
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F11%2F26%2Fstrategies-integrating-bounded-contexts%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F11%2F26%2Fstrategies-integrating-bounded-contexts%2F&amp;format=xml">
+
+<link rel="dns-prefetch" href="http://v0.wordpress.com/">
+<link rel="dns-prefetch" href="http://i0.wp.com/">
+<link rel="dns-prefetch" href="http://i1.wp.com/">
+<link rel="dns-prefetch" href="http://i2.wp.com/">
+<style type="text/css">img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  <script type="text/javascript" async="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/embed.js"></script><style type="text/css">.tk-museo-sans{font-family:"museo-sans",sans-serif;}</style><style type="text/css">@font-face{font-family:museo-sans;src:url(https://use.typekit.net/af/585dc6/00000000000000000000e805/27/l?subset_id=2&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/585dc6/00000000000000000000e805/27/d?subset_id=2&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/585dc6/00000000000000000000e805/27/a?subset_id=2&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;}</style><script async="" type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/count.js"></script><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Strategies for Integrating Bounded Contexts _ Culttt_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Strategies for Integrating Bounded Contexts _ Culttt_files/services.css"><script type="text/javascript" charset="utf-8" async="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/button.ea31e9a5ca2c3a1514ec1ed6530e2669.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><script src="./Strategies for Integrating Bounded Contexts _ Culttt_files/alfie.f51946af45e0b561c60f768335c9eb79.js" async="" charset="UTF-8"></script></head>
+  <body class="" data-gr-c-s-loaded="true" cz-shortcut-listen="true">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="http://culttt.com/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="http://culttt.com/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="http://culttt.com/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="http://culttt.com/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="http://culttt.com/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="http://culttt.com/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="http://culttt.com/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="http://culttt.com/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="http://culttt.com/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="http://culttt.com/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">Strategies for Integrating Bounded Contexts</strong></span></span></span></span>
+              
+                
+                  <h1>Strategies for Integrating Bounded Contexts</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on November 26th, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="./Strategies for Integrating Bounded Contexts _ Culttt_files/Strategies-for-Integrating-Bounded-Contexts.jpg" alt="Strategies for Integrating Bounded Contexts" width="584" height="334"><br>
+Over the last couple of weeks we have looked at a couple of important topics in the world of Domain Driven Design.</p>
+<p>First we looked at <a href="http://culttt.com/2014/11/12/domain-model-domain-driven-design">what are Domain Models</a> and why are they so important to Domain Driven Design. A Domain Model is the focused knowledge around a specific problem to the business.</p>
+<p>Next we looked at <a href="http://culttt.com/2014/11/19/bounded-contexts-context-maps-domain-driven-design">Bounded Contexts</a> and how they fit into the Context Map of an entire organisation. A Bounded Context is the boundary around a specific Domain Model, whereas a Context Map is the global view of how each individual Bounded Context fits into the bigger picture.</p>
+<p>The vast majority of all Domain Driven Design applications will have multiple Bounded Contexts. This could mean integration with third-party services, but it is also often the case that you need to integrate with existing legacy applications or simply other models of the same application.</p>
+<p>There are many technical ways to integrate Bounded Contexts, third-party services and legacy applications. </p>
+<p>However, choosing the correct integration pattern is extremely important because it will have a big impact on the design of your application and the future of your project as a whole.</p>
+<p>In today’s article we’re going to at the strategies for integrating Bounded Contexts in a Domain Driven Design application, the pros and cons of each and how to come to a decision of which to choose for your project.</p>
+<h2>Recap of Domain Models and Bounded Contexts</h2>
+<p>Before I jump into talking about the integration strategies, first we’ll do a quick recap of Domain Models and Bounded Contexts.</p>
+<p>A Domain Model is the focused knowledge around a particular problem. This includes the Entities, Value Objects and relationships between the things of importance that are specific to that particular problem.</p>
+<p>A Bounded Context is the boundary around a Domain Model. The language, names of objects and ideas within the Bounded Context should form a unified model of the problem at hand. The Bounded Context shields the internal model from the complexity of the outside world. Each Bounded Context should have an internal model that is clearly understood by all members of the team. This is important because in most organisations, certain terms will have different meanings across departments or areas of the business.</p>
+<p>And Finally the Context Map is the global view of how each Bounded Context fits together within the application or organisation. This bigger picture view of the problem ensures that the goal of the application is not lost in the focused details of each Bounded Context. It’s better to have a true internal model for each Bounded Context with a layer of translation, rather than having monolithic objects that try to fill the role of different, often conflicting jobs.</p>
+<h2>The reality of software projects</h2>
+<p>In an ideal world, every software project would start with a blank slate, a clean git repository and no legacy headaches.</p>
+<p>However, in the real world, these types of projects are very rare.</p>
+<p>The vast majority of all non-trivial application development projects will require multiple Bounded Contexts.</p>
+<p>When working with an existing organisation, it is usually the case that you will be required to integrate with legacy applications or third-party services.</p>
+<p>It is therefore your job to integrate these legacy applications and third-party systems with the new project you are working on.</p>
+<p>The problem with these types of integrations is, there are an unlimited number of situations you can find yourself in. For example, you could find yourself at the mercy of a third-party service, or perhaps you are responsible for providing an interface to an existing legacy system.</p>
+<p>There are a number of different integration strategies that I will discuss in this article. Each strategy has it positives and negatives.</p>
+<p>Choosing the correct integration strategy for your particular situation is extremely important because it’s going to have a major impact on the design of your application and it’s future development path.</p>
+<h2>A simple example of translation</h2>
+<p>Before we jump into discussing the integration strategies, first I will explain a simple example so we’re all on the same page as to why this is important.</p>
+<p>Imagine that we’ve been brought into an existing offline retailer as Consultants to create a new online Ecommerce website for the company.</p>
+<p>The company has been trading on the high street for a number of years now and so it already has existing stock management, distribution and financial systems.</p>
+<p>Our assignment is to create an Ecommerce website that can interface with the company’s existing systems to provide a seamless new channel for sales.</p>
+<p>Our new development project is clearly a new Bounded Context within the scope of the Context Map of the Organisation as a whole. We aren’t going to be extending any of the current systems, but we must consume and return data from each of the existing systems in order to make the new channel seamlessly integrate into the current architecture.</p>
+<p>We will need to be able to request data from the stock management system in order to know what should be made available to purchase online.</p>
+<p>We will also need to send data to the distribution and financial systems so orders are processed correctly and the company’s accountancy liabilities are dealt with.</p>
+<p>If this was a real life situation, we would probably have to interface with a whole load of other existing systems and third-party services. However, hopefully you can see the requirement for being able to integrate with existing systems through a layer of translation.</p>
+<p>Whilst in a theoretical idea world, it would be wonderful if Ecommerce sales, stock management, distribution and finances were all part of a single unified model. However, the complexity of such a system would quickly get out of control.</p>
+<p>Instead we need to find ways of integrating through a layer of translation. The following are 7 ways of doing just that.</p>
+<h2>Shared Kernel</h2>
+<p>The first integration strategy is to use a Shared Kernel, where a part of the Domain Model is shared between different teams working on the same application.</p>
+<p>The Shared Kernel integration strategy is beneficial because it reduces the amount of duplicated code and the overhead of translation layers.</p>
+<p>However a Shared Kernel will only work if all of the development teams work to share and communicate the requirements of the shared code. This means that the design of the Shared Kernel can’t evolve as quickly as other aspects of the application, and any changes must be agreed upon by members of each development team.</p>
+<p>Each development team will also have to take equal responsibility for maintaining unit tests that ensure the functionality of the Shared Kernel remains consistent.</p>
+<p>When there is a shared requirement of a certain aspect of the application, and relatively high levels of communication and low levels of political unrest, the Shared Kernel integration strategy can be easier to implement than many of the other integration strategies we will look at in this article.</p>
+<p>An example of using a Shared Kernel in our Ecommerce analogy might be that the Customer Model is shared between the Transaction team and the Online Marketing team.</p>
+<p>The Transaction team requires the Customer Model to associate transactions and request payments, whereas the online marketing team requires the Customer Model to send marketing information to stimulate new purchases and keep the customer informed of new products and offers.</p>
+<p>Instead of both teams writing their own Customer Model and translating back and forth, they could have a shared Customer Model that they both rely on to satisfy their requirements. This means that the teams need to agree on the specification of the Customer Model, and any future changes must be signed off by both teams.</p>
+<h2>Customer / Supplier</h2>
+<p>A common relationship between two software applications is where a downstream application requires data from an upstream application, but the upstream application is not dependent on the downstream application. </p>
+<p>This relationship can play out in a number of different ways.</p>
+<p>Firstly the downstream team can be at the mercy of the upstream team if the upstream team make changes without thinking about the requirements of the downstream team.</p>
+<p>Alternatively the upstream team can feel restricted on the design and implementation of their application if the downstream team has control over how their application evolves.</p>
+<p>The downstream team is dependent on the upstream team, but the upstream team is not responsible for the deliverables of the downstream team. In order to make this situation work, the two teams need to have a formal relationship where the requirements of the downstream team are considered, as would occur in any Customer / Supplier relationship.</p>
+<p>This means future development priorities, tasks and requests need to be agreed upon by members of both teams.</p>
+<p>Both teams should also agree upon a series of Acceptance tests that will ensure the interface of the boundary remains consistent. This means the upstream team can evolve their application as long as the interface remains consistent, and the downstream team can be assured that they won’t wake up one day to find their application broken because of the upstream team’s changes.</p>
+<p>The Customer / Supplier relationship works best when both teams’ goals are aligned or they both report to the same layer of management. When the goals of the two teams are not aligned, the relationship will often break down.</p>
+<p>An example of the Customer / Supplier relationship from our Ecommerce analogy could be where a separate Analysis application must take data from the Ecommerce application in order to generate customer recommendations and predict new trends.</p>
+<p>The Analysis application is in a different Bounded Context because it is likely to be written in a different programming language and use very different tools and persistent storage than that of the Ecommerce application.</p>
+<p>The Analysis application is relying on the Ecommerce application to send data of the transactions, customer profiles and tracking events in order to run the analysis.</p>
+<p>The two teams should agree upon on the type, format and method of the data and how it should be transferred downstream. If both teams are aligned in increasing the success and profitability of the company as a whole, this relationship is more likely to work.</p>
+<h2>Conformist</h2>
+<p>When the relationship between the Customer and the Supplier is not mutually aligned, the downstream team can end up in a situation where it is at the mercy of the upstream team.</p>
+<p>This can occur in the same company where each team reports to a very different layer of management with different goals, or where the Supplier has many small Customers and so each individual Customer is not particularly important to the Supplier.</p>
+<p>This means that the upstream team has no motivation to provide any kind of priority or even consistency to the downstream team. The downstream team just has to accept the fact that they cannot rely on the upstream team and a consistent interface at the boundary of the relationship.</p>
+<p>If the value of the upstream application is critically important to the downstream application, the only way to continue is to adhere to the whims of the upstream team.</p>
+<p>This will mean that the upstream team will be completely in control of the integration of the two applications and so the downstream will have to just make it work.</p>
+<p>This will cause the downstream team to have a deep dependency on the upstream team and so any future development will be constrained by the situation.</p>
+<p>An example of the Conformist relationship in our Ecommerce analogy could be where we rely on a third-party delivery service to send packages to our customers. In order to update our customers on the location of their progress we need to request updates from the third-party delivery service.</p>
+<p>However, we are only one of thousands of customers of the delivery service, and so they have no motivation to provide the data we require. The delivery service is also free to change their API at any point, potentially breaking our integration.</p>
+<p>In this situation we are completely at the mercy of the delivery service and so we have to take responsibility for accepting their data and the interface they provide for requesting it. If the interface changes, it is our responsible to conform to those changes and evolve our integration to meet those requirements.</p>
+<h2>Anti-Corruption Layer</h2>
+<p>When working with existing legacy applications or third-party services, the integration requirements can often be complex. Whilst it might initially seem easier to avoid the integration all together, if the other system is critically important, there is probably more value in the integration.</p>
+<p>Integrating other systems is difficult because the other model can leak through the integration and begin to affect the new system’s own model. By adapting to the existing systems too much, we can end up with a new system that has an inconsistent or unsuitable model to solve it’s own problem.</p>
+<p>In order to prevent the model from an external system leaking internally to a new system, we need a way to translate the data between the two models. This will often mean ensuring the context of how the data is interpreted is consistent in the new model, but also preventing unnecessary data from leaking through the integration.</p>
+<p>To achieve this we need to create an isolating layer that can communicate with the existing interfaces of the legacy and third-party systems, and then translate that back forth between our internal model as requests come and go.</p>
+<p>An example of using an Anti-Corruption Layer in our Ecommerce analogy could be linking an existing customer loyalty scheme from the offline retail system with a customer loyalty scheme for our new online retail system.</p>
+<p>If an existing offline customer has an existing loyalty balance with the retailer and she starts to shop online, those two systems should know about each other so the customer does not lose out on benefits or discounts.</p>
+<p>However the two systems are likely going to have different models and different supporting data that is not relevant between the two systems.</p>
+<p>In order to keep the two systems consistent we can set up Web Hooks (<a href="http://culttt.com/2014/01/22/webhooks">What are Webhooks?</a>) that will send a request whenever the customer loyalty balance is updated on one side of the relationship.</p>
+<p>When a request is sent or received, it will travel through the Anti-Corruption Layer to be translated into the appropriate form for the receiving application. This means data can flow between the two systems without having to change the existing offline system and without having to conform the new system to the model of the existing system.</p>
+<h2>Open Host</h2>
+<p>When your application will need to integrate with another system, you will typically provide a layer of translation to make this integration easier.</p>
+<p>However when your application needs to integrate with many other existing systems, having all of these layers of translation can start to become unwieldily.</p>
+<p>Instead of providing one off translation layers for each integration, instead provide a set of Services that can be consumed by any other Bounded Context.</p>
+<p>By providing your application as a series of Services you reduce the overhead required to maintain multiple layers of translation.</p>
+<p>These Services are likely to evolve as new functionality is created internally, or requested from external consumers. However for one off integration requirements, a single layer of translation will be better than compromising the generic Service interface.</p>
+<p>An example of using the Open Host strategy in our Ecommerce application could be providing data about the customers and transaction as a series of Services.</p>
+<p>Many of the existing applications inside the company will likely need to request data from our application in order to fulfil orders or restock products, and so instead of providing layers of translation for each system, we can provide a set of Services to reduce this overhead.</p>
+<h2>Published Language</h2>
+<p>Integrating the model from an external system into a new system is difficult because you don’t want your new system to be influenced by the design of the external system.</p>
+<p>The external system’s model is likely going to be incompatible with your internal model and so accepting their model as a data exchange language can mean your model is dependent and influenced by the external system.</p>
+<p>Instead of relying on the model as a data exchange language, we should use common published languages such as JSON or XML that allow data to be translated between different systems using a common format.</p>
+<p>An example of using a Published Language in our Ecommerce analogy could be updating an Messaging application whenever a new transaction occurs. The Messaging application will send emails to the customer to notify them of product updates, discounts and related products.</p>
+<p>We can ensure that the data is compatible with the Messaging application by sending details of the request as JSON or XML. By sending the data as a common format we aren’t forcing the Messaging system to conform to our internal model or make compromises in how they design their internal application.</p>
+<h2>Separate Ways</h2>
+<p>In many situations, integration can be more costly than it is worth. This could be due a Conformist situation, or perhaps the other team is just too difficult to work with.</p>
+<p>If the functionality or data between the two system is not inherently linked, just because it is related, does not mean that it should be integrated.</p>
+<p>Instead of trying to force an integration, allowing two systems to go their Separate Ways is another attractive option.</p>
+<p>An example of Separate Ways in our Ecommerce analogy could be that of reporting financial statistic to the retailer’s existing finance department. The finance department uses an archaic system that would take a long time to integrate with our new ecommerce application.</p>
+<p>The Financial liabilities of the company need to be reported weekly, monthly, quarterly and yearly. Investing time to build integration between the two systems for real-time reporting is superfluous to our needs.</p>
+<p>Instead we can simply ensure that financial reports can be exported in the required format. This means the two systems don’t need to be integrated at all and so we lose the overhead of trying to make the integration work.</p>
+<h2>Conclusion</h2>
+<p>It’s almost inevitable that you will need to integrate with existing applications, third-party services or multiple Bounded Context in any non-trivial application.</p>
+<p>Many different types of companies around the world can reap huge productivity benefits from integrating new and existing systems within their organisation.</p>
+<p>Understanding the common patterns around integration will be a huge asset when you are tasked to integrate two very different systems.</p>
+<p>Integration is also something important to keep in mind when developing a totally new application. By providing your application as a series of services, you will make any future integration requirements with your application a whole lot easier!</p>
+<p>The power of software is really magnified when distributed systems can be integrated and leveraged as a whole. Understanding how to integrate applications under different circumstances is very valuable knowledge to possess.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt="" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/780290abdc8ae52adddecac01690747e" srcset="http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x" class="avatar avatar-100 photo grav-hashed grav-hijack" height="100" width="100" id="grav-780290abdc8ae52adddecac01690747e-0">                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com/">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/tweet_button.89bd237a86eeb0e8b1de842a4b88b09b.en.html" style="position: static; visibility: visible; width: 60px; height: 20px;"></iframe>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/1FegrZjPbq3.html" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/1FegrZjPbq3(1).html" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like fb_iframe_widget" data-send="false" data-layout="box_count" data-show-faces="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=&amp;container_width=156&amp;href=http%3A%2F%2Fculttt.com%2F2014%2F11%2F26%2Fstrategies-integrating-bounded-contexts&amp;layout=box_count&amp;locale=en_GB&amp;sdk=joey&amp;send=false&amp;show_faces=false"><span style="vertical-align: bottom; width: 51px; height: 40px;"><iframe name="f13a8747aff7f2" width="1000px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/like.html" style="border: none; visibility: visible; width: 51px; height: 40px;" class=""></iframe></span></div>
+                    </div>
+                    <div class="social-button">
+                      <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" width="100%" id="I0_1490149328040" name="I0_1490149328040" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/fastbutton.html" data-gapiattached="true" title="+1"></iframe></div>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      
+                      <script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/button.js"></script><iframe scrolling="no" frameborder="0" class="buffer-button" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/saved_resource.html" style="border: none; width: 55px; height: 62px;"></iframe>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread"><iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 1175px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/11/26/strategies-integrating-bounded-contexts/';
+var disqus_identifier = '5073 http://culttt.com/?p=5073';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "Strategies for Integrating Bounded Contexts";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=5073';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&amp;zoneid=1408&amp;key=cff8e425093b59be72c2fd4e27ce192a&amp;serve=C6SIVKV&amp;placement=cultttcom&amp;circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com/">Yellow Flag</a></p>
+    </footer>
+  
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/photon.js"></script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/wpgroho.js"></script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/wp-embed.min.js"></script>
+<script type="text/javascript" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/e-201643.js" async="" defer=""></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'5073',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '5073' ]);
+</script>
+
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 13:54:49 by W3 Total Cache --></div></div><img src="./Strategies for Integrating Bounded Contexts _ Culttt_files/g.gif" alt=":)" width="6" height="5" id="wpstats"><iframe style="display: none;" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/saved_resource(2).html"></iframe><iframe name="oauth2relay257149008" id="oauth2relay257149008" src="./Strategies for Integrating Bounded Contexts _ Culttt_files/postmessageRelay.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><span style="border-radius: 3px; text-indent: 20px; width: auto; padding: 0px 4px 0px 0px; text-align: center; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; font-size: 11px; line-height: 20px; font-family: &quot;Helvetica Neue&quot;, Helvetica, sans-serif; color: rgb(255, 255, 255); background: url(&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMzBweCIgd2lkdGg9IjMwcHgiIHZpZXdCb3g9Ii0xIC0xIDMxIDMxIj48Zz48cGF0aCBkPSJNMjkuNDQ5LDE0LjY2MiBDMjkuNDQ5LDIyLjcyMiAyMi44NjgsMjkuMjU2IDE0Ljc1LDI5LjI1NiBDNi42MzIsMjkuMjU2IDAuMDUxLDIyLjcyMiAwLjA1MSwxNC42NjIgQzAuMDUxLDYuNjAxIDYuNjMyLDAuMDY3IDE0Ljc1LDAuMDY3IEMyMi44NjgsMC4wNjcgMjkuNDQ5LDYuNjAxIDI5LjQ0OSwxNC42NjIiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+PHBhdGggZD0iTTE0LjczMywxLjY4NiBDNy41MTYsMS42ODYgMS42NjUsNy40OTUgMS42NjUsMTQuNjYyIEMxLjY2NSwyMC4xNTkgNS4xMDksMjQuODU0IDkuOTcsMjYuNzQ0IEM5Ljg1NiwyNS43MTggOS43NTMsMjQuMTQzIDEwLjAxNiwyMy4wMjIgQzEwLjI1MywyMi4wMSAxMS41NDgsMTYuNTcyIDExLjU0OCwxNi41NzIgQzExLjU0OCwxNi41NzIgMTEuMTU3LDE1Ljc5NSAxMS4xNTcsMTQuNjQ2IEMxMS4xNTcsMTIuODQyIDEyLjIxMSwxMS40OTUgMTMuNTIyLDExLjQ5NSBDMTQuNjM3LDExLjQ5NSAxNS4xNzUsMTIuMzI2IDE1LjE3NSwxMy4zMjMgQzE1LjE3NSwxNC40MzYgMTQuNDYyLDE2LjEgMTQuMDkzLDE3LjY0MyBDMTMuNzg1LDE4LjkzNSAxNC43NDUsMTkuOTg4IDE2LjAyOCwxOS45ODggQzE4LjM1MSwxOS45ODggMjAuMTM2LDE3LjU1NiAyMC4xMzYsMTQuMDQ2IEMyMC4xMzYsMTAuOTM5IDE3Ljg4OCw4Ljc2NyAxNC42NzgsOC43NjcgQzEwLjk1OSw4Ljc2NyA4Ljc3NywxMS41MzYgOC43NzcsMTQuMzk4IEM4Ljc3NywxNS41MTMgOS4yMSwxNi43MDkgOS43NDksMTcuMzU5IEM5Ljg1NiwxNy40ODggOS44NzIsMTcuNiA5Ljg0LDE3LjczMSBDOS43NDEsMTguMTQxIDkuNTIsMTkuMDIzIDkuNDc3LDE5LjIwMyBDOS40MiwxOS40NCA5LjI4OCwxOS40OTEgOS4wNCwxOS4zNzYgQzcuNDA4LDE4LjYyMiA2LjM4NywxNi4yNTIgNi4zODcsMTQuMzQ5IEM2LjM4NywxMC4yNTYgOS4zODMsNi40OTcgMTUuMDIyLDYuNDk3IEMxOS41NTUsNi40OTcgMjMuMDc4LDkuNzA1IDIzLjA3OCwxMy45OTEgQzIzLjA3OCwxOC40NjMgMjAuMjM5LDIyLjA2MiAxNi4yOTcsMjIuMDYyIEMxNC45NzMsMjIuMDYyIDEzLjcyOCwyMS4zNzkgMTMuMzAyLDIwLjU3MiBDMTMuMzAyLDIwLjU3MiAxMi42NDcsMjMuMDUgMTIuNDg4LDIzLjY1NyBDMTIuMTkzLDI0Ljc4NCAxMS4zOTYsMjYuMTk2IDEwLjg2MywyNy4wNTggQzEyLjA4NiwyNy40MzQgMTMuMzg2LDI3LjYzNyAxNC43MzMsMjcuNjM3IEMyMS45NSwyNy42MzcgMjcuODAxLDIxLjgyOCAyNy44MDEsMTQuNjYyIEMyNy44MDEsNy40OTUgMjEuOTUsMS42ODYgMTQuNzMzLDEuNjg2IiBmaWxsPSIjYmQwODFjIj48L3BhdGg+PC9nPjwvc3ZnPg==&quot;) 3px 50% / 14px 14px no-repeat rgb(189, 8, 28); position: absolute; opacity: 1; z-index: 8675309; display: none; cursor: pointer; border: none; -webkit-font-smoothing: antialiased; top: 276px; left: 199px;">Save</span></body></html>

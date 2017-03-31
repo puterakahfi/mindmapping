@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" class="wf-loading">
+  <head>
+    <meta charset='UTF-8'>
+    <title>What are Aggregates in Domain Driven Design? | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://culttt.com/wp-content/themes/culttt-v3/style.css" />
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png"/>
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="As an application begins to grow in complexity, the web of interconnected Entities and associations can begin to get overwhelming. What was once a simple s"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://culttt.com/2014/12/17/aggregates-domain-driven-design/" />
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What are Aggregates in Domain Driven Design? | Culttt" />
+<meta property="og:description" content="As an application begins to grow in complexity, the web of interconnected Entities and associations can begin to get overwhelming. What was once a simple s" />
+<meta property="og:url" content="http://culttt.com/2014/12/17/aggregates-domain-driven-design/" />
+<meta property="og:site_name" content="Culttt" />
+<meta property="article:publisher" content="http://facebook.com/culttt" />
+<meta property="article:author" content="https://www.facebook.com/phillyyyy" />
+<meta property="article:section" content="Code" />
+<meta property="article:published_time" content="2014-12-17T07:00:54+00:00" />
+<meta property="article:modified_time" content="2014-12-15T21:25:00+00:00" />
+<meta property="og:updated_time" content="2014-12-15T21:25:00+00:00" />
+<meta property="fb:admins" content="893905018" />
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/12/What-are-Aggregates-in-Domain-Driven-Design.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="As an application begins to grow in complexity, the web of interconnected Entities and associations can begin to get overwhelming. What was once a simple s" />
+<meta name="twitter:title" content="What are Aggregates in Domain Driven Design? | Culttt" />
+<meta name="twitter:site" content="@culttt" />
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/12/What-are-Aggregates-in-Domain-Driven-Design.jpg" />
+<meta name="twitter:creator" content="@philipbrown" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Culttt &raquo; What are Aggregates in Domain Driven Design? Comments Feed" href="http://culttt.com/2014/12/17/aggregates-domain-driven-design/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='http://culttt.com/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://culttt.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='http://wp.me/p2tyoR-1kV' />
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F12%2F17%2Faggregates-domain-driven-design%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F12%2F17%2Faggregates-domain-driven-design%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//v0.wordpress.com'>
+<link rel='dns-prefetch' href='//i0.wp.com'>
+<link rel='dns-prefetch' href='//i1.wp.com'>
+<link rel='dns-prefetch' href='//i2.wp.com'>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  </head>
+  <body class="">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">What are Aggregates in Domain Driven Design?</strong></span></span></span></span>
+              
+                
+                  <h1>What are Aggregates in Domain Driven Design?</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on December 17th, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="http://i0.wp.com/culttt.com/wp-content/uploads/2014/12/What-are-Aggregates-in-Domain-Driven-Design.jpg" alt="What are Aggregates in Domain Driven Design" data-recalc-dims="1" /><br />
+As an application begins to grow in complexity, the web of interconnected Entities and associations can begin to get overwhelming. What was once a simple set of Entities and relationships is suddenly a sprawling	mess of objects and associations.</p>
+<p>When the number of interconnected objects increases, so too does the surface area for interacting with those objects. Certain objects will have child objects, and those objects will have further related objects.</p>
+<p>Domain Driven Design is all about allowing the model to drive the direction of development. When the complexity of the object graph inevitably becomes overwhelming, it’s time to take a closer look at the model to understand how to resolve the issues.</p>
+<p>Aggregates are a way to calm this complexity by reducing the web of connected objects into a single unit. In today’s article we’re going to be looking at Aggregates, how they work and why you would want to use them in a Domain Driven Design project.</p>
+<h2>The problem of complexity</h2>
+<p>When code becomes too complex, bugs can creep in through ambiguity.</p>
+<p>In a simple application, all objects will have equal precedence within the application. For example, if we were creating a forum application, we would probably have <code>Thread</code>, <code>Post</code> and <code>Reply</code> objects. Each <code>Thread</code> would have child <code>Post</code> objects and certain <code>Post</code> objects would have <code>Reply</code> objects.</p>
+<p>When all objects have equal precedence, we could very easily select any of these objects straight from the database using their unique id:</p>
+<pre class="brush: php; title: ; notranslate" title="">
+$reply = Reply::find(4526);
+</pre>
+<p>However, what about the rules of our application? If only certain users can post in a <code>Thread</code> how do we prevent them from adding a <code>Reply</code> object to a <code>Post</code>? What about when a <code>Thread</code> is deleted? How do we deal with all of the child <code>Post</code> objects and their <code>Reply</code> objects?</p>
+<h2>Looking to the model for answers</h2>
+<p>In any non-trivial application, there is likely going to be a lot of rules around how the objects should interact and coexist together. In reality, these objects should not have equal precedence in the application.</p>
+<p>A <code>Post</code> object only really make sense in the context of a <code>Thread</code> because we can’t have a <code>Post</code> without a <code>Thread</code>, and we definitely can’t have a <code>Reply</code> without a <code>Post</code>.</p>
+<p>When all objects have equal precedence we have created a massive interface for interacting with those objects. However, when we actually take a closer look at the model we are building, it does not make sense for those objects to be globally accessible. If an object shouldn’t appear outside of the context of it’s parent, we have no business having access to it in isolation.</p>
+<h2>Aggregates are the answer</h2>
+<p>An Aggregate is a cluster of associated object that we treat as a single unit. Each Aggregate has a single root Entity and a boundary that marks what is inside and what is outside of the Aggregate.</p>
+<p>The root Entity is the only Entity that is globally accessible in the application. In the example from above, <code>Thread</code> would be the root Entity.</p>
+<p>Inside the boundary we would have all of the associated objects of this Aggregate. For example, we would have the <code>Post</code> and <code>Reply</code> Entities as well as any other Entities or Value Objects that make up the Aggregate.</p>
+<p>The <code>Post</code> and <code>Reply</code> objects can hold references to each other internally to the Aggregate, but no other external object can hold a reference to any object internally to the Aggregate that is not the root Entity.</p>
+<p>The only way to access the <code>Post</code> and <code>Reply</code> Entities is to retrieve the <code>Thread</code> root Entity and traverse it’s associated objects.</p>
+<h2>The benefits of using Aggregates</h2>
+<p>To fully appreciate why you would want to structure your application around Aggregates, I think its important to first understand the benefits of using them. Without understanding the benefits, Aggregates can seem a bit like a needless artificial constraint in your code.</p>
+<p>I think there are basically 3 benefits to using Aggregates.</p>
+<h3>A simple interface</h3>
+<p>The first big benefit of Aggregates is that it greatly reduces the interface you have to a certain segment of your application. </p>
+<p>Imagine it’s your first day on the job of our imaginary forum development project and you’ve been tasked with making a change to some existing functionality.</p>
+<p>Having unrestricted power to manipulate any object in the application is only going to lead to bad things happening. Without the constraints of an Aggregate a developer without the understanding of the business rules of the application will likely break those rules or expose an object that should not be exposed.</p>
+<p>By having a single point of entry to the Aggregate, we can constrain access to the internal objects and maintain the harmony inside of the boundary. Having a single point of entry also makes it much easier to work with the code for the first time because there is no ambiguity of how you are supposed to access the child objects of a parent object.</p>
+<h3>Maintaining the invariants</h3>
+<p>The real beauty of Domain Driven applications is the ability to model the business rules of the application through invariants. An invariant is a rule that must remain consistent.</p>
+<p>For example, if there was a business rule that stated only users who had posted in a thread could reply to other posts, we would be able to maintain this rule through the constraint of the Aggregate.</p>
+<p>Maintaining the invariants of a unit of objects would be difficult without the constraint of the Aggregate boundary. If we didn’t have the boundary it would be very easy to simply create a new <code>Reply</code> and associate it with a <code>Post</code>.</p>
+<p>Instead, the <code>Thread</code> can be in charge of deciding whether a <code>Reply</code> is valid or not, and so any attempt to circumvent this rule would be stopped.</p>
+<h3>Removing Objects</h3>
+<p>A common problem when building web applications is how to safely remove objects. When we don’t have constraints around what objects can be associated with other objects, this can start to become scary.</p>
+<p>For example, if we didn’t restrict the associations of the application and we wanted to delete a <code>Thread</code>, how could we be certain that we wouldn’t be breaking other associations by cascading through the relationships of the <code>Thread</code>?</p>
+<p>If we were to delete just the <code>Thread</code> we would be leaving lots of <code>Post</code> and <code>Reply</code> garbage objects in the database that no longer had context within the application.</p>
+<p>Using Aggregates removes this problem because all objects within the boundary of the Aggregate are forbidden from being associated with any object outside of the boundary. This means we can delete the <code>Thread</code> and all of it’s internal associated objects without being scared of breaking associations across the application.</p>
+<h2>Conclusion</h2>
+<p>Thinking about your application as a set of main Aggregates can really clarify your thought process when designing what you need to build. Aggregates attract responsibility and capture a lot of the nuances of an association between two objects so it is not lost in complexity.</p>
+<p>Now of course, there will always be ways to circumvent the constraints that an Aggregate puts in place. But I think the process of identifying and modelling your application in terms of Aggregates can really help distill the problem you are trying to tackle.</p>
+<p>Using Aggregates also makes it a lot easier to make certain decisions. For example, it can be difficult to decide who has responsibility for creating and maintaining the relationship between Entities. When you identify and implement Aggregates you don’t have to ponder this decision because the model should have already guided you to the right answer.</p>
+<p>So even if your next project isn’t a fully blown Domain Driven Design application, I would encourage you to start thinking about your code in terms of Aggregates and where the lines of responsibility between objects fall.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt='' src='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=100&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' />                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="culttt" data-lang="en" data-related="philipbrown" data-count="vertical">Tweet</a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root"></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like" data-send="false" data-layout="box_count" data-show-faces="false"></div>
+                    </div>
+                    <div class="social-button">
+                      <g:plusone size="tall"></g:plusone>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      <a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="culttt" >Buffer</a>
+                      <script type="text/javascript" src="http://static.bufferapp.com/js/button.js"></script>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-5037">
+        <div id="dsq-comment-header-5037" class="dsq-comment-header">
+            <cite id="dsq-cite-5037">
+                <span id="dsq-author-user-5037">pixelBender67</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5037" class="dsq-comment-body">
+            <div id="dsq-comment-message-5037" class="dsq-comment-message"><p>Love your articles mate</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5066">
+        <div id="dsq-comment-header-5066" class="dsq-comment-header">
+            <cite id="dsq-cite-5066">
+                <a id="dsq-author-user-5066" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5066" class="dsq-comment-body">
+            <div id="dsq-comment-message-5066" class="dsq-comment-message"><p>Thank you Tony :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-5042">
+        <div id="dsq-comment-header-5042" class="dsq-comment-header">
+            <cite id="dsq-cite-5042">
+                <span id="dsq-author-user-5042">Juukie14</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5042" class="dsq-comment-body">
+            <div id="dsq-comment-message-5042" class="dsq-comment-message"><p>Very clear explained :)</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5067">
+        <div id="dsq-comment-header-5067" class="dsq-comment-header">
+            <cite id="dsq-cite-5067">
+                <a id="dsq-author-user-5067" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5067" class="dsq-comment-body">
+            <div id="dsq-comment-message-5067" class="dsq-comment-message"><p>Thank you sir :D</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-5131">
+        <div id="dsq-comment-header-5131" class="dsq-comment-header">
+            <cite id="dsq-cite-5131">
+                <span id="dsq-author-user-5131">Matt</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5131" class="dsq-comment-body">
+            <div id="dsq-comment-message-5131" class="dsq-comment-message"><p>Interesting stuff and very well explained. I wonder: how big can or may aggregates become? Thinking about a model where you have a very hierarchical relationship between the things. Say you have an application for tracking Visits to certain Places. Places are locations in Sectors. Sectors are located in Areas. Areas are locations in Countries. Now what would be the Aggregate? A country? An area? A sector? Maybe a country is too big, because getting the country (from the db, eventually) to get access to all Visits, might mean getting many tens of thousands of them in one time. Maybe area is better? Sector too small? :)</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-5132">
+        <div id="dsq-comment-header-5132" class="dsq-comment-header">
+            <cite id="dsq-cite-5132">
+                <a id="dsq-author-user-5132" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5132" class="dsq-comment-body">
+            <div id="dsq-comment-message-5132" class="dsq-comment-message"><p>Thank you :)</p>
+<p>I would look to the business for the answer. Often when there seems like there is an unclear decision its simply because you don&#8217;t quite understand how the business thinks about the problem in question.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-5134">
+        <div id="dsq-comment-header-5134" class="dsq-comment-header">
+            <cite id="dsq-cite-5134">
+                <span id="dsq-author-user-5134">Matt</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5134" class="dsq-comment-body">
+            <div id="dsq-comment-message-5134" class="dsq-comment-message"><p>So what you mean is: what is more important? Like if Areas are a more important aspect of the whole model compared to sectors, you would take areas as the aggregate. Countries would probably be too generic (the business is not about countries itself).</p>
+<p>Great series of articles!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-5145">
+        <div id="dsq-comment-header-5145" class="dsq-comment-header">
+            <cite id="dsq-cite-5145">
+                <a id="dsq-author-user-5145" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-5145" class="dsq-comment-body">
+            <div id="dsq-comment-message-5145" class="dsq-comment-message"><p>Yeah exactly! Try and find what the business values and where it naturally places emphasis and let that guide your decision making. Yeah I&#8217;d imagine Countries is too big, but if you were struggling to decide between Areas and Sectors, I would look deeper into the business to truly understand the intricacies.</p>
+<p>Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2014/12/24/factories-domain-driven-design/' rel='external nofollow' class='url'>What are Factories in Domain Driven Design? | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2014/12/29/enforcing-business-rules-aggregate-instantiation/' rel='external nofollow' class='url'>Enforcing Business Rules through Aggregate Instantiation | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2015/01/05/using-aggregates-gateway-functionality/' rel='external nofollow' class='url'>Using Aggregates as a Gateway to Functionality | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-6198">
+        <div id="dsq-comment-header-6198" class="dsq-comment-header">
+            <cite id="dsq-cite-6198">
+                <span id="dsq-author-user-6198">Ahesanali Suthar</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6198" class="dsq-comment-body">
+            <div id="dsq-comment-message-6198" class="dsq-comment-message"><p>Hi Philip,</p>
+<p>Nice post and found very interesting information in object oriented direction.</p>
+<p>But i have one question for below sentences:</p>
+<p>&#8220;If we were to delete just the Thread we would be leaving lots of Post andReply garbage objects in the database that no longer had context within the application.&#8221;</p>
+<p>Can above functionality  not be achieved by database relationship?</p>
+<p>I mean if i design database relationship in such a way that it will delete it&#8217;s dependent records when it&#8217;s parent got deleted.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-6202">
+        <div id="dsq-comment-header-6202" class="dsq-comment-header">
+            <cite id="dsq-cite-6202">
+                <a id="dsq-author-user-6202" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6202" class="dsq-comment-body">
+            <div id="dsq-comment-message-6202" class="dsq-comment-message"><p>Thank you :)</p>
+<p>Yes that is absolutely correct. However, I tend to not use database relationships.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/12/17/aggregates-domain-driven-design/';
+var disqus_identifier = '5141 http://culttt.com/?p=5141';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "What are Aggregates in Domain Driven Design?";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=5141';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&zoneid=1408&key=cff8e425093b59be72c2fd4e27ce192a&serve=C6SIVKV&placement=cultttcom&circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com">Yellow Flag</a></p>
+    </footer>
+  </body>
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPhp.js?ver=3.0.9b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://culttt.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['tab-size'] = 2;
+	SyntaxHighlighter.all();
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2016Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'5141',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '5141' ]);
+</script>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 14:26:13 by W3 Total Cache -->

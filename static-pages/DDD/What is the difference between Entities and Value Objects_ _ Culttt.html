@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" class="wf-loading">
+  <head>
+    <meta charset='UTF-8'>
+    <title>What is the difference between Entities and Value Objects? | Culttt</title>
+    <!--[if lte IE 8]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="http://culttt.com/wp-content/themes/culttt-v3/style.css" />
+    <style>
+  .ad-packs{
+    padding: 0 0 5px 0;
+    background-color: #e3e3e3;
+    border-top: 5px solid #94b84b;
+    border-bottom: 5px solid #789F49;
+  }
+  h3.supported{
+    margin: 0 0 10px 0 auto;
+    font-weight: normal;
+    font-size: 10px;
+    color: #ededed;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+.bsap,
+.one .bsa_it_ad {
+  font-size: 10px;
+  font-family: Verdana, "Helvetica Neue", Helvetica, sans-serif !important;
+  line-height: 1.5;
+}
+.bsa_it_i {
+    text-align: center;
+}
+.bsa_it_d {
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+.bsa_it_p {
+    padding: 6px 0 0;
+}
+    </style>
+    <link rel="shortcut icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="http://culttt.com/wp-content/themes/culttt-v3/images/apple-touch-icon.png"/>
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'zsc1foq',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width">
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.7.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="As you begin to delve deeper and deeper into the world of computer programming you start to uncover lots and lots of new theories and concepts. One such id"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://culttt.com/2014/04/30/difference-entities-value-objects/" />
+<link rel="publisher" href="https://plus.google.com/b/105545788844824874492/105545788844824874492"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What is the difference between Entities and Value Objects? | Culttt" />
+<meta property="og:description" content="As you begin to delve deeper and deeper into the world of computer programming you start to uncover lots and lots of new theories and concepts. One such id" />
+<meta property="og:url" content="http://culttt.com/2014/04/30/difference-entities-value-objects/" />
+<meta property="og:site_name" content="Culttt" />
+<meta property="article:publisher" content="http://facebook.com/culttt" />
+<meta property="article:author" content="https://www.facebook.com/phillyyyy" />
+<meta property="article:tag" content="PHP" />
+<meta property="article:section" content="Code" />
+<meta property="article:published_time" content="2014-04-30T06:00:52+00:00" />
+<meta property="article:modified_time" content="2014-09-14T11:15:21+00:00" />
+<meta property="og:updated_time" content="2014-09-14T11:15:21+00:00" />
+<meta property="fb:admins" content="893905018" />
+<meta property="og:image" content="http://culttt.com/wp-content/uploads/2014/04/What-is-the-difference-between-Entities-and-Value-Objects.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="As you begin to delve deeper and deeper into the world of computer programming you start to uncover lots and lots of new theories and concepts. One such id" />
+<meta name="twitter:title" content="What is the difference between Entities and Value Objects? | Culttt" />
+<meta name="twitter:site" content="@culttt" />
+<meta name="twitter:image" content="http://culttt.com/wp-content/uploads/2014/04/What-is-the-difference-between-Entities-and-Value-Objects.jpg" />
+<meta name="twitter:creator" content="@philipbrown" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Culttt &raquo; What is the difference between Entities and Value Objects? Comments Feed" href="http://culttt.com/2014/04/30/difference-entities-value-objects/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/culttt.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='http://culttt.com/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.4 - Universal disabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-6105422-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://culttt.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://culttt.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://culttt.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='http://wp.me/p2tyoR-176' />
+<link rel="alternate" type="application/json+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F04%2F30%2Fdifference-entities-value-objects%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://culttt.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fculttt.com%2F2014%2F04%2F30%2Fdifference-entities-value-objects%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//v0.wordpress.com'>
+<link rel='dns-prefetch' href='//i0.wp.com'>
+<link rel='dns-prefetch' href='//i1.wp.com'>
+<link rel='dns-prefetch' href='//i2.wp.com'>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+  </head>
+  <body class="">
+
+    <header class="header">
+      <div class="grid">
+        <div class="col-12">
+          <span class="brand"><a href="/">Culttt</a></span>
+          <a class="icons twitter" href="https://twitter.com/culttt"><i class="icon-twitter"></i></a>
+          <a class="icons facebook" href="https://www.facebook.com/culttt"><i class="icon-facebook-squared"></i></a>
+          <a class="icons googleplus" href="https://plus.google.com/105545788844824874492"><i class="icon-gplus"></i></a>
+          <a class="icons rss" href="http://culttt.com/feed/"><i class="icon-rss"></i></a>
+        </div>
+        <div class="col-12">
+          <form class="search" action="/search">
+              <input type="text" name="q" placeholder="Search...">
+              <span><button class="icon-search"></button></span>
+          </form>
+        </div>
+      </div><!--/grid-->
+    </header><!--/header-->
+
+    <div class="wrapper">
+      <div class="grid">
+
+    <div class="wrapper">
+      <div class="grid">
+
+        <nav class="navigation col-3">
+  <a href="/business"><i class="icon-chart-line"></i> <span class="item">Business</span></a>
+  <a href="/code"><i class="icon-code"></i> <span class="item">Code</span></a>
+  <a href="/design"><i class="icon-brush"></i> <span class="item">Design</span></a>
+  <a href="/mobile"><i class="icon-mobile"></i> <span class="item">Mobile</span></a>
+  <a href="/random"><i class="icon-address"></i> <span class="item">Random</span></a>
+  <a href="/reviews"><i class="icon-book-open"></i> <span class="item">Reviews</span></a>
+  <a href="/social"><i class="icon-chat"></i> <span class="item">Social</span></a>
+  <a href="/strategy"><i class="icon-chart-area"></i> <span class="item">Strategy</span></a>
+</nav>
+        <div class="col-21 wrapper-big">
+
+          <div class="col-19 wrapper-small">
+
+            <div class="content col-16 single">
+
+              <span class="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://culttt.com/" rel="v:url" property="v:title">Home</a> <span class="seperator">»</span> <span rel="v:child" typeof="v:Breadcrumb"><a href="http://culttt.com/code/" rel="v:url" property="v:title">Code</a> <span class="seperator">»</span> <strong class="breadcrumb_last">What is the difference between Entities and Value Objects?</strong></span></span></span></span>
+              
+                
+                  <h1>What is the difference between Entities and Value Objects?</h1>
+
+                  <div class="meta">
+                    <span>Posted by <a href="http://culttt.com/author/philipbrown/" title="Posts by Philip Brown" rel="author">Philip Brown</a> on April 30th, 2014</span>
+                  </div>
+
+                  <div class="post">
+                    <p><img src="http://i1.wp.com/culttt.com/wp-content/uploads/2014/04/What-is-the-difference-between-Entities-and-Value-Objects.jpg" alt="What is the difference between Entities and Value Objects" data-recalc-dims="1" /><br />
+As you begin to delve deeper and deeper into the world of computer programming you start to uncover lots and lots of new theories and concepts.</p>
+<p>One such idea that isn&#8217;t intuitively obvious is Value Objects. A Value Object is an important concept in <a href="http://en.wikipedia.org/wiki/Domain-driven_design" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://en.wikipedia.org/wiki/Domain-driven_design', 'Domain Driven Design (DDD)']);" >Domain Driven Design (DDD)</a>.</p>
+<p>For this article you don&#8217;t have to worry about Domain Driven Design or any of the related concepts as I&#8217;m going to be purely focusing on Value Objects. However, hopefully this is the first step towards a better understand of Domain Driven Design in general.</p>
+<p><strong>Note:</strong> I&#8217;m assuming you have a good understanding of <a href="http://en.wikipedia.org/wiki/Object-oriented_programming" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://en.wikipedia.org/wiki/Object-oriented_programming', 'Object Oriented Programming']);" >Object Oriented Programming</a>. If not, you will probably want to read up on that before reading this article.</p>
+<h2>Entities verses Value Objects</h2>
+<p>In Object Oriented Programming, we represent related attributes and methods as an Object.</p>
+<p>So for example, a Person could be an Object within our application. A person will have a name, email address and password as well as many other attributes. Within our database this person is represented by an <code>id</code>. This means that the person could change their name, email and password but it would still be the same person. When an object can change it&#8217;s attributes but remain the same object we call it an <em>Entity</em>. An Entity is mutable because it can change it&#8217;s attributes without changing the identity of the object. The Entity object will maintain the identity because it has an <code>id</code> in the database.</p>
+<p>Imagine that our application allows the person to track their current location. When the person is able to successfully connect to the internet and authenticate with our application a new <code>Location</code> object is created. This <code>Location</code> object has attributes for longitude and latitude. The <code>Location</code> object is a <em>Value Object</em> because we don&#8217;t care about the specific instance of the object we only care that it is a location.</p>
+<p>When the person changes location, we don&#8217;t have to update the <code>Location</code> object, we can simply create a new <code>Location</code> object. The <code>Location</code> object never changes it&#8217;s attributes from the moment it is created until the moment it is destroyed. When an object&#8217;s attributes cannot be changed, it is known as <em>immutable</em>.</p>
+<p>Another important distinction is, Value Objects equality is not based upon identity. So for example, when you create two <code>Location</code> objects with the same longitude and latitude attributes those two objects will be equal to one another. The <code>Person</code> object on the other hand does base equality on identity because it is a single representation with an <code>id</code>. If you had two people with the exact same name, they would not be the same person.</p>
+<h2>How to identify Value Objects?</h2>
+<p>So hopefully you can see that we can generally make the distinction between an Entity and a Value Object when an object is represented with an <code>id</code>.</p>
+<p>An Entity&#8217;s attributes can change, but it remains the same representation within our system because of it&#8217;s unique identifier. Whereas a Value Object is a single instance of an object that is created and then destroyed. We don&#8217;t care about a specific instance of a Value Object and we can&#8217;t change it&#8217;s attributes.</p>
+<p>So how do you know when to use an Entity and when to use a Value Object? Well the decision really comes down to the context of the application.</p>
+<p>Imagine that in the example from earlier, our application is not just a generic social application, it is actually <a href="http://foursquare.com" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://foursquare.com', 'Foursquare']);" >Foursquare</a>. Now every individual <code>Location</code> object does have a unique identifier because many different users can checkin to that location over time. Now the <code>Location</code> object is an Entity, not a Value Object.</p>
+<p>On the other hand, imagine that we are the owner of a power plant that records activity around it&#8217;s security fence. The security fence has many locations where activity is recorded for monitoring purposes. Each location around the fence is an Entity because we care about recording activity at those specific locations. Whenever a suspicious person walks past one of our locations an incident is recorded in the database. In this example, a person is a Value Object because we don&#8217;t care about any particular person, we only care that a person triggered one of the security locations.</p>
+<p>So whether an object is an Entity or a Value Object really depends on the context of how you are using it within your application. Generally speaking objects like location, dates, numbers or money will nearly always be Value Objects, and objects like people, products, files or sales will nearly always be entities.</p>
+<h2>Why is the distinction between Value Objects and Entity Objects important?</h2>
+<p>You are probably thinking, <em>&#8220;why is the distinction between Value Objects and Entity Objects important?&#8221;</em>.</p>
+<p>Well it&#8217;s actually really quite important for a number of reasons.</p>
+<p>Firstly, when you have two Entities with the same attributes, these two objects are not the same because they have two different identities. However, when you have two Value Objects with the same values, these two objects do have equality and can therefore can be interchanged freely. When you can substitute one object for another, the object is a Value object (in other words, the value is in the object, rather than the identity of the object). You couldn&#8217;t interchange Entities because there would be unwanted side effects.</p>
+<p>Secondly, overtime an Entity&#8217;s properties will change, but it will remain the same Entity. For example, if a user changes their email address. However when your application needs to change a Value Object property, the whole object needs to be destroyed and a new one should replace it. For example, when you make a payment, the money object isn&#8217;t given back to you as change, you are given a new money object of a lower value.</p>
+<h2>Conclusion</h2>
+<p>The difference between Entities and Value objects is an important concept in Domain Driven Design. In DDD, it&#8217;s important to identify the difference between Entities and Value Objects in order to model the real world correctly in our application.</p>
+<p>As I mentioned in this post, it&#8217;s important to fully understand the context of what you are building so that you know when an object should be an Entity and when it should be a Value Object. Just because at first glance and object would seem to have an identity, does not mean that it should be an Entity. Modelling a concept as an Entity with an identity, when it should be an immutable Value Object can have unwanted side effects.</p>
+<p>Immutable Value Objects are an important part of building an application that correctly represents the intended design. Using Value Objects for things such as money for example, also ensures that mistakes aren&#8217;t made due to an object&#8217;s changing state through time.</p>
+<p>Understanding the difference between Entities and Value Objects isn&#8217;t always apparent, and will require that you fully get your head around the context of the application you are building. However, the distinction is important, and is something that you should be aware of as you model a real world system as a new application in code.</p>
+                  </div>
+
+                  <div class="about-author">
+                    <img alt='' src='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=100&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/780290abdc8ae52adddecac01690747e?s=200&amp;d=mm&amp;r=g 2x' class='avatar avatar-100 photo' height='100' width='100' />                    <p class="name">Philip Brown</p>
+                    <p class="bio">Hey, I'm <em>Philip Brown</em>, a designer and developer from Durham, England. I create websites and web based applications from the ground up. In 2011 I founded a company called <a href="http://yflag.com">Yellow Flag</a>. If you want to find out more about me, you can follow me on <a href="http://twitter.com/philipbrown">Twitter</a> or <a href="https://plus.google.com/100062537916148743454/?rel=author">Google Plus</a>.</p>
+                  </div>
+
+                  <div class="social-buttons group">
+                    <div class="social-button">
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-via="culttt" data-lang="en" data-related="philipbrown" data-count="vertical">Tweet</a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    </div>
+                    <div class="social-button">
+                      <div id="fb-root"></div>
+                      <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk'));</script>
+                      <div class="fb-like" data-send="false" data-layout="box_count" data-show-faces="false"></div>
+                    </div>
+                    <div class="social-button">
+                      <g:plusone size="tall"></g:plusone>
+                      <script type="text/javascript">
+                        window.___gcfg = {lang: 'en-GB'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                      </script>
+                    </div>
+                    <div class="social-button">
+                      <a href="http://bufferapp.com/add" class="buffer-add-button" data-count="vertical" data-via="culttt" >Buffer</a>
+                      <script type="text/javascript" src="http://static.bufferapp.com/js/button.js"></script>
+                    </div>
+                  </div>
+
+                  <div class="comments">
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-2456">
+        <div id="dsq-comment-header-2456" class="dsq-comment-header">
+            <cite id="dsq-cite-2456">
+                <span id="dsq-author-user-2456">nticaric</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2456" class="dsq-comment-body">
+            <div id="dsq-comment-message-2456" class="dsq-comment-message"><p>Nice article!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-2466">
+        <div id="dsq-comment-header-2466" class="dsq-comment-header">
+            <cite id="dsq-cite-2466">
+                <a id="dsq-author-user-2466" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2466" class="dsq-comment-body">
+            <div id="dsq-comment-message-2466" class="dsq-comment-message"><p>Thank you :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2457">
+        <div id="dsq-comment-header-2457" class="dsq-comment-header">
+            <cite id="dsq-cite-2457">
+                <span id="dsq-author-user-2457">cheeker</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2457" class="dsq-comment-body">
+            <div id="dsq-comment-message-2457" class="dsq-comment-message"><p>I would like to ask how to use DDD with ORM e.g. eloquent because tendency is to make eloquent model and put methods to manipulate this data inside it. Repository pattern should be implmented to hide eloquent ORM details but how to do it without number of method explosion? Thanks very much for reply and good articles.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-2459">
+        <div id="dsq-comment-header-2459" class="dsq-comment-header">
+            <cite id="dsq-cite-2459">
+                <span id="dsq-author-user-2459">philpalmieri</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2459" class="dsq-comment-body">
+            <div id="dsq-comment-message-2459" class="dsq-comment-message"><p>hi cheeker</p>
+<p>there are apples/oranges..  your ORM &#8216;should not&#8217; &#8211; i say those words lightly.. be your direct mapping of your model.. they should be injected into your &#8216;model&#8217;..  So your location / person would not be an ORM / Eloquent model, it is its own thing that is injected with an eloquent instance to populate itself</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-2460">
+        <div id="dsq-comment-header-2460" class="dsq-comment-header">
+            <cite id="dsq-cite-2460">
+                <span id="dsq-author-user-2460">cheeker</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2460" class="dsq-comment-body">
+            <div id="dsq-comment-message-2460" class="dsq-comment-message"><p>Se there should be Entity e.g. person, that is plain class, which will receive in constructor instance of eloquent ORM mode personEloquent or better personRepository which will use Eloquent person model, right?</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-4" id="dsq-comment-2468">
+        <div id="dsq-comment-header-2468" class="dsq-comment-header">
+            <cite id="dsq-cite-2468">
+                <a id="dsq-author-user-2468" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2468" class="dsq-comment-body">
+            <div id="dsq-comment-message-2468" class="dsq-comment-message"><p>Yeah, Active Record style ORMs like Eloquent aren&#8217;t true to the nature of DDD. You should look at Doctrine which uses the DataMapper pattern.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-5" id="dsq-comment-2471">
+        <div id="dsq-comment-header-2471" class="dsq-comment-header">
+            <cite id="dsq-cite-2471">
+                <span id="dsq-author-user-2471">cheeker</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2471" class="dsq-comment-body">
+            <div id="dsq-comment-message-2471" class="dsq-comment-message"><p>Is there a neat way how to use Active record ORM e.g. Eloquent &#8220;correctly&#8221; without heavy bending in DDD? OR is it contraproductive?</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt depth-5" id="dsq-comment-2477">
+        <div id="dsq-comment-header-2477" class="dsq-comment-header">
+            <cite id="dsq-cite-2477">
+                <a id="dsq-author-user-2477" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2477" class="dsq-comment-body">
+            <div id="dsq-comment-message-2477" class="dsq-comment-message"><p>The way you would normally use Eloquent is how you use the Active Record pattern <a href="http://en.wikipedia.org/wiki/Active_record_pattern" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://en.wikipedia.org/wiki/Active_record_pattern', 'http://en.wikipedia.org/wiki/Active_record_pattern']);" rel="nofollow">http://en.wikipedia.org/wiki/Active_record_pattern</a></p>
+<p>To follow the DDD way, you could return a standard object from a repository, yeah.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-2458">
+        <div id="dsq-comment-header-2458" class="dsq-comment-header">
+            <cite id="dsq-cite-2458">
+                <span id="dsq-author-user-2458">santacruz</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2458" class="dsq-comment-body">
+            <div id="dsq-comment-message-2458" class="dsq-comment-message"><p>Great writeup!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-2467">
+        <div id="dsq-comment-header-2467" class="dsq-comment-header">
+            <cite id="dsq-cite-2467">
+                <a id="dsq-author-user-2467" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2467" class="dsq-comment-body">
+            <div id="dsq-comment-message-2467" class="dsq-comment-message"><p>Thank you sir :D</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-3548">
+        <div id="dsq-comment-header-3548" class="dsq-comment-header">
+            <cite id="dsq-cite-3548">
+                <a id="dsq-author-user-3548" href="http://keripix.pethak.com/" target="_blank" rel="nofollow">keripix</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3548" class="dsq-comment-body">
+            <div id="dsq-comment-message-3548" class="dsq-comment-message"><p>This is a very nice explanation. Clear and quite short. Its actually very helpfull, especially where you explain that deciding wether something is an entity or value object depends on the context.</p>
+<p>Thank you a lot</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3561">
+        <div id="dsq-comment-header-3561" class="dsq-comment-header">
+            <cite id="dsq-cite-3561">
+                <a id="dsq-author-user-3561" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3561" class="dsq-comment-body">
+            <div id="dsq-comment-message-3561" class="dsq-comment-message"><p>Thank you :) Glad you found it useful!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-3947">
+        <div id="dsq-comment-header-3947" class="dsq-comment-header">
+            <cite id="dsq-cite-3947">
+                <span id="dsq-author-user-3947">alireza Rahmani khalili</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3947" class="dsq-comment-body">
+            <div id="dsq-comment-message-3947" class="dsq-comment-message"><p>very nice! I like it</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-3953">
+        <div id="dsq-comment-header-3953" class="dsq-comment-header">
+            <cite id="dsq-cite-3953">
+                <a id="dsq-author-user-3953" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3953" class="dsq-comment-body">
+            <div id="dsq-comment-message-3953" class="dsq-comment-message"><p>Thank you, glad you found it useful :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2014/12/03/6-principles-writing-maintainable-code/' rel='external nofollow' class='url'>6 Principles for Writing Maintainable Code | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://culttt.com/2015/01/21/creating-php-shopping-basket-part-1-money-currency-taxes/' rel='external nofollow' class='url'>Creating a PHP Shopping Basket Part 1 - Money, Currency and Taxes | Culttt</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-6421">
+        <div id="dsq-comment-header-6421" class="dsq-comment-header">
+            <cite id="dsq-cite-6421">
+                <span id="dsq-author-user-6421">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6421" class="dsq-comment-body">
+            <div id="dsq-comment-message-6421" class="dsq-comment-message"><p>Hi Philip, one question. I&#8217;m working with Eloquent and I have three Tables: Customer, Partner and Contact. Then I have a fourth table with a polymorphic relationship called Addresses. I read before about the Address as Value Objects and I&#8217;m not persisting those Addresses using any Address identifier, only I related with each Customer, Partner or Contact model.</p>
+<p>What is the way you recommend me for persisting those Addresses? Do I need use Value Objects and, is correct to use a separated table, or is better to use the Root Entity for the Address persistance than this way?</p>
+<p>This is the structure of the Tables:</p>
+<p>Customer (id, customer_name, &#8230;)<br />
+Partner (id, partner_name, &#8230;)<br />
+Contact (id, contact_name, &#8230;)</p>
+<p>Addresses (line1, line2, city, zipcode, state, country, addressable_id, addresable_type)</p>
+<p>Thanks in advanced.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment odd alt depth-2" id="dsq-comment-6440">
+        <div id="dsq-comment-header-6440" class="dsq-comment-header">
+            <cite id="dsq-cite-6440">
+                <a id="dsq-author-user-6440" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6440" class="dsq-comment-body">
+            <div id="dsq-comment-message-6440" class="dsq-comment-message"><p>The decision as to whether the Address should be a Value Object really depends on the context of your application.</p>
+<p>If the Address was a Value Object you would store it as part of the record, usually as a serialised object. I don&#8217;t think Eloquent has a better way to do it.</p>
+<p>But to be honest it sounds like the Address is not a Value Object in your case. Just because an Address is a Value Object in certain applications, doesn&#8217;t mean it will be for all applications.</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-3" id="dsq-comment-6444">
+        <div id="dsq-comment-header-6444" class="dsq-comment-header">
+            <cite id="dsq-cite-6444">
+                <span id="dsq-author-user-6444">codeatbusiness</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6444" class="dsq-comment-body">
+            <div id="dsq-comment-message-6444" class="dsq-comment-message"><p>Great answer as always. I suppose that would be better candidates for Value Objects some of the Address parts (zipcode, country, state, &#8230;) Many thanks Philip! Have a great day!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-6785">
+        <div id="dsq-comment-header-6785" class="dsq-comment-header">
+            <cite id="dsq-cite-6785">
+                <span id="dsq-author-user-6785">Ricardo Saul</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6785" class="dsq-comment-body">
+            <div id="dsq-comment-message-6785" class="dsq-comment-message"><p>Great article!</p>
+</div>
+        </div>
+
+    <ul class="children">
+    <li class="comment even depth-2" id="dsq-comment-6799">
+        <div id="dsq-comment-header-6799" class="dsq-comment-header">
+            <cite id="dsq-cite-6799">
+                <a id="dsq-author-user-6799" href="http://culttt.com/" target="_blank" rel="nofollow">Philip Brown</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-6799" class="dsq-comment-body">
+            <div id="dsq-comment-message-6799" class="dsq-comment-message"><p>Thank you Richard :)</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://culttt.com/2014/04/30/difference-entities-value-objects/';
+var disqus_identifier = '4284 http://culttt.com/?p=4284';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'culttt';
+var disqus_title = "What is the difference between Entities and Value Objects?";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=4284';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+                  </div>
+
+              
+              
+            </div>
+
+            <section class="sidebar col-8">
+  <h3 class="supported">Supported by</h3>
+
+  <div class="widget ad-packs">
+    <script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1288393&zoneid=1408&key=cff8e425093b59be72c2fd4e27ce192a&serve=C6SIVKV&placement=cultttcom&circle=design" id="_adpacks_js"></script>
+  </div>
+
+  <div class="widget become-a-follower">
+    <h2>Become a follower</h2>
+      <a href="https://twitter.com/culttt"><i class="icon-twitter twitter"></i><span class="action">Follow us on</span> Twitter</a>
+      <a href="https://www.facebook.com/culttt"><i class="icon-facebook-squared facebook"></i><span class="action">Like us on</span> Facebook</a>
+      <a href="https://plus.google.com/105545788844824874492"><i class="icon-gplus googleplus"></i><span class="action">Circle us on</span> Google Plus</a>
+      <a href="http://culttt.com/feed/"><i class="icon-rss rss"></i><span class="action">Subscribe via </span> RSS</a>
+  </div>
+
+</section>
+
+          </div><!--/wrapper-small-->
+
+          <section class="advertisements col-5 group">
+
+</section>
+
+        </div><!--/wrapper-big-->
+
+      </div><!--/grid-->
+    </div><!--/content-->
+    <footer class="footer">
+      <p><a href="http://yflag.com">Yellow Flag</a></p>
+    </footer>
+  </body>
+          <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'culttt';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        	<div style="display:none">
+	<div class="grofile-hash-map-780290abdc8ae52adddecac01690747e">
+	</div>
+	</div>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2016Octaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://culttt.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://culttt.com/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'36596421',post:'4284',tz:'0',srv:'culttt.com'} ]);
+	_stq.push([ 'clickTrackerInit', '36596421', '4284' ]);
+</script>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced
+
+ Served from: culttt.com @ 2016-10-30 15:05:09 by W3 Total Cache -->
